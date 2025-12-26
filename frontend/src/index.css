@@ -6,9 +6,19 @@
 /* about.jsx */
 @layer utilities {
   @keyframes pulse-slow {
-    0%, 100% { transform: scale(1); opacity: 1; }
-    50% { transform: scale(1.05); opacity: 0.8; }
+
+    0%,
+    100% {
+      transform: scale(1);
+      opacity: 1;
+    }
+
+    50% {
+      transform: scale(1.05);
+      opacity: 0.8;
+    }
   }
+
   .animate-pulse-slow {
     animation: pulse-slow 3s infinite;
   }
