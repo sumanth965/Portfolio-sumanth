@@ -1,310 +1,167 @@
 import React, { useState, useEffect } from "react";
-import {
-  Menu,
-  X,
-  Sun,
-  Moon,
-  ChevronDown,
-  Sparkles,
-  Zap,
-  User,
-  Mail,
-  Briefcase,
-  Home,
-} from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
+import { Menu, X, Home, User, Briefcase, Mail, Sun, Moon, Sparkles } from "lucide-react";
+
+const NAV_LINKS = [
+  { name: "Home", href: "#home", icon: Home },
+  { name: "About", href: "#about", icon: User },
+  { name: "Projects", href: "#projects", icon: Briefcase },
+  { name: "Contact", href: "#contact", icon: Mail },
+];
 
 export default function Navbar({ theme, setTheme }) {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
-  const [isHovered, setIsHovered] = useState(null);
-  const [showDropdown, setShowDropdown] = useState(false);
+  const [activeTab, setActiveTab] = useState("Home");
 
-  const navLinks = [
-    { name: "Home", href: "#home", icon: Home },
-    { name: "About", href: "#about", icon: User },
-    { name: "Projects", href: "#projects", icon: Briefcase, hasDropdown: true },
-    { name: "Contact", href: "#contact", icon: Mail },
-  ];
-
-  const projectDropdown = [
-    { name: "Web Apps", href: "#webapps" },
-    { name: "Mobile Apps", href: "#mobileapps" },
-    { name: "AI Projects", href: "#aiprojects" },
-    { name: "Open Source", href: "#opensource" },
-  ];
-
-  // Handle scroll effect
   useEffect(() => {
-    const handleScroll = () => setScrolled(window.scrollY > 20);
+    const handleScroll = () => {
+      setScrolled(window.scrollY > 50);
+      
+      // Update active tab based on scroll position
+      const sections = NAV_LINKS.map(link => document.querySelector(link.href));
+      const scrollPos = window.scrollY + 100;
+
+      sections.forEach((section, index) => {
+        if (section && scrollPos >= section.offsetTop && scrollPos < section.offsetTop + section.offsetHeight) {
+          setActiveTab(NAV_LINKS[index].name);
+        }
+      });
+    };
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  // Particle effect
-  const particles = Array.from({ length: 15 }, (_, i) => (
-    <div
-      key={i}
-      className={`absolute w-1 h-1 rounded-full animate-pulse transition-colors duration-1000 ${
-        theme === "dark" ? "bg-orange-400/30" : "bg-orange-500/20"
-      }`}
-      style={{
-        left: `${Math.random() * 100}%`,
-        top: `${Math.random() * 100}%`,
-        animationDelay: `${Math.random() * 3}s`,
-        animationDuration: `${2 + Math.random() * 2}s`,
-      }}
-    />
-  ));
+  const toggleTheme = () => setTheme(theme === "dark" ? "light" : "dark");
 
   return (
     <nav
-      className={`fixed w-full top-0 z-50 transition-all duration-700 transform
-        ${scrolled ? "backdrop-blur-xl shadow-2xl py-2" : "backdrop-blur-lg py-4"}
-        ${
-          theme === "dark"
-            ? `bg-gradient-to-r from-slate-900/90 via-slate-800/90 to-slate-900/90 ${
-                scrolled ? "shadow-orange-500/20" : ""
-              }`
-            : `bg-gradient-to-r from-white/90 via-gray-50/90 to-white/90 ${
-                scrolled ? "shadow-orange-500/10" : ""
-              }`
-        }`}
+      className={`fixed top-0 left-0 right-0 z-[100] transition-all duration-500 ${
+        scrolled 
+          ? "py-3 px-4 sm:px-8 border-b border-white/10" 
+          : "py-6 px-4 sm:px-12"
+      }`}
     >
-      {/* Background particles */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        {particles}
-      </div>
-
-      {/* Border line */}
-      <div
-        className={`absolute bottom-0 left-0 right-0 h-[1px] bg-gradient-to-r
-        ${
-          theme === "dark"
-            ? "from-transparent via-orange-400 to-transparent"
-            : "from-transparent via-orange-500 to-transparent"
-        }`}
-      />
-
-      <div className="max-w-7xl mx-auto flex justify-between items-center px-6 relative">
-        {/* Logo */}
-        <div className="relative group">
-          <div
-            className={`text-3xl font-black tracking-wider transition-all duration-500 transform group-hover:scale-110 ${
-              theme === "dark" ? "text-white" : "text-gray-900"
-            }`}
-            onMouseEnter={() => setIsHovered("logo")}
-            onMouseLeave={() => setIsHovered(null)}
-          >
-            <span className="relative inline-block">
-              S
-              <Sparkles
-                className={`absolute -top-2 -right-2 w-4 h-4 transition-all duration-300 ${
-                  isHovered === "logo"
-                    ? "text-orange-400 animate-spin"
-                    : "text-transparent"
-                }`}
-              />
-            </span>
-            <span
-              className={`bg-gradient-to-r from-orange-500 to-red-500 bg-clip-text text-transparent ${
-                isHovered === "logo" ? "animate-pulse" : ""
-              }`}
-            >
-              umanth
-            </span>
-          </div>
-
-          {/* Glow */}
-          <div
-            className={`absolute inset-0 rounded-lg blur-xl transition-opacity duration-500 ${
-              isHovered === "logo" ? "bg-orange-500/20 opacity-100" : "opacity-0"
-            }`}
-          />
-        </div>
-
-        {/* Desktop Menu */}
-        <ul className="hidden lg:flex items-center space-x-1 font-semibold">
-          {navLinks.map((item) => (
-            <li key={item.name} className="relative group">
-              {item.hasDropdown ? (
-                <div
-                  onMouseEnter={() => setShowDropdown(true)}
-                  onMouseLeave={() => setShowDropdown(false)}
-                  className="relative"
-                >
-                  <button
-                    className={`flex items-center space-x-2 px-6 py-3 rounded-xl transition-all duration-300 transform hover:scale-105
-                      ${
-                        theme === "dark"
-                          ? "text-white hover:text-orange-400"
-                          : "text-gray-800 hover:text-orange-600"
-                      }`}
-                  >
-                    <item.icon size={18} />
-                    <span>{item.name}</span>
-                    <ChevronDown
-                      size={16}
-                      className={`transition-transform duration-300 ${
-                        showDropdown ? "rotate-180" : ""
-                      }`}
-                    />
-                  </button>
-
-                  {/* Dropdown */}
-                  <div
-                    className={`absolute top-full left-0 mt-2 w-48 rounded-xl shadow-2xl transition-all duration-300 transform origin-top
-                      ${
-                        showDropdown
-                          ? "opacity-100 scale-100 translate-y-0"
-                          : "opacity-0 scale-95 -translate-y-2 pointer-events-none"
-                      }
-                      ${
-                        theme === "dark"
-                          ? "bg-slate-800/95 border-slate-700"
-                          : "bg-white/95 border-gray-200"
-                      } backdrop-blur-xl border`}
-                  >
-                    {projectDropdown.map((dropItem) => (
-                      <a
-                        key={dropItem.name}
-                        href={dropItem.href}
-                        className={`block px-4 py-3 text-sm transition-all duration-200 hover:scale-105 transform ${
-                          theme === "dark"
-                            ? "text-gray-300 hover:text-orange-400 hover:bg-orange-500/10"
-                            : "text-gray-700 hover:text-orange-600 hover:bg-orange-500/5"
-                        }`}
-                      >
-                        {dropItem.name}
-                      </a>
-                    ))}
-                  </div>
-                </div>
-              ) : (
-                <a
-                  href={item.href}
-                  className={`flex items-center space-x-2 px-6 py-3 rounded-xl transition-all duration-300 transform hover:scale-105
-                    ${
-                      theme === "dark"
-                        ? "text-white hover:text-orange-400"
-                        : "text-gray-800 hover:text-orange-600"
-                    }`}
-                  onMouseEnter={() => setIsHovered(item.name)}
-                  onMouseLeave={() => setIsHovered(null)}
-                >
-                  <item.icon
-                    size={18}
-                    className={`transition-transform duration-300 ${
-                      isHovered === item.name ? "rotate-12" : ""
-                    }`}
-                  />
-                  <span>{item.name}</span>
-                </a>
-              )}
-            </li>
-          ))}
-        </ul>
-
-        {/* Theme Toggle + Mobile Menu Btn */}
-        <div className="flex items-center space-x-4">
-          {/* Theme Toggle */}
-          <button
-            onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
-            className={`relative p-3 rounded-full transition-all duration-500 transform hover:scale-110 group overflow-hidden
-              ${
-                theme === "dark"
-                  ? "bg-gradient-to-r from-slate-800 to-slate-700 hover:from-orange-600 hover:to-orange-500 shadow-lg"
-                  : "bg-gradient-to-r from-gray-100 to-gray-200 hover:from-orange-500 hover:to-orange-400 shadow-lg"
-              }`}
-          >
-            <div
-              className={`relative z-10 transition-colors duration-300 ${
-                theme === "dark"
-                  ? "text-orange-400 group-hover:text-white"
-                  : "text-gray-700 group-hover:text-white"
-              }`}
-            >
-              {theme === "dark" ? <Sun size={22} /> : <Moon size={22} />}
-            </div>
-          </button>
-
-          {/* Mobile Menu Button */}
-          <div className="lg:hidden">
-            <button
-              onClick={() => setIsOpen(!isOpen)}
-              className={`relative p-3 rounded-full transition-all duration-500 transform hover:scale-110 group
-                ${
-                  theme === "dark"
-                    ? "bg-slate-800 hover:bg-orange-600"
-                    : "bg-gray-100 hover:bg-orange-500"
-                } ${isOpen ? "rotate-180" : ""}`}
-            >
-              {isOpen ? <X size={24} /> : <Menu size={24} />}
-            </button>
-          </div>
-        </div>
-      </div>
-
-      {/* Mobile Dropdown */}
-      <div
-        className={`lg:hidden absolute top-full left-0 right-0 transition-all duration-700 transform origin-top ${
-          isOpen
-            ? "opacity-100 scale-100 translate-y-0"
-            : "opacity-0 scale-95 -translate-y-4 pointer-events-none"
+      <div 
+        className={`max-w-7xl mx-auto flex items-center justify-between transition-all duration-500 ${
+          scrolled 
+            ? "bg-slate-900/80 backdrop-blur-xl rounded-full px-6 py-2 shadow-2xl shadow-cyan-900/20" 
+            : ""
         }`}
       >
-        <div
-          className={`mx-4 mt-4 rounded-2xl shadow-2xl backdrop-blur-xl border overflow-hidden
-            ${
-              theme === "dark"
-                ? "bg-slate-900/95 border-slate-700"
-                : "bg-white/95 border-gray-200"
-            }`}
+        {/* Logo */}
+        <motion.a
+          href="#home"
+          className="flex items-center gap-2 no-underline group"
+          whileHover={{ scale: 1.05 }}
         >
-          {/* Mobile header */}
-          <div
-            className={`px-6 py-4 border-b ${
-              theme === "dark" ? "border-slate-700" : "border-gray-200"
+          <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-cyan-400 to-blue-600 flex items-center justify-center shadow-lg shadow-cyan-500/30">
+            <Sparkles className="text-white w-6 h-6 group-hover:rotate-12 transition-transform" />
+          </div>
+          <span className={`text-2xl font-black tracking-tighter ${theme === "dark" ? "text-white" : "text-slate-900"}`}>
+            SUMANTH<span className="text-cyan-500">.</span>
+          </span>
+        </motion.a>
+
+        {/* Desktop Menu */}
+        <div className="hidden md:flex items-center gap-1">
+          {NAV_LINKS.map((link) => (
+            <a
+              key={link.name}
+              href={link.href}
+              onClick={() => setActiveTab(link.name)}
+              className={`relative px-4 py-2 rounded-full text-sm font-semibold transition-all duration-300 no-underline flex items-center gap-2 ${
+                activeTab === link.name
+                  ? (theme === "dark" ? "text-white" : "text-slate-950")
+                  : (theme === "dark" ? "text-slate-400 hover:text-cyan-400" : "text-slate-600 hover:text-cyan-600")
+              }`}
+            >
+              {activeTab === link.name && (
+                <motion.div
+                  layoutId="active-pill"
+                  className="absolute inset-0 bg-cyan-500/10 rounded-full"
+                  transition={{ type: "spring", bounce: 0.2, duration: 0.6 }}
+                />
+              )}
+              <link.icon size={16} />
+              {link.name}
+              {activeTab === link.name && (
+                <motion.div 
+                  layoutId="active-line"
+                  className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-4 h-1 bg-cyan-500 rounded-full"
+                />
+              )}
+            </a>
+          ))}
+          
+          <div className="w-px h-6 bg-white/10 mx-2" />
+          
+          <button
+            onClick={toggleTheme}
+            className={`p-2.5 rounded-full transition-all duration-300 ${
+              theme === "dark" 
+                ? "bg-slate-800 text-yellow-400 hover:bg-slate-700" 
+                : "bg-slate-100 text-slate-600 hover:bg-slate-200"
             }`}
           >
-            <div className="flex items-center space-x-3">
-              <Zap className="text-orange-500" size={20} />
-              <span
-                className={`font-bold ${
-                  theme === "dark" ? "text-white" : "text-gray-900"
-                }`}
-              >
-                Navigation
-              </span>
-            </div>
-          </div>
+            {theme === "dark" ? <Sun size={20} /> : <Moon size={20} />}
+          </button>
+        </div>
 
-          {/* Mobile Items */}
-          <div className="py-2">
-            {navLinks.map((item) => (
-              <a
-                key={item.name}
-                href={item.href}
-                onClick={() => setIsOpen(false)}
-                className={`flex items-center space-x-4 px-6 py-4 transition-all duration-300 transform hover:scale-105
-                  ${
-                    theme === "dark"
-                      ? "text-gray-300 hover:text-orange-400 hover:bg-orange-500/10"
-                      : "text-gray-700 hover:text-orange-600 hover:bg-orange-500/5"
-                  }`}
-              >
-                <div
-                  className={`p-2 rounded-lg transition-colors duration-300 ${
-                    theme === "dark" ? "bg-slate-800" : "bg-gray-100"
-                  }`}
-                >
-                  <item.icon size={18} />
-                </div>
-                <span className="font-medium">{item.name}</span>
-              </a>
-            ))}
-          </div>
+        {/* Mobile Toggle */}
+        <div className="flex md:hidden items-center gap-3">
+           <button
+            onClick={toggleTheme}
+            className={`p-2 rounded-full ${
+              theme === "dark" ? "bg-slate-800 text-yellow-400" : "bg-slate-100 text-slate-600"
+            }`}
+          >
+            {theme === "dark" ? <Sun size={18} /> : <Moon size={18} />}
+          </button>
+          <button
+            onClick={() => setIsOpen(!isOpen)}
+            className={`p-2 rounded-xl transition-all ${
+              theme === "dark" ? "bg-slate-800 text-white" : "bg-slate-100 text-slate-900"
+            }`}
+          >
+            {isOpen ? <X size={24} /> : <Menu size={24} />}
+          </button>
         </div>
       </div>
+
+      {/* Mobile Menu */}
+      <AnimatePresence>
+        {isOpen && (
+          <motion.div
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -20 }}
+            className={`absolute top-full left-4 right-4 mt-4 p-4 rounded-3xl shadow-2xl border backdrop-blur-2xl md:hidden ${
+              theme === "dark" 
+                ? "bg-slate-900/95 border-white/10" 
+                : "bg-white/95 border-slate-200"
+            }`}
+          >
+            <div className="flex flex-col gap-2">
+              {NAV_LINKS.map((link) => (
+                <a
+                  key={link.name}
+                  href={link.href}
+                  onClick={() => setIsOpen(false)}
+                  className={`flex items-center gap-4 p-4 rounded-2xl no-underline transition-all ${
+                    activeTab === link.name
+                      ? "bg-cyan-500/10 text-cyan-400"
+                      : (theme === "dark" ? "text-slate-400 hover:bg-white/5" : "text-slate-600 hover:bg-slate-50")
+                  }`}
+                >
+                  <link.icon size={20} />
+                  <span className="font-bold">{link.name}</span>
+                </a>
+              ))}
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </nav>
   );
 }
