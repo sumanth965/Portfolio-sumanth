@@ -1,253 +1,187 @@
-import React, { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import { FaGithub, FaExternalLinkAlt, FaCode, FaRocket, FaSearch, FaHistory } from "react-icons/fa";
-import { Briefcase, Layers, Cpu, Layout, Sparkles, Zap, ChevronRight, Play } from "lucide-react";
+import { useMemo, useState } from 'react';
+import { AnimatePresence, motion as Motion } from 'framer-motion';
+import { ArrowUpRight, Github, Search } from 'lucide-react';
 
-/* ─── REAL DATA ──────────────────────────────────────────────────────────── */
-const PROJECTS = [
+const projects = [
   {
-    name: "MERN Excel Analytics",
-    description: "Robust data visualization platform that transforms complex Excel datasets into interactive dashboards with JWT security.",
-    link: "https://github.com/sumanth965/MERN-Excel-Analytics-Project-",
-    demo: "",
-    image: "/images/excel-analytics.jpg",
-    tech: ["React", "Express", "Node", "MongoDB", "Charts.js"],
-    category: "Full Stack",
-    highlight: "production-ready"
+    name: 'MERN Excel Analytics',
+    description: 'Analytics dashboard for Excel-driven business data with secure authentication and clear visual reporting.',
+    link: 'https://github.com/sumanth965/MERN-Excel-Analytics-Project-',
+    demo: '',
+    category: 'Full Stack',
+    tech: ['React', 'Node.js', 'Express', 'MongoDB', 'Charts'],
   },
   {
-    name: "Foodify Ecosystem",
-    description: "End-to-end restaurant management platform featuring menu orchestration, real-time ordering, and comprehensive admin controls.",
-    link: "https://github.com/sumanth965/Foodify",
-    demo: "",
-    image: "/images/foodify.jpg",
-    tech: ["MERN", "Socket.io", "Redux", "Tailwind"],
-    category: "Full Stack",
-    highlight: "scalable"
+    name: 'Foodify Ecosystem',
+    description: 'Restaurant management workflow covering menu operations, order management, and internal admin views.',
+    link: 'https://github.com/sumanth965/Foodify',
+    demo: '',
+    category: 'Full Stack',
+    tech: ['MERN', 'Socket.io', 'Redux', 'Tailwind'],
   },
   {
-    name: "Precision Slider UI",
-    description: "Engineered a high-performance, GPU-accelerated image gallery with fluid transitions and mobile-first touch optimization.",
-    link: "https://github.com/sumanth965/Image_Slider",
-    demo: "https://sumanth09-image-slider.netlify.app/",
-    image: "/images/image-slider.jpg",
-    tech: ["React", "Framer Motion", "Vite"],
-    category: "Frontend",
-    highlight: "performance"
+    name: 'Precision Slider UI',
+    description: 'Interactive image slider with smooth transitions, responsive motion, and a lightweight front-end setup.',
+    link: 'https://github.com/sumanth965/Image_Slider',
+    demo: 'https://sumanth09-image-slider.netlify.app/',
+    category: 'Frontend',
+    tech: ['React', 'Framer Motion', 'Vite'],
   },
   {
-    name: "E-Commerce Core",
-    description: "Architected a modular shopping cart experience with persistent state management and dynamic price calculations.",
-    link: "https://github.com/sumanth965/Cart_page",
-    demo: "https://sumanth09-cartpage.netlify.app/#",
-    image: "/images/cart-page.jpg",
-    tech: ["JavaScript", "HTML5", "CSS3", "Local Storage"],
-    category: "Frontend",
-    highlight: "state-management"
+    name: 'E-Commerce Core',
+    description: 'Shopping cart interface with clean pricing logic, persistent state handling, and intuitive browsing flow.',
+    link: 'https://github.com/sumanth965/Cart_page',
+    demo: 'https://sumanth09-cartpage.netlify.app/#',
+    category: 'Frontend',
+    tech: ['JavaScript', 'HTML', 'CSS', 'Local Storage'],
   },
   {
-    name: "Bucket List Pro",
-    description: "Productivity application with localized data persistence, prioritizing clean UI and minimal user friction.",
-    link: "https://github.com/sumanth965/Buket_List",
-    demo: "https://sumanth09-bucketlist.netlify.app/",
-    image: "/images/bucket-list.jpg",
-    tech: ["React", "Context API", "LocalDB"],
-    category: "Full Stack",
-    highlight: "productivity"
+    name: 'Bucket List Pro',
+    description: 'Task-focused productivity app designed for quick entry, local persistence, and simple day-to-day use.',
+    link: 'https://github.com/sumanth965/Buket_List',
+    demo: 'https://sumanth09-bucketlist.netlify.app/',
+    category: 'Frontend',
+    tech: ['React', 'Context API', 'Storage'],
   },
   {
-    name: "Secure Auth Portal",
-    description: "Standardized authentication templates with multi-factor support, built for high-security integration environments.",
-    link: "https://github.com/sumanth965/signin-signup-page",
-    demo: "https://su-manth09-signin-signup-page-frontend.onrender.com/",
-    image: "/images/signin-signup.jpg",
-    tech: ["React", "Node", "Bcrypt", "JWT"],
-    category: "Full Stack",
-    highlight: "security"
-  }
+    name: 'Secure Auth Portal',
+    description: 'Authentication flow template with sign-in, sign-up, and backend validation patterns for production-ready apps.',
+    link: 'https://github.com/sumanth965/signin-signup-page',
+    demo: 'https://su-manth09-signin-signup-page-frontend.onrender.com/',
+    category: 'Full Stack',
+    tech: ['React', 'Node.js', 'JWT', 'Bcrypt'],
+  },
 ];
 
-const CATEGORIES = ["All", "Frontend", "Full Stack"];
+const categories = ['All', 'Frontend', 'Full Stack'];
+const gradients = [
+  'from-cyan-500/25 to-blue-500/10',
+  'from-violet-500/25 to-cyan-500/10',
+  'from-emerald-500/25 to-sky-500/10',
+];
 
 export default function Projects({ theme }) {
-  const [activeCategory, setActiveCategory] = useState("All");
-  const [searchQuery, setSearchQuery] = useState("");
+  const [activeCategory, setActiveCategory] = useState('All');
+  const [query, setQuery] = useState('');
 
-  const filtered = PROJECTS.filter((proj) => {
-    const matchesCategory = activeCategory === "All" || proj.category === activeCategory;
-    const matchesSearch = proj.name.toLowerCase().includes(searchQuery.toLowerCase());
-    return matchesCategory && matchesSearch;
-  });
-
-  const bg = theme === "dark" ? "bg-[#0b1120]" : "bg-white";
-  const cardBg = theme === "dark" ? "bg-slate-900/50" : "bg-slate-50";
+  const filtered = useMemo(
+    () =>
+      projects.filter((project) => {
+        const matchesCategory = activeCategory === 'All' || project.category === activeCategory;
+        const haystack = `${project.name} ${project.description} ${project.tech.join(' ')}`.toLowerCase();
+        return matchesCategory && haystack.includes(query.toLowerCase());
+      }),
+    [activeCategory, query],
+  );
 
   return (
-    <section id="projects" className={`${bg} py-32 transition-colors duration-500 overflow-hidden`}>
-      <div className="max-w-7xl mx-auto px-6">
-        
-        {/* Header Section */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between items-center gap-10 mb-20 text-center md:text-left">
-           <motion.div 
-            initial={{ opacity: 0, x: -30 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-           >
-              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-cyan-500/10 text-cyan-400 text-xs font-black uppercase tracking-widest mb-4">
-                <Zap size={14} /> My Portfolio
-              </div>
-              <h2 className={`text-4xl md:text-6xl font-black ${theme === "dark" ? "text-white" : "text-slate-950"}`}>
-                FEATURED <br />
-                <span className="text-cyan-500">PROJECTS</span>
-              </h2>
-           </motion.div>
+    <section id="projects" className="section-shell px-6 py-24">
+      <div className="mx-auto max-w-7xl space-y-12">
+        <div className="flex flex-col gap-8 lg:flex-row lg:items-end lg:justify-between">
+          <div className="max-w-2xl space-y-5">
+            <p className="text-sm font-semibold uppercase tracking-[0.35em] text-cyan-500">Selected work</p>
+            <h2 className={`text-4xl font-semibold sm:text-5xl ${theme === 'dark' ? 'text-white' : 'text-slate-950'}`}>
+              Projects presented with a cleaner, studio-style layout.
+            </h2>
+            <p className={`text-lg leading-8 ${theme === 'dark' ? 'text-slate-300' : 'text-slate-600'}`}>
+              A focused collection of builds that highlight product thinking, component quality, and practical full-stack delivery.
+            </p>
+          </div>
 
-           {/* Search & Filter */}
-           <motion.div 
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="flex flex-col gap-4 w-full md:w-auto"
-           >
-              <div className="relative group overflow-hidden">
-                 <FaSearch size={14} className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-500 z-10" />
-                 <input 
-                  type="text" 
-                  placeholder="Search architecture..." 
-                  value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
-                  className={`pl-12 pr-6 py-4 rounded-2xl outline-none text-sm font-bold w-full transition-all border ${
-                    theme === "dark" 
-                      ? "bg-slate-900 border-white/5 text-white focus:ring-2 focus:ring-cyan-500/50" 
-                      : "bg-slate-50 border-slate-200 text-slate-900 focus:ring-2 focus:ring-cyan-600/20"
+          <div className="flex w-full max-w-xl flex-col gap-4">
+            <div className={`flex items-center gap-3 rounded-full border px-4 py-3 ${theme === 'dark' ? 'border-white/10 bg-white/5' : 'border-slate-200 bg-white'}`}>
+              <Search size={16} className="text-slate-400" />
+              <input
+                type="text"
+                value={query}
+                onChange={(event) => setQuery(event.target.value)}
+                placeholder="Search projects or technologies"
+                className="w-full bg-transparent text-sm outline-none"
+              />
+            </div>
+            <div className="flex flex-wrap gap-2">
+              {categories.map((category) => (
+                <button
+                  key={category}
+                  type="button"
+                  onClick={() => setActiveCategory(category)}
+                  className={`rounded-full px-4 py-2 text-sm font-medium transition ${
+                    activeCategory === category
+                      ? 'bg-cyan-500 text-white'
+                      : theme === 'dark'
+                        ? 'bg-white/5 text-slate-300 hover:bg-white/10'
+                        : 'bg-white text-slate-600 hover:bg-slate-100'
                   }`}
-                 />
-              </div>
-              
-              <div className="flex flex-wrap md:flex-nowrap gap-2 justify-center">
-                 {CATEGORIES.map((cat) => (
-                   <button
-                    key={cat}
-                    onClick={() => setActiveCategory(cat)}
-                    className={`px-6 py-2 rounded-full text-[10px] font-black uppercase tracking-widest transition-all ${
-                      activeCategory === cat 
-                        ? "bg-cyan-500 text-white shadow-lg shadow-cyan-500/30" 
-                        : (theme === "dark" ? "bg-slate-900 text-slate-400 border border-white/5 hover:bg-slate-800" : "bg-white text-slate-600 border border-slate-200 hover:bg-slate-50")
-                    }`}
-                   >
-                     {cat}
-                   </button>
-                 ))}
-              </div>
-           </motion.div>
-        </div>
-
-        {/* Project Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
-           <AnimatePresence mode="popLayout">
-              {filtered.map((proj, i) => (
-                <motion.div
-                  key={proj.name}
-                  layout
-                  initial={{ opacity: 0, scale: 0.9, y: 30 }}
-                  animate={{ opacity: 1, scale: 1, y: 0 }}
-                  exit={{ opacity: 0, scale: 0.8, y: 20 }}
-                  transition={{ duration: 0.4, delay: i * 0.1 }}
-                  className={`group relative rounded-[2.5rem] border ${cardBg} border-white/10 overflow-hidden shadow-2xl transition-all duration-500 hover:border-cyan-500/50`}
                 >
-                   {/* Thumbnail Container */}
-                   <div className="relative h-64 overflow-hidden rounded-t-[2.5rem]">
-                      <div className="absolute inset-0 bg-slate-950/40 group-hover:bg-transparent transition-all duration-500 z-10" />
-                      <img 
-                        src={proj.image} 
-                        alt={proj.name} 
-                        className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110"
-                      />
-                      
-                      {/* Floating Badge */}
-                      <div className="absolute top-4 left-4 z-20 px-3 py-1 rounded-full bg-slate-900/80 backdrop-blur-xl border border-white/10 text-[10px] font-black uppercase tracking-widest text-white shadow-xl">
-                        {proj.category}
-                      </div>
-
-                      {/* Tech Stack Overlay on hover */}
-                      <div className="absolute bottom-4 left-4 right-4 z-20 flex flex-wrap gap-2 opacity-0 group-hover:opacity-100 translate-y-4 group-hover:translate-y-0 transition-all duration-500">
-                         {proj.tech.map((t) => (
-                           <span key={t} className="px-3 py-1 rounded-lg bg-cyan-500 text-white text-[9px] font-black tracking-widest uppercase shadow-lg shadow-cyan-500/30 border border-cyan-400">
-                             {t}
-                           </span>
-                         ))}
-                      </div>
-                   </div>
-
-                   {/* Content */}
-                   <div className="p-10 space-y-6">
-                      <div className="space-y-4 min-h-[140px]">
-                         <h3 className={`text-2xl font-black ${theme === "dark" ? "text-white" : "text-slate-900"}`}>{proj.name}</h3>
-                         <p className={`text-sm leading-relaxed ${theme === "dark" ? "text-slate-500" : "text-slate-500"}`}>{proj.description}</p>
-                      </div>
-
-                      <div className="flex items-center gap-4">
-                         <motion.a 
-                          href={proj.link}
-                          target="_blank"
-                          rel="noreferrer"
-                          whileHover={{ scale: 1.05 }}
-                          whileTap={{ scale: 0.95 }}
-                          className={`flex-1 p-4 rounded-2xl flex items-center justify-center gap-3 no-underline text-xs font-black uppercase tracking-widest transition-all ${
-                            theme === "dark" ? "bg-white/5 text-white hover:bg-white/10" : "bg-white text-slate-900 border border-slate-200 hover:bg-slate-50"
-                          }`}
-                         >
-                            <FaGithub size={16} /> Codebase
-                         </motion.a>
-                         <motion.a 
-                          href={proj.demo || "#"}
-                          disabled={!proj.demo}
-                          target="_blank"
-                          rel="noreferrer"
-                          whileHover={proj.demo ? { scale: 1.05, boxShadow: "0 0 20px rgba(6,182,212,0.4)" } : {}}
-                          whileTap={proj.demo ? { scale: 0.95 } : {}}
-                          className={`flex-1 p-4 rounded-2xl flex items-center justify-center gap-3 no-underline text-xs font-black uppercase tracking-widest transition-all ${
-                            proj.demo 
-                              ? "bg-cyan-500 text-white" 
-                              : "bg-slate-800 text-slate-500 cursor-not-allowed opacity-50"
-                          }`}
-                         >
-                            {proj.demo ? <><Play size={14} fill="currentColor" /> Live</> : <><FaHistory size={14} /> WIP</>}
-                         </motion.a>
-                      </div>
-                   </div>
-
-                   {/* Decorative background glow */}
-                   <div className="absolute -bottom-10 -right-10 w-40 h-40 bg-cyan-500/5 blur-[50px] pointer-events-none group-hover:bg-cyan-500/20 transition-all duration-700 rounded-full" />
-                </motion.div>
+                  {category}
+                </button>
               ))}
-           </AnimatePresence>
+            </div>
+          </div>
         </div>
 
-        {/* Global Stats bar */}
-        <div className={`mt-32 p-12 rounded-[3.5rem] border ${cardBg} border-white/5 shadow-2xl relative overflow-hidden`}>
-           <div className="grid grid-cols-2 md:grid-cols-4 gap-12 relative z-10 text-center">
-              {[
-                { label: "Hours Encoded", val: 2400 },
-                { label: "Lines Pushed", val: 55000 },
-                { label: "PRs Merged", val: 128 },
-                { label: "Coffee Brewed", val: 420 }
-              ].map((stat, i) => (
-                <div key={i} className="space-y-2">
-                   <h4 className="text-3xl font-black text-cyan-500 underline decoration-cyan-500/10 underline-offset-8 transition-all hover:decoration-cyan-500">
-                      {stat.val.toLocaleString()}
-                   </h4>
-                   <p className="text-[10px] font-black uppercase tracking-[0.2em] text-slate-500">{stat.label}</p>
+        <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
+          <AnimatePresence>
+            {filtered.map((project, index) => (
+              <Motion.article
+                key={project.name}
+                layout
+                initial={{ opacity: 0, y: 16 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: 16 }}
+                className={`surface-card overflow-hidden rounded-[2rem] border ${theme === 'dark' ? 'border-white/10 bg-white/5' : 'border-slate-200 bg-white/85'}`}
+              >
+                <div className={`h-40 bg-gradient-to-br ${gradients[index % gradients.length]} p-6`}>
+                  <div className="flex h-full flex-col justify-between">
+                    <span className="w-fit rounded-full bg-slate-950/70 px-3 py-1 text-xs font-semibold uppercase tracking-[0.25em] text-white">
+                      {project.category}
+                    </span>
+                    <div>
+                      <p className="text-xs font-semibold uppercase tracking-[0.3em] text-slate-700/70">Featured project</p>
+                      <h3 className="mt-2 text-2xl font-semibold text-slate-950">{project.name}</h3>
+                    </div>
+                  </div>
                 </div>
-              ))}
-           </div>
-           
-           {/* Background branding */}
-           <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 opacity-[0.03] select-none pointer-events-none">
-              <span className="text-7xl font-black uppercase tracking-[0.4em] whitespace-nowrap">ARCHITECTURE</span>
-           </div>
-        </div>
 
+                <div className="space-y-6 p-6">
+                  <p className={`text-sm leading-7 ${theme === 'dark' ? 'text-slate-300' : 'text-slate-600'}`}>{project.description}</p>
+                  <div className="flex flex-wrap gap-2">
+                    {project.tech.map((item) => (
+                      <span
+                        key={item}
+                        className={`rounded-full px-3 py-1 text-xs font-medium ${theme === 'dark' ? 'bg-white/8 text-slate-200' : 'bg-slate-100 text-slate-600'}`}
+                      >
+                        {item}
+                      </span>
+                    ))}
+                  </div>
+                  <div className="flex gap-3">
+                    <a
+                      href={project.link}
+                      target="_blank"
+                      rel="noreferrer"
+                      className={`inline-flex flex-1 items-center justify-center gap-2 rounded-full border px-4 py-3 text-sm font-semibold no-underline transition ${
+                        theme === 'dark' ? 'border-white/10 text-white hover:bg-white/5' : 'border-slate-200 text-slate-900 hover:bg-slate-50'
+                      }`}
+                    >
+                      <Github size={16} /> Repository
+                    </a>
+                    <a
+                      href={project.demo || project.link}
+                      target="_blank"
+                      rel="noreferrer"
+                      className={`inline-flex flex-1 items-center justify-center gap-2 rounded-full px-4 py-3 text-sm font-semibold no-underline transition ${
+                        project.demo ? 'bg-cyan-500 text-white hover:bg-cyan-400' : 'bg-slate-300 text-slate-700'
+                      }`}
+                    >
+                      <ArrowUpRight size={16} /> {project.demo ? 'Live demo' : 'Preview soon'}
+                    </a>
+                  </div>
+                </div>
+              </Motion.article>
+            ))}
+          </AnimatePresence>
+        </div>
       </div>
     </section>
   );

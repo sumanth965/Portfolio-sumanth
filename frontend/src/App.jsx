@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import './App.css';
 import Footer from './Components/Footer';
 import Navbar from './Components/Navbar';
@@ -11,18 +11,25 @@ function App() {
   const [theme, setTheme] = useState(localStorage.getItem('theme') || 'dark');
 
   useEffect(() => {
-    if (theme === 'dark') {
-      document.documentElement.classList.add('dark');
-    } else {
-      document.documentElement.classList.remove('dark');
-    }
+    document.documentElement.classList.toggle('dark', theme === 'dark');
     localStorage.setItem('theme', theme);
   }, [theme]);
 
   return (
-    <div className={`min-h-screen transition-colors duration-500 ${theme === 'dark' ? 'bg-[#0b1120] text-white' : 'bg-slate-50 text-slate-900'}`}>
+    <div
+      className={`min-h-screen transition-colors duration-500 ${
+        theme === 'dark'
+          ? 'bg-slate-950 text-slate-50'
+          : 'bg-slate-50 text-slate-900'
+      }`}
+    >
+      <div className="fixed inset-0 -z-10 overflow-hidden">
+        <div className="absolute inset-x-0 top-0 h-[34rem] bg-[radial-gradient(circle_at_top,_rgba(34,211,238,0.22),_transparent_58%)]" />
+        <div className="absolute inset-x-0 bottom-0 h-[28rem] bg-[radial-gradient(circle_at_bottom,_rgba(59,130,246,0.14),_transparent_55%)]" />
+      </div>
+
       <Navbar theme={theme} setTheme={setTheme} />
-      
+
       <main className="relative">
         <Home theme={theme} />
         <About theme={theme} />
@@ -31,9 +38,6 @@ function App() {
       </main>
 
       <Footer theme={theme} />
-      
-      {/* Decorative accent lines */}
-      <div className={`fixed inset-0 pointer-events-none z-[99] border-x transition-colors duration-500 opacity-10 ${theme === 'dark' ? 'border-white/10' : 'border-slate-900/10'}`} />
     </div>
   );
 }

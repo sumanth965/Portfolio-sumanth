@@ -1,238 +1,163 @@
-import React, { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import CountUp from "react-countup";
-import img3 from "../assets/img3.jpg";
-import { 
-  Code, Server, Globe, Download, MapPin, 
-  Sparkles, Award, Zap, Briefcase, GraduationCap, ChevronRight
-} from "lucide-react";
+import { useState } from 'react';
+import { AnimatePresence, motion as Motion } from 'framer-motion';
+import CountUp from 'react-countup';
+import { ArrowRight, Briefcase, Download, GraduationCap, MapPin, Sparkles } from 'lucide-react';
+import img3 from '../assets/img3.jpg';
 
-const SKILLS = [
-  { name: "Frontend", level: 92, tech: "React, Next.js, Tailwind CSS" },
-  { name: "Backend", level: 85, tech: "Node.js, Express, REST APIs" },
-  { name: "Database", level: 88, tech: "MongoDB, PostgreSQL, Redis" },
-  { name: "DevOps", level: 65, tech: "AWS, Docker, CI/CD" },
+const skillGroups = [
+  { name: 'Frontend engineering', level: 92, detail: 'React, Tailwind CSS, responsive UI systems' },
+  { name: 'Backend development', level: 86, detail: 'Node.js, Express, REST APIs, authentication' },
+  { name: 'Data & persistence', level: 84, detail: 'MongoDB, SQL fundamentals, schema design' },
+  { name: 'Delivery workflow', level: 72, detail: 'Git, deployment, debugging, product iteration' },
 ];
 
-const EXPERIENCE = [
+const timeline = [
   {
-    type: "internship",
-    company: "Zephyr Technologies",
-    role: "Full-Stack Intern",
-    year: "2024",
-    desc: "Engineered a high-performance Restaurant Management System with real-time order processing and an 8-page e-commerce dashboard."
+    title: 'Full-Stack Intern',
+    organization: 'Zephyr Technologies',
+    period: '2024',
+    description: 'Built dashboard and ordering experiences for a restaurant management system with reusable UI and backend integration.',
   },
   {
-    type: "internship",
-    company: "MotionCut",
-    role: "Frontend Developer",
-    year: "2024",
-    desc: "Built modern, component-driven UI layouts using React, focusing on mobile-first responsiveness and pixel-perfect design."
+    title: 'Frontend Developer Intern',
+    organization: 'MotionCut',
+    period: '2024',
+    description: 'Delivered mobile-first React interfaces with a strong focus on spacing, usability, and visual consistency.',
   },
   {
-    type: "education",
-    company: "DR NSAM College",
-    role: "BCA Graduate",
-    year: "2022-2025",
-    desc: "Consistent 9.03 CGPA with specialization in Algorithmic Problem Solving and Web Architecture."
-  }
+    title: 'BCA Graduate',
+    organization: 'DR NSAM College',
+    period: '2022 – 2025',
+    description: 'Graduated with a 9.03 CGPA while building practical full-stack projects and strengthening system design fundamentals.',
+  },
 ];
 
 export default function About({ theme }) {
-  const [activeTab, setActiveTab] = useState("skills");
-
-  const bg = theme === "dark" ? "bg-[#0b1120]" : "bg-slate-50";
-  const cardBg = theme === "dark" ? "bg-slate-900/50" : "bg-white";
+  const [activeTab, setActiveTab] = useState('skills');
 
   return (
-    <section id="about" className={`${bg} py-24 transition-colors duration-500`}>
-      <div className="max-w-7xl mx-auto px-6">
-        
-        {/* Intro Grid */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 mb-24">
-          
-          {/* Left: Image / Stats */}
-          <motion.div 
-            initial={{ opacity: 0, x: -50 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            className="lg:col-span-5 relative"
-          >
-             <div className="relative z-10 rounded-[3rem] overflow-hidden border-8 border-cyan-500/10 shadow-2xl">
-                <img 
-                  src={img3} 
-                  alt="Sumanth Poojary" 
-                  className="w-full h-auto grayscale hover:grayscale-0 transition-all duration-1000"
-                />
-                <div className="absolute inset-0 bg-cyan-500/10 mix-blend-overlay" />
-             </div>
-             
-             {/* Stats Overlay Card */}
-             <motion.div 
-              initial={{ scale: 0.8, opacity: 0 }}
-              whileInView={{ scale: 1, opacity: 1 }}
-              viewport={{ once: true }}
-              transition={{ delay: 0.5 }}
-              className={`absolute -bottom-8 -right-8 p-8 rounded-3xl border ${cardBg} border-white/10 shadow-2xl backdrop-blur-xl z-20 hidden md:block`}
-             >
-                <div className="flex items-center gap-6">
-                   <div className="text-center border-r border-white/10 pr-6">
-                      <h3 className="text-3xl font-black text-cyan-500">
-                        <CountUp end={6} duration={3} />+
-                      </h3>
-                      <p className="text-[10px] font-bold uppercase tracking-widest text-slate-500 mt-1">Projects</p>
-                   </div>
-                   <div className="text-center border-r border-white/10 pr-6">
-                      <h3 className="text-3xl font-black text-cyan-500">
-                        <CountUp end={3} duration={3} />
-                      </h3>
-                      <p className="text-[10px] font-bold uppercase tracking-widest text-slate-500 mt-1">Internships</p>
-                   </div>
-                   <div className="text-center">
-                      <h3 className="text-3xl font-black text-cyan-500">
-                        <CountUp end={9} duration={3} decimals={2} />
-                      </h3>
-                      <p className="text-[10px] font-bold uppercase tracking-widest text-slate-500 mt-1">CGPA</p>
-                   </div>
+    <section id="about" className="section-shell px-6 py-24">
+      <div className="mx-auto max-w-7xl space-y-16">
+        <div className="grid gap-14 lg:grid-cols-[0.85fr_1.15fr] lg:items-center">
+          <div className="relative mx-auto w-full max-w-md">
+            <div className="absolute inset-0 rounded-[2rem] bg-gradient-to-br from-cyan-500/20 to-blue-600/5 blur-3xl" />
+            <div className={`surface-card relative overflow-hidden rounded-[2rem] border p-4 ${theme === 'dark' ? 'border-white/10 bg-white/5' : 'border-slate-200 bg-white/80'}`}>
+              <img src={img3} alt="Sumanth Poojary" className="rounded-[1.5rem] object-cover" />
+            </div>
+            <div className={`surface-card absolute -bottom-6 right-0 rounded-3xl border px-6 py-5 ${theme === 'dark' ? 'border-white/10 bg-slate-900/90' : 'border-slate-200 bg-white'}`}>
+              <div className="grid grid-cols-3 gap-5 text-center">
+                <div>
+                  <p className="text-2xl font-semibold text-cyan-500"><CountUp end={12} />+</p>
+                  <p className="text-xs uppercase tracking-[0.3em] text-slate-500">Projects</p>
                 </div>
-             </motion.div>
-          </motion.div>
-
-          {/* Right: Content */}
-          <motion.div 
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="lg:col-span-7 flex flex-col justify-center"
-          >
-             <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-cyan-500/10 text-cyan-400 text-xs font-black uppercase tracking-widest mb-6">
-                <Sparkles size={14} /> My Identity
-             </div>
-             
-             <h2 className={`text-4xl md:text-5xl font-black mb-10 ${theme === "dark" ? "text-white" : "text-slate-950"}`}>
-                I RE-ENGINEER <br />
-                <span className="text-cyan-500 underline decoration-cyan-500/20 underline-offset-8">COMPLEX SYSTEMS</span>
-             </h2>
-
-             <p className={`text-lg leading-relaxed mb-10 ${theme === "dark" ? "text-slate-400" : "text-slate-600"}`}>
-                As a Master of Computer Applications student and full-stack engineer, I bridge the gap between architectural theory and practical implementation. My journey started in 2022 with a focus on core programming, eventually evolving into building production-ready applications powered by the MERN stack.
-             </p>
-
-             <div className="flex flex-wrap gap-4">
-                <motion.a 
-                  href="/Resume_2k25.pdf"
-                  download
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
-                  className="flex items-center gap-2 px-8 py-4 rounded-2xl bg-cyan-500 text-white font-black text-sm uppercase tracking-widest no-underline shadow-lg shadow-cyan-500/20 hover:bg-cyan-600 transition-all"
-                >
-                  Download CV <Download size={18} />
-                </motion.a>
-                <div className={`flex items-center gap-2 px-6 py-4 rounded-2xl text-[10px] font-bold uppercase tracking-widest border border-cyan-500/20 ${theme === "dark" ? "text-white bg-white/5" : "text-slate-900"}`}>
-                  <MapPin size={16} className="text-cyan-500" /> Udupi, India
+                <div>
+                  <p className="text-2xl font-semibold text-cyan-500"><CountUp end={2} /></p>
+                  <p className="text-xs uppercase tracking-[0.3em] text-slate-500">Internships</p>
                 </div>
-             </div>
-          </motion.div>
+                <div>
+                  <p className="text-2xl font-semibold text-cyan-500"><CountUp end={9.03} decimals={2} /></p>
+                  <p className="text-xs uppercase tracking-[0.3em] text-slate-500">CGPA</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div className="space-y-6">
+            <div className="inline-flex items-center gap-2 rounded-full border border-cyan-500/20 bg-cyan-500/8 px-4 py-2 text-xs font-semibold uppercase tracking-[0.3em] text-cyan-500">
+              <Sparkles size={14} /> About me
+            </div>
+            <h2 className={`text-4xl font-semibold leading-tight sm:text-5xl ${theme === 'dark' ? 'text-white' : 'text-slate-950'}`}>
+              I design developer-friendly interfaces and production-minded web applications.
+            </h2>
+            <p className={`max-w-2xl text-lg leading-8 ${theme === 'dark' ? 'text-slate-300' : 'text-slate-600'}`}>
+              My work blends clean visual design with dependable engineering. I enjoy shaping user experiences, organizing components,
+              and building APIs that are simple to maintain as products grow.
+            </p>
+            <div className="flex flex-wrap gap-4">
+              <div className={`inline-flex items-center gap-2 rounded-full px-4 py-3 text-sm ${theme === 'dark' ? 'bg-white/5 text-slate-200' : 'bg-white text-slate-700 shadow-sm'}`}>
+                <MapPin size={16} className="text-cyan-500" /> Udupi, India
+              </div>
+              <a href="/Resume%20_2k25.pdf" download className="inline-flex items-center gap-2 rounded-full bg-cyan-500 px-5 py-3 text-sm font-semibold text-white no-underline hover:bg-cyan-400">
+                Download resume <Download size={16} />
+              </a>
+            </div>
+          </div>
         </div>
 
-        {/* Dynamic Experience/Skills Section */}
-        <div className="mt-40 grid grid-cols-1 lg:grid-cols-12 gap-16">
-           
-           {/* Left: Interactive Tabs */}
-           <div className="lg:col-span-4 space-y-4">
-              {["skills", "experience"].map((item) => (
-                <button
-                  key={item}
-                  onClick={() => setActiveTab(item)}
-                  className={`w-full text-left p-8 rounded-3xl border transition-all relative overflow-hidden group ${
-                    activeTab === item 
-                      ? "border-cyan-500 bg-cyan-500 text-white shadow-2xl shadow-cyan-500/20" 
-                      : (theme === "dark" ? "border-white/5 bg-white/5 text-slate-400" : "border-slate-200 bg-white text-slate-600")
-                  }`}
-                >
-                   <div className="relative z-10 flex items-center justify-between">
-                      <div className="space-y-1">
-                         <h4 className="text-xs font-black uppercase tracking-widest opacity-60">Section</h4>
-                         <span className="text-xl font-bold capitalize">{item}</span>
+        <div className="grid gap-10 lg:grid-cols-[0.34fr_0.66fr]">
+          <div className="space-y-3">
+            {['skills', 'experience'].map((tab) => (
+              <button
+                key={tab}
+                type="button"
+                onClick={() => setActiveTab(tab)}
+                className={`w-full rounded-3xl border px-6 py-5 text-left transition ${
+                  activeTab === tab
+                    ? 'border-cyan-500 bg-cyan-500 text-white shadow-lg shadow-cyan-500/20'
+                    : theme === 'dark'
+                      ? 'border-white/10 bg-white/5 text-slate-200 hover:bg-white/8'
+                      : 'border-slate-200 bg-white text-slate-700 hover:bg-slate-100'
+                }`}
+              >
+                <p className="text-xs uppercase tracking-[0.3em] opacity-70">Overview</p>
+                <div className="mt-2 flex items-center justify-between text-lg font-semibold capitalize">
+                  {tab}
+                  <ArrowRight size={18} />
+                </div>
+              </button>
+            ))}
+          </div>
+
+          <AnimatePresence mode="wait">
+            <Motion.div
+              key={activeTab}
+              initial={{ opacity: 0, y: 12 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -12 }}
+              className={`surface-card rounded-[2rem] border p-8 sm:p-10 ${theme === 'dark' ? 'border-white/10 bg-white/5' : 'border-slate-200 bg-white/80'}`}
+            >
+              {activeTab === 'skills' ? (
+                <div className="grid gap-8 md:grid-cols-2">
+                  {skillGroups.map((item) => (
+                    <div key={item.name} className="space-y-4">
+                      <div className="flex items-center justify-between gap-4">
+                        <div>
+                          <h3 className="text-lg font-semibold">{item.name}</h3>
+                          <p className={`mt-1 text-sm leading-6 ${theme === 'dark' ? 'text-slate-300' : 'text-slate-600'}`}>{item.detail}</p>
+                        </div>
+                        <span className="text-sm font-semibold text-cyan-500">{item.level}%</span>
                       </div>
-                      {activeTab === item ? <Zap size={24} /> : <div className="w-10 h-10 rounded-full border border-white/10 flex items-center justify-center"><ChevronRight size={18} /></div>}
-                   </div>
-                   {activeTab !== item && (
-                     <div className="absolute inset-0 bg-cyan-500 transition-transform origin-left translate-x-[-100%] group-hover:translate-x-0" />
-                   )}
-                </button>
-              ))}
-           </div>
-
-           {/* Right: Tab Content */}
-           <div className="lg:col-span-8">
-              <AnimatePresence mode="wait">
-                 <motion.div
-                    key={activeTab}
-                    initial={{ opacity: 0, x: 20 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    exit={{ opacity: 0, x: -20 }}
-                    transition={{ duration: 0.4 }}
-                    className={`p-10 rounded-[3rem] border ${cardBg} border-white/10 shadow-2xl relative overflow-hidden`}
-                 >
-                    {activeTab === "skills" ? (
-                       <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
-                          {SKILLS.map((item, i) => (
-                            <div key={i} className="space-y-4 animate-float" style={{ animationDelay: `${i * 0.2}s` }}>
-                               <div className="flex justify-between items-end">
-                                  <div className="space-y-1">
-                                     <h5 className={`font-black text-xs uppercase tracking-widest ${theme === "dark" ? "text-white" : "text-slate-950"}`}>{item.name}</h5>
-                                     <p className="text-[10px] text-slate-500 font-bold">{item.tech}</p>
-                                  </div>
-                                  <span className="text-xs font-black text-cyan-500">{item.level}%</span>
-                               </div>
-                               <div className={`h-2 rounded-full ${theme === "dark" ? "bg-white/5" : "bg-slate-100"} overflow-hidden`}>
-                                  <motion.div 
-                                    initial={{ width: 0 }}
-                                    whileInView={{ width: `${item.level}%` }}
-                                    transition={{ duration: 1, delay: 0.5 }}
-                                    className="h-full bg-cyan-500 relative"
-                                  >
-                                     <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent animate-shimmer" style={{ backgroundSize: "200% 100%" }} />
-                                  </motion.div>
-                               </div>
-                            </div>
-                          ))}
-                       </div>
-                    ) : (
-                       <div className="space-y-10">
-                          {EXPERIENCE.map((item, i) => (
-                            <div key={i} className="flex gap-8 group">
-                               <div className="flex flex-col items-center">
-                                  <div className={`w-14 h-14 rounded-2xl flex items-center justify-center transition-all ${
-                                    theme === "dark" ? "bg-slate-800 text-cyan-400 group-hover:bg-cyan-500 group-hover:text-white" : "bg-slate-100 text-cyan-600"
-                                  }`}>
-                                     {item.type === "internship" ? <Briefcase size={24} /> : <GraduationCap size={24} />}
-                                  </div>
-                                  {i !== EXPERIENCE.length - 1 && <div className="w-px flex-grow bg-white/5 my-2" />}
-                               </div>
-                               <div className="space-y-2">
-                                  <div className="flex flex-wrap items-center gap-3">
-                                     <h5 className={`text-xl font-bold ${theme === "dark" ? "text-white" : "text-slate-900"}`}>{item.role}</h5>
-                                     <span className="px-3 py-1 rounded-full bg-cyan-500/10 text-cyan-400 text-[10px] font-black uppercase tracking-widest">{item.year}</span>
-                                  </div>
-                                  <p className="text-cyan-500 font-bold uppercase tracking-widest text-xs">{item.company}</p>
-                                  <p className={`text-sm leading-relaxed max-w-lg ${theme === "dark" ? "text-slate-500" : "text-slate-500"}`}>{item.desc}</p>
-                               </div>
-                            </div>
-                          ))}
-                       </div>
-                    )}
-                    
-                    {/* Decorative Corner icon */}
-                    <div className="absolute top-10 right-10 opacity-5">
-                       {activeTab === "skills" ? <Code size={120} /> : <Briefcase size={120} />}
+                      <div className={`h-2 rounded-full ${theme === 'dark' ? 'bg-white/10' : 'bg-slate-200'}`}>
+                        <div className="h-2 rounded-full bg-gradient-to-r from-cyan-400 to-blue-500" style={{ width: `${item.level}%` }} />
+                      </div>
                     </div>
-                 </motion.div>
-              </AnimatePresence>
-           </div>
+                  ))}
+                </div>
+              ) : (
+                <div className="space-y-8">
+                  {timeline.map((item, index) => (
+                    <div key={item.title} className="flex gap-5">
+                      <div className="flex flex-col items-center">
+                        <div className={`flex h-12 w-12 items-center justify-center rounded-2xl ${theme === 'dark' ? 'bg-white/8 text-cyan-400' : 'bg-slate-100 text-cyan-600'}`}>
+                          {index < 2 ? <Briefcase size={18} /> : <GraduationCap size={18} />}
+                        </div>
+                        {index !== timeline.length - 1 && <div className={`mt-3 h-full w-px ${theme === 'dark' ? 'bg-white/10' : 'bg-slate-200'}`} />}
+                      </div>
+                      <div className="pb-6">
+                        <div className="flex flex-wrap items-center gap-3">
+                          <h3 className="text-lg font-semibold">{item.title}</h3>
+                          <span className="rounded-full bg-cyan-500/10 px-3 py-1 text-xs font-semibold uppercase tracking-[0.2em] text-cyan-500">{item.period}</span>
+                        </div>
+                        <p className="mt-2 text-sm font-semibold uppercase tracking-[0.2em] text-slate-500">{item.organization}</p>
+                        <p className={`mt-3 max-w-2xl text-sm leading-7 ${theme === 'dark' ? 'text-slate-300' : 'text-slate-600'}`}>{item.description}</p>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </Motion.div>
+          </AnimatePresence>
         </div>
-
       </div>
     </section>
   );

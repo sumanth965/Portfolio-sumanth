@@ -1,262 +1,136 @@
-import React, { useState, useEffect, useRef } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import { FaGithub, FaLinkedin, FaTwitter, FaArrowRight, FaPaperPlane } from "react-icons/fa";
-import { Mail, MapPin, Phone, MessageSquare, Send, Sparkles, Zap, Smartphone, Server } from "lucide-react";
-import toast, { Toaster } from "react-hot-toast";
+import { useState } from 'react';
+import { motion as Motion } from 'framer-motion';
+import { Mail, MapPin, Phone, Send } from 'lucide-react';
+import toast, { Toaster } from 'react-hot-toast';
 
-/* ─── ANIMATED POLYGON NETWORK CANVAS ──────────────────────────────────── */
-function PolyNetBg() {
-  const canvasRef = useRef(null);
+const contactCards = [
+  { icon: Mail, label: 'Email', value: 'sumanthpoojary965@gmail.com', href: 'mailto:sumanthpoojary965@gmail.com' },
+  { icon: Phone, label: 'Phone', value: '+91 9113201800', href: 'tel:+919113201800' },
+  { icon: MapPin, label: 'Location', value: 'Udupi, Karnataka, India' },
+];
 
-  useEffect(() => {
-    const canvas = canvasRef.current;
-    if (!canvas) return;
-    const ctx = canvas.getContext("2d");
-    let animId;
+function ContactItem(props) {
+  const { icon: Icon, label, value, href, theme } = props;
 
-    const resize = () => {
-      canvas.width = canvas.offsetWidth;
-      canvas.height = canvas.offsetHeight;
-    };
-    resize();
-    window.addEventListener("resize", resize);
-
-    const N = 40;
-    const nodes = Array.from({ length: N }, () => ({
-      x: Math.random() * canvas.width,
-      y: Math.random() * canvas.height,
-      vx: (Math.random() - 0.5) * 0.3,
-      vy: (Math.random() - 0.5) * 0.3,
-      r: Math.random() * 2 + 1,
-    }));
-
-    const draw = () => {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      nodes.forEach((n) => {
-        n.x += n.vx;
-        n.y += n.vy;
-        if (n.x < 0 || n.x > canvas.width) n.vx *= -1;
-        if (n.y < 0 || n.y > canvas.height) n.vy *= -1;
-      });
-
-      const MAX_DIST = 180;
-      for (let i = 0; i < N; i++) {
-        for (let j = i + 1; j < N; j++) {
-          const dx = nodes[i].x - nodes[j].x;
-          const dy = nodes[i].y - nodes[j].y;
-          const dist = Math.sqrt(dx * dx + dy * dy);
-          if (dist < MAX_DIST) {
-            ctx.beginPath();
-            ctx.moveTo(nodes[i].x, nodes[i].y);
-            ctx.lineTo(nodes[j].x, nodes[j].y);
-            ctx.strokeStyle = `rgba(6,182,212,${0.1 * (1 - dist / MAX_DIST)})`;
-            ctx.lineWidth = 1;
-            ctx.stroke();
-          }
-        }
-      }
-
-      nodes.forEach((n) => {
-        ctx.beginPath();
-        ctx.arc(n.x, n.y, n.r, 0, Math.PI * 2);
-        ctx.fillStyle = "rgba(6,182,212,0.4)";
-        ctx.fill();
-      });
-
-      animId = requestAnimationFrame(draw);
-    };
-
-    draw();
-    return () => {
-      cancelAnimationFrame(animId);
-      window.removeEventListener("resize", resize);
-    };
-  }, []);
-
-  return <canvas ref={canvasRef} className="absolute inset-0 w-full h-full opacity-40 pointer-events-none" />;
-}
-
-/* ─── CONTACT INFO ITEM ─────────────────────────────────────────────────── */
-function ContactCard({ icon: Icon, label, value, href, theme }) {
-  const Card = href ? motion.a : motion.div;
-  
-  return (
-    <Card
-      href={href}
-      target={href ? "_blank" : undefined}
-      rel={href ? "noreferrer" : undefined}
-      whileHover={{ y: -5, scale: 1.02 }}
-      className={`p-10 rounded-[2.5rem] border transition-all no-underline overflow-hidden relative group ${
-        theme === "dark" 
-          ? "bg-slate-900 border-white/5 shadow-2xl shadow-black/40" 
-          : "bg-slate-50 border-slate-200 shadow-xl"
-      }`}
-    >
-      <div className={`w-14 h-14 rounded-2xl flex items-center justify-center transition-all ${
-        theme === "dark" ? "bg-slate-800 text-cyan-400 group-hover:bg-cyan-500 group-hover:text-white" : "bg-white text-cyan-600 border border-slate-200"
-      }`}>
-        <Icon size={24} />
+  const content = (
+    <div className={`surface-card rounded-[1.75rem] border p-6 transition ${theme === 'dark' ? 'border-white/10 bg-white/5 hover:bg-white/8' : 'border-slate-200 bg-white hover:bg-slate-50'}`}>
+      <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-cyan-500/10 text-cyan-500">
+        <Icon size={20} />
       </div>
-      <div className="mt-8 space-y-2">
-         <h4 className="text-[10px] font-black uppercase tracking-[0.2em] text-slate-500">{label}</h4>
-         <p className={`text-xl font-bold break-all ${theme === "dark" ? "text-white" : "text-slate-900"}`}>{value}</p>
-      </div>
-
-      <div className="absolute top-1/2 right-4 translate-y-[-50%] opacity-0 group-hover:opacity-20 group-hover:translate-x-[-10px] transition-all duration-500">
-         <Icon size={80} />
-      </div>
-    </Card>
-  );
-}
-
-/* ─── FORM FIELD ────────────────────────────────────────────────────────── */
-function InputField({ label, name, type, value, onChange, placeholder, isArea, theme }) {
-  const InputTag = isArea ? "textarea" : "input";
-  return (
-    <div className="space-y-4">
-      <label className={`text-xs font-black uppercase tracking-widest ${theme === "dark" ? "text-white" : "text-slate-900"}`}>
-        {label}
-      </label>
-      <InputTag
-        name={name}
-        type={type}
-        value={value}
-        onChange={onChange}
-        placeholder={placeholder}
-        rows={isArea ? 6 : undefined}
-        className={`w-full p-4 rounded-2xl outline-none text-sm transition-all border ${
-          theme === "dark" 
-            ? "bg-slate-800 border-white/5 text-white focus:ring-2 focus:ring-cyan-500/50" 
-            : "bg-white border-slate-200 text-slate-900 focus:ring-2 focus:ring-cyan-600/20 shadow-inner"
-        }`}
-      />
+      <p className="mt-5 text-xs font-semibold uppercase tracking-[0.3em] text-slate-500">{label}</p>
+      <p className="mt-2 text-base font-semibold break-words">{value}</p>
     </div>
   );
+
+  return href ? (
+    <a href={href} className="no-underline text-inherit">
+      {content}
+    </a>
+  ) : (
+    content
+  );
 }
 
-/* ─── MAIN ──────────────────────────────────────────────────────────────── */
 export default function Contact({ theme }) {
-  const [formData, setFormData] = useState({ name: "", email: "", subject: "", message: "" });
+  const [formData, setFormData] = useState({ name: '', email: '', subject: '', message: '' });
   const [loading, setLoading] = useState(false);
 
-  const handleChange = (e) => setFormData({ ...formData, [e.target.name]: e.target.value });
+  const handleChange = ({ target: { name, value } }) => {
+    setFormData((current) => ({ ...current, [name]: value }));
+  };
 
   const validate = () => {
     const { name, email, subject, message } = formData;
     if (!name.trim() || !email.trim() || !subject.trim() || !message.trim()) {
-      toast.error("Please fill in all orchestration parameters.");
+      toast.error('Please complete all fields before sending your message.');
       return false;
     }
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailRegex.test(email)) {
-      toast.error("Invalid email architecture.");
+
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      toast.error('Please enter a valid email address.');
       return false;
     }
+
     return true;
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+  const handleSubmit = async (event) => {
+    event.preventDefault();
     if (!validate()) return;
+
     setLoading(true);
     try {
-      const res = await fetch("https://su-manth09-signin-signup-page.onrender.com/feedback", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
+      const response = await fetch('https://su-manth09-signin-signup-page.onrender.com/feedback', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(formData),
       });
-      if (res.ok) {
-        toast.success("Packet received successfully.");
-        setFormData({ name: "", email: "", subject: "", message: "" });
-      } else {
-        toast.error("Server synchronization failed.");
-      }
+
+      if (!response.ok) throw new Error('Request failed');
+
+      toast.success('Thanks for reaching out. Your message has been sent.');
+      setFormData({ name: '', email: '', subject: '', message: '' });
     } catch {
-      toast.error("Network interface error.");
+      toast.error('Unable to send the message right now. Please try again later.');
+    } finally {
+      setLoading(false);
     }
-    setLoading(false);
   };
 
-  const bg = theme === "dark" ? "bg-[#0b1120]" : "bg-white";
-
   return (
-    <section id="contact" className={`${bg} py-32 transition-colors duration-500 relative overflow-hidden`}>
+    <section id="contact" className="section-shell px-6 py-24">
       <Toaster position="top-right" />
-      <PolyNetBg />
+      <div className="mx-auto grid max-w-7xl gap-10 lg:grid-cols-[0.48fr_0.52fr]">
+        <div className="space-y-6">
+          <p className="text-sm font-semibold uppercase tracking-[0.35em] text-cyan-500">Contact</p>
+          <h2 className={`text-4xl font-semibold sm:text-5xl ${theme === 'dark' ? 'text-white' : 'text-slate-950'}`}>
+            Let&apos;s build something thoughtful and well-crafted.
+          </h2>
+          <p className={`max-w-xl text-lg leading-8 ${theme === 'dark' ? 'text-slate-300' : 'text-slate-600'}`}>
+            I&apos;m open to internships, freelance projects, and collaborative product work. Share the context, goals, and timeline,
+            and I&apos;ll get back to you.
+          </p>
 
-      <div className="max-w-7xl mx-auto px-6 relative z-10">
-        
-        {/* Header Section */}
-        <div className="text-center mb-24 max-w-2xl mx-auto space-y-6">
-           <motion.div 
-            initial={{ opacity: 0, scale: 0.8 }}
-            whileInView={{ opacity: 1, scale: 1 }}
-            viewport={{ once: true }}
-            className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-cyan-500/10 text-cyan-400 text-xs font-black uppercase tracking-widest"
-           >
-              <Zap size={14} /> Open for Collaboration
-           </motion.div>
-           <h2 className={`text-4xl md:text-6xl font-black ${theme === "dark" ? "text-white" : "text-slate-950"}`}>
-              GET IN <span className="text-cyan-500">TOUCH</span>
-           </h2>
-           <p className={`text-lg leading-relaxed ${theme === "dark" ? "text-slate-500" : "text-slate-500"}`}>
-              Let's synchronize on your next big project. I am available for internships, freelancing, or full-time architectural roles.
-           </p>
+          <div className="grid gap-4">
+            {contactCards.map((item) => (
+              <ContactItem key={item.label} {...item} theme={theme} />
+            ))}
+          </div>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 items-start">
-           
-           {/* Left Info Columns */}
-           <motion.div 
-            initial={{ opacity: 0, x: -50 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            className="lg:col-span-5 space-y-10"
-           >
-              <ContactCard icon={Mail} label="Packet Gateway" value="sumanthpoojary965@gmail.com" href="mailto:sumanthpoojary965@gmail.com" theme={theme} />
-              <ContactCard icon={Phone} label="Direct Interface" value="+91 9113201800" theme={theme} />
-              <ContactCard icon={MapPin} label="Base Coordinates" value="Udupi, Karnataka, India" theme={theme} />
-           </motion.div>
+        <Motion.form
+          initial={{ opacity: 0, y: 16 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          onSubmit={handleSubmit}
+          className={`surface-card rounded-[2rem] border p-8 sm:p-10 ${theme === 'dark' ? 'border-white/10 bg-white/5' : 'border-slate-200 bg-white/85'}`}
+        >
+          <div className="grid gap-5 sm:grid-cols-2">
+            <label className="space-y-2 text-sm font-medium">
+              <span>Name</span>
+              <input name="name" value={formData.name} onChange={handleChange} className={`w-full rounded-2xl border px-4 py-3 outline-none ${theme === 'dark' ? 'border-white/10 bg-slate-950/70' : 'border-slate-200 bg-slate-50'}`} placeholder="Your name" />
+            </label>
+            <label className="space-y-2 text-sm font-medium">
+              <span>Email</span>
+              <input name="email" value={formData.email} onChange={handleChange} className={`w-full rounded-2xl border px-4 py-3 outline-none ${theme === 'dark' ? 'border-white/10 bg-slate-950/70' : 'border-slate-200 bg-slate-50'}`} placeholder="your@email.com" />
+            </label>
+          </div>
 
-           {/* Right Form Card */}
-           <motion.div 
-            initial={{ opacity: 0, y: 50 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="lg:col-span-7"
-           >
-              <form 
-                onSubmit={handleSubmit}
-                className={`p-10 md:p-16 rounded-[4rem] border ${theme === "dark" ? "bg-slate-900 border-white/5 shadow-2xl" : "bg-slate-50 border-slate-200 shadow-xl"} space-y-12`}
-              >
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
-                     <InputField label="Name" name="name" type="text" value={formData.name} onChange={handleChange} placeholder="Protocol ID" theme={theme} />
-                     <InputField label="Email" name="email" type="email" value={formData.email} onChange={handleChange} placeholder="Gateway URL" theme={theme} />
-                  </div>
-                  <InputField label="Subject" name="subject" type="text" value={formData.subject} onChange={handleChange} placeholder="Transmission Type" theme={theme} />
-                  <InputField label="Message" name="message" value={formData.message} onChange={handleChange} isArea placeholder="Payload details..." theme={theme} />
+          <label className="mt-5 block space-y-2 text-sm font-medium">
+            <span>Subject</span>
+            <input name="subject" value={formData.subject} onChange={handleChange} className={`w-full rounded-2xl border px-4 py-3 outline-none ${theme === 'dark' ? 'border-white/10 bg-slate-950/70' : 'border-slate-200 bg-slate-50'}`} placeholder="Project inquiry" />
+          </label>
 
-                  <motion.button 
-                    type="submit"
-                    disabled={loading}
-                    whileHover={{ scale: 1.02, boxShadow: "0 0 30px rgba(6,182,212,0.4)" }}
-                    whileTap={{ scale: 0.98 }}
-                    className="w-full py-5 rounded-[2rem] bg-cyan-500 text-white font-black text-sm uppercase tracking-widest flex items-center justify-center gap-4 transition-all"
-                  >
-                    {loading ? (
-                      <motion.div 
-                        animate={{ rotate: 360 }}
-                        transition={{ repeat: Infinity, duration: 1, ease: "linear" }}
-                        className="w-5 h-5 border-2 border-white/20 border-t-white rounded-full"
-                      />
-                    ) : (
-                      <>Push Transmission <Send size={18} /></>
-                    )}
-                  </motion.button>
-              </form>
-           </motion.div>
-        </div>
+          <label className="mt-5 block space-y-2 text-sm font-medium">
+            <span>Message</span>
+            <textarea name="message" rows="6" value={formData.message} onChange={handleChange} className={`w-full rounded-2xl border px-4 py-3 outline-none ${theme === 'dark' ? 'border-white/10 bg-slate-950/70' : 'border-slate-200 bg-slate-50'}`} placeholder="Tell me about the role, project, or problem you are solving." />
+          </label>
 
+          <button type="submit" disabled={loading} className="mt-6 inline-flex w-full items-center justify-center gap-2 rounded-full bg-cyan-500 px-6 py-4 text-sm font-semibold text-white transition hover:bg-cyan-400 disabled:cursor-not-allowed disabled:opacity-70">
+            {loading ? 'Sending...' : 'Send message'}
+            <Send size={16} />
+          </button>
+        </Motion.form>
       </div>
     </section>
   );
