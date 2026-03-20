@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Code, Server, Globe, Download, MapPin, X } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import CountUp from "react-countup";
-import profile from "../assets/img3.jpg";
+import img3 from "../assets/img3.jpg";
 
 export default function About({ theme }) {
   const [selectedItem, setSelectedItem] = useState(null);
@@ -118,7 +118,7 @@ export default function About({ theme }) {
             ${theme === "dark" ? "bg-white/5" : "bg-black/5"}`}
           >
             <img
-              src={profile}
+              src={img3}
               alt="Profile"
               className="w-16 h-16 rounded-full object-cover border-2 border-orange-500"
             />
