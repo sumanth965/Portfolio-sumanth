@@ -1,167 +1,155 @@
-import React, { useState, useEffect } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import { Menu, X, Home, User, Briefcase, Mail, Sun, Moon, Sparkles } from "lucide-react";
+import { useEffect, useState } from 'react';
+import { AnimatePresence, motion as Motion } from 'framer-motion';
+import { Briefcase, Home, Mail, Menu, Moon, Sparkles, Sun, User, X } from 'lucide-react';
 
-const NAV_LINKS = [
-  { name: "Home", href: "#home", icon: Home },
-  { name: "About", href: "#about", icon: User },
-  { name: "Projects", href: "#projects", icon: Briefcase },
-  { name: "Contact", href: "#contact", icon: Mail },
+const navLinks = [
+  { name: 'Home', href: '#home', icon: Home },
+  { name: 'About', href: '#about', icon: User },
+  { name: 'Projects', href: '#projects', icon: Briefcase },
+  { name: 'Contact', href: '#contact', icon: Mail },
 ];
 
 export default function Navbar({ theme, setTheme }) {
   const [isOpen, setIsOpen] = useState(false);
-  const [scrolled, setScrolled] = useState(false);
-  const [activeTab, setActiveTab] = useState("Home");
+  const [isScrolled, setIsScrolled] = useState(false);
+  const [activeTab, setActiveTab] = useState('Home');
 
   useEffect(() => {
     const handleScroll = () => {
-      setScrolled(window.scrollY > 50);
-      
-      // Update active tab based on scroll position
-      const sections = NAV_LINKS.map(link => document.querySelector(link.href));
-      const scrollPos = window.scrollY + 100;
-
-      sections.forEach((section, index) => {
-        if (section && scrollPos >= section.offsetTop && scrollPos < section.offsetTop + section.offsetHeight) {
-          setActiveTab(NAV_LINKS[index].name);
-        }
+      setIsScrolled(window.scrollY > 24);
+      const current = navLinks.find(({ href }) => {
+        const section = document.querySelector(href);
+        if (!section) return false;
+        const top = section.offsetTop - 140;
+        const bottom = top + section.offsetHeight;
+        return window.scrollY >= top && window.scrollY < bottom;
       });
+      if (current) setActiveTab(current.name);
     };
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
+
+    handleScroll();
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  const toggleTheme = () => setTheme(theme === "dark" ? "light" : "dark");
+  const navShell = theme === 'dark'
+    ? 'border-white/10 bg-slate-950/75 text-white shadow-2xl shadow-cyan-950/10'
+    : 'border-slate-200/80 bg-white/85 text-slate-900 shadow-xl shadow-slate-200/70';
 
   return (
-    <nav
-      className={`fixed top-0 left-0 right-0 z-[100] transition-all duration-500 ${
-        scrolled 
-          ? "py-3 px-4 sm:px-8 border-b border-white/10" 
-          : "py-6 px-4 sm:px-12"
-      }`}
-    >
-      <div 
-        className={`max-w-7xl mx-auto flex items-center justify-between transition-all duration-500 ${
-          scrolled 
-            ? "bg-slate-900/80 backdrop-blur-xl rounded-full px-6 py-2 shadow-2xl shadow-cyan-900/20" 
-            : ""
+    <header className="fixed inset-x-0 top-0 z-50 px-4 pt-4 sm:px-6 lg:px-10">
+      <nav
+        className={`mx-auto flex max-w-7xl items-center justify-between rounded-full border px-5 py-3 transition-all duration-300 ${navShell} ${
+          isScrolled ? 'surface-card' : ''
         }`}
       >
-        {/* Logo */}
-        <motion.a
-          href="#home"
-          className="flex items-center gap-2 no-underline group"
-          whileHover={{ scale: 1.05 }}
-        >
-          <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-cyan-400 to-blue-600 flex items-center justify-center shadow-lg shadow-cyan-500/30">
-            <Sparkles className="text-white w-6 h-6 group-hover:rotate-12 transition-transform" />
+        <a href="#home" className="flex items-center gap-3 no-underline">
+          <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-gradient-to-br from-cyan-400 to-blue-600 text-white shadow-lg shadow-cyan-500/30">
+            <Sparkles size={20} />
           </div>
-          <span className={`text-2xl font-black tracking-tighter ${theme === "dark" ? "text-white" : "text-slate-900"}`}>
-            SUMANTH<span className="text-cyan-500">.</span>
-          </span>
-        </motion.a>
+          <div>
+            <p className="text-xs font-semibold uppercase tracking-[0.3em] text-cyan-500">Portfolio</p>
+            <h1 className="text-lg font-bold tracking-[0.2em]">SUMANTH</h1>
+          </div>
+        </a>
 
-        {/* Desktop Menu */}
-        <div className="hidden md:flex items-center gap-1">
-          {NAV_LINKS.map((link) => (
+        <div className="hidden items-center gap-2 md:flex">
+          {navLinks.map((link) => (
             <a
               key={link.name}
               href={link.href}
               onClick={() => setActiveTab(link.name)}
-              className={`relative px-4 py-2 rounded-full text-sm font-semibold transition-all duration-300 no-underline flex items-center gap-2 ${
+              className={`relative flex items-center gap-2 rounded-full px-4 py-2 text-sm font-medium no-underline transition ${
                 activeTab === link.name
-                  ? (theme === "dark" ? "text-white" : "text-slate-950")
-                  : (theme === "dark" ? "text-slate-400 hover:text-cyan-400" : "text-slate-600 hover:text-cyan-600")
+                  ? 'text-cyan-500'
+                  : theme === 'dark'
+                    ? 'text-slate-300 hover:text-white'
+                    : 'text-slate-600 hover:text-slate-950'
               }`}
             >
               {activeTab === link.name && (
-                <motion.div
-                  layoutId="active-pill"
-                  className="absolute inset-0 bg-cyan-500/10 rounded-full"
-                  transition={{ type: "spring", bounce: 0.2, duration: 0.6 }}
+                <Motion.span
+                  layoutId="nav-highlight"
+                  className="absolute inset-0 rounded-full bg-cyan-500/10"
+                  transition={{ type: 'spring', stiffness: 280, damping: 28 }}
                 />
               )}
-              <link.icon size={16} />
-              {link.name}
-              {activeTab === link.name && (
-                <motion.div 
-                  layoutId="active-line"
-                  className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-4 h-1 bg-cyan-500 rounded-full"
-                />
-              )}
+              <link.icon size={16} className="relative z-10" />
+              <span className="relative z-10">{link.name}</span>
             </a>
           ))}
-          
-          <div className="w-px h-6 bg-white/10 mx-2" />
-          
+
           <button
-            onClick={toggleTheme}
-            className={`p-2.5 rounded-full transition-all duration-300 ${
-              theme === "dark" 
-                ? "bg-slate-800 text-yellow-400 hover:bg-slate-700" 
-                : "bg-slate-100 text-slate-600 hover:bg-slate-200"
+            type="button"
+            onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
+            className={`ml-2 flex h-11 w-11 items-center justify-center rounded-full border transition ${
+              theme === 'dark'
+                ? 'border-white/10 bg-white/5 text-amber-300 hover:bg-white/10'
+                : 'border-slate-200 bg-slate-100 text-slate-700 hover:bg-slate-200'
             }`}
+            aria-label="Toggle theme"
           >
-            {theme === "dark" ? <Sun size={20} /> : <Moon size={20} />}
+            {theme === 'dark' ? <Sun size={18} /> : <Moon size={18} />}
           </button>
         </div>
 
-        {/* Mobile Toggle */}
-        <div className="flex md:hidden items-center gap-3">
-           <button
-            onClick={toggleTheme}
-            className={`p-2 rounded-full ${
-              theme === "dark" ? "bg-slate-800 text-yellow-400" : "bg-slate-100 text-slate-600"
+        <div className="flex items-center gap-2 md:hidden">
+          <button
+            type="button"
+            onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
+            className={`flex h-10 w-10 items-center justify-center rounded-full border ${
+              theme === 'dark' ? 'border-white/10 bg-white/5 text-amber-300' : 'border-slate-200 bg-white text-slate-700'
             }`}
+            aria-label="Toggle theme"
           >
-            {theme === "dark" ? <Sun size={18} /> : <Moon size={18} />}
+            {theme === 'dark' ? <Sun size={18} /> : <Moon size={18} />}
           </button>
           <button
-            onClick={() => setIsOpen(!isOpen)}
-            className={`p-2 rounded-xl transition-all ${
-              theme === "dark" ? "bg-slate-800 text-white" : "bg-slate-100 text-slate-900"
+            type="button"
+            onClick={() => setIsOpen((prev) => !prev)}
+            className={`flex h-10 w-10 items-center justify-center rounded-full border ${
+              theme === 'dark' ? 'border-white/10 bg-white/5 text-white' : 'border-slate-200 bg-white text-slate-900'
             }`}
+            aria-label="Toggle navigation"
           >
-            {isOpen ? <X size={24} /> : <Menu size={24} />}
+            {isOpen ? <X size={18} /> : <Menu size={18} />}
           </button>
         </div>
-      </div>
+      </nav>
 
-      {/* Mobile Menu */}
       <AnimatePresence>
         {isOpen && (
-          <motion.div
-            initial={{ opacity: 0, y: -20 }}
+          <Motion.div
+            initial={{ opacity: 0, y: -12 }}
             animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -20 }}
-            className={`absolute top-full left-4 right-4 mt-4 p-4 rounded-3xl shadow-2xl border backdrop-blur-2xl md:hidden ${
-              theme === "dark" 
-                ? "bg-slate-900/95 border-white/10" 
-                : "bg-white/95 border-slate-200"
-            }`}
+            exit={{ opacity: 0, y: -12 }}
+            className={`surface-card mx-auto mt-3 max-w-7xl rounded-3xl border p-4 md:hidden ${navShell}`}
           >
-            <div className="flex flex-col gap-2">
-              {NAV_LINKS.map((link) => (
+            <div className="space-y-2">
+              {navLinks.map((link) => (
                 <a
                   key={link.name}
                   href={link.href}
-                  onClick={() => setIsOpen(false)}
-                  className={`flex items-center gap-4 p-4 rounded-2xl no-underline transition-all ${
+                  onClick={() => {
+                    setActiveTab(link.name);
+                    setIsOpen(false);
+                  }}
+                  className={`flex items-center gap-3 rounded-2xl px-4 py-3 text-sm font-medium no-underline ${
                     activeTab === link.name
-                      ? "bg-cyan-500/10 text-cyan-400"
-                      : (theme === "dark" ? "text-slate-400 hover:bg-white/5" : "text-slate-600 hover:bg-slate-50")
+                      ? 'bg-cyan-500/10 text-cyan-500'
+                      : theme === 'dark'
+                        ? 'text-slate-300 hover:bg-white/5'
+                        : 'text-slate-700 hover:bg-slate-100'
                   }`}
                 >
-                  <link.icon size={20} />
-                  <span className="font-bold">{link.name}</span>
+                  <link.icon size={18} />
+                  {link.name}
                 </a>
               ))}
             </div>
-          </motion.div>
+          </Motion.div>
         )}
       </AnimatePresence>
-    </nav>
+    </header>
   );
 }

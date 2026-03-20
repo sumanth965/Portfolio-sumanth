@@ -1,180 +1,123 @@
-import React, { useEffect, useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import profile from "../assets/IMG.png";
-import {
-  FaReact, FaPython, FaJava, FaAws, FaNodeJs,
-  FaGithub, FaLinkedin, FaDatabase, FaRocket, FaCode, FaLaptopCode
-} from "react-icons/fa";
-import { SiMongodb, SiExpress, SiJavascript } from "react-icons/si";
-import { Mail, ChevronRight, Sparkles, Zap, Smartphone, Server } from "lucide-react";
+import { motion as Motion } from 'framer-motion';
+import { ArrowRight, Briefcase, Download, Mail } from 'lucide-react';
+import { FaAws, FaNodeJs, FaReact } from 'react-icons/fa';
+import { SiExpress, SiJavascript, SiMongodb } from 'react-icons/si';
+import profile from '../assets/IMG.png';
 
-/* ─── DATA ─────────────────────────────────────────────────────────────── */
-const SKILLS = [
-  { name: "MERN Stack", icon: <SiMongodb size={20} />, color: "#47A248", level: 90 },
-  { name: "Python",     icon: <FaPython  size={20} />, color: "#3776AB", level: 75 },
-  { name: "Java",       icon: <FaJava    size={20} />, color: "#f89820", level: 65 },
-  { name: "AWS",        icon: <FaAws     size={20} />, color: "#232F3E", level: 60 },
-  { name: "Node.js",    icon: <FaNodeJs  size={20} />, color: "#68A063", level: 85 },
-  { name: "React.js",   icon: <FaReact   size={20} />, color: "#61DAFB", level: 92 },
-  { name: "JavaScript", icon: <SiJavascript size={20} />, color: "#F7DF1E", level: 88 },
-  { name: "Express",    icon: <SiExpress size={20} />, color: "#828282", level: 80 },
+const stats = [
+  { label: 'Years building on the web', value: '3+' },
+  { label: 'Projects delivered', value: '12+' },
+  { label: 'Focus areas', value: 'MERN · UI' },
 ];
 
-/* ─── NEON FRAME ────────────────────────────────────────────────────────── */
-function HeroImage({ src }) {
-  const [imageLoaded, setImageLoaded] = useState(false);
+const stack = [SiMongodb, SiExpress, FaReact, FaNodeJs, SiJavascript, FaAws];
 
-  return (
-    <div className="relative w-full max-w-[420px] aspect-[4/5] mx-auto md:mx-0">
-      {/* Outer Glows */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[120%] h-[120%] bg-cyan-500/10 blur-[100px] pointer-events-none rounded-full" />
-      <div className="absolute top-0 right-0 w-32 h-32 bg-blue-600/20 blur-[60px] pointer-events-none rounded-full" />
-
-      {/* Main Image Container */}
-      <motion.div 
-        initial={{ opacity: 0, scale: 0.9 }}
-        animate={{ opacity: 1, scale: 1 }}
-        transition={{ duration: 1 }}
-        className="relative w-full h-full rounded-[40px] overflow-hidden border border-white/5 shadow-2xl z-10"
-      >
-        {!imageLoaded && (
-          <div className="absolute inset-0 bg-slate-900 flex flex-col items-center justify-center gap-4">
-             <motion.div 
-              animate={{ rotate: 360 }}
-              transition={{ repeat: Infinity, duration: 1, ease: "linear" }}
-              className="w-12 h-12 border-4 border-cyan-500/20 border-t-cyan-500 rounded-full" 
-             />
-             <span className="text-xs font-bold text-slate-500 tracking-widest animate-pulse">LOADING</span>
-          </div>
-        )}
-        <img
-          src={src}
-          alt="Sumanth"
-          onLoad={() => setImageLoaded(true)}
-          className={`w-full h-full object-cover transition-all duration-1000 ${imageLoaded ? "scale-100 opacity-100" : "scale-110 opacity-0"}`}
-        />
-        <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-transparent to-transparent opacity-60" />
-
-        {/* Floating Badges */}
-        <motion.div 
-          animate={{ y: [0, -10, 0] }}
-          transition={{ repeat: Infinity, duration: 3 }}
-          className="absolute top-10 -left-6 bg-slate-900/80 backdrop-blur-xl p-4 rounded-2xl border border-white/10 shadow-xl z-20"
-        >
-          <div className="bg-cyan-500/20 p-2 rounded-lg mb-2">
-            <FaReact className="text-cyan-400 text-xl" />
-          </div>
-          <span className="text-xs font-bold text-white whitespace-nowrap">React Developer</span>
-        </motion.div>
-
-        <motion.div 
-          animate={{ y: [0, 10, 0] }}
-          transition={{ repeat: Infinity, duration: 4, delay: 0.5 }}
-          className="absolute bottom-20 -right-6 bg-slate-900/80 backdrop-blur-xl p-4 rounded-2xl border border-white/10 shadow-xl z-20"
-        >
-          <div className="bg-orange-500/20 p-2 rounded-lg mb-2">
-             <FaNodeJs className="text-orange-400 text-xl" />
-          </div>
-          <span className="text-xs font-bold text-white whitespace-nowrap">Node Expert</span>
-        </motion.div>
-      </motion.div>
-
-      {/* Decorative Ornaments */}
-      <div className="absolute -top-4 -right-4 w-24 h-24 border-t-4 border-r-4 border-cyan-500/30 rounded-tr-[50px] pointer-events-none" />
-      <div className="absolute -bottom-4 -left-4 w-24 h-24 border-b-4 border-l-4 border-cyan-500/30 rounded-bl-[50px] pointer-events-none" />
-    </div>
-  );
-}
-
-/* ─── MAIN COMPONENT ────────────────────────────────────────────────────── */
 export default function Home({ theme }) {
-  const bg = theme === "dark" 
-    ? "bg-[#0b1120]" 
-    : "bg-white";
-
   return (
-    <div id="home" className={`${bg} transition-colors duration-500 pt-32 pb-20 overflow-hidden`}>
-      <div className="max-w-7xl mx-auto px-6 grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
-        
-        {/* Left: Text Content */}
-        <motion.div
-          initial={{ opacity: 0, x: -50 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.8, ease: "easeOut" }}
-          className="order-2 lg:order-1 text-center lg:text-left"
+    <section id="home" className="section-shell overflow-hidden px-6 pb-24 pt-32 sm:pt-36">
+      <div className="mx-auto grid max-w-7xl items-center gap-16 lg:grid-cols-[1.2fr_0.8fr]">
+        <Motion.div
+          initial={{ opacity: 0, y: 28 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.7 }}
+          className="space-y-8"
         >
-          {/* Availability Badge */}
-          <div className="inline-flex items-center gap-3 px-4 py-2 rounded-full border border-cyan-500/30 bg-cyan-400/5 mb-8">
-            <span className="relative flex h-2 w-2">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-cyan-400 opacity-75"></span>
-              <span className="relative inline-flex rounded-full h-2 w-2 bg-cyan-500"></span>
-            </span>
-            <span className="text-xs font-black uppercase tracking-[0.2em] text-cyan-400">Available for hire</span>
+          <div className="inline-flex items-center gap-2 rounded-full border border-cyan-500/20 bg-cyan-500/8 px-4 py-2 text-xs font-semibold uppercase tracking-[0.3em] text-cyan-500">
+            <Briefcase size={14} /> Available for full-stack opportunities
           </div>
 
-          <h1 className={`text-5xl md:text-7xl font-black tracking-tighter leading-[0.9] mb-8 ${theme === "dark" ? "text-white" : "text-slate-900"}`}>
-            I BUILD <br />
-            <span className="bg-gradient-to-r from-cyan-400 via-blue-500 to-indigo-600 bg-clip-text text-transparent">
-              DIGITAL PRODUCTS
-            </span> <br />
-            THAT SCALE.
-          </h1>
+          <div className="space-y-6">
+            <p className="text-sm font-semibold uppercase tracking-[0.35em] text-slate-500">Sumanth Poojary</p>
+            <h2 className={`max-w-4xl text-5xl font-semibold leading-tight sm:text-6xl lg:text-7xl ${theme === 'dark' ? 'text-white' : 'text-slate-950'}`}>
+              Building polished digital products with reliable engineering and modern design.
+            </h2>
+            <p className={`max-w-2xl text-lg leading-8 ${theme === 'dark' ? 'text-slate-300' : 'text-slate-600'}`}>
+              Full-stack developer focused on responsive interfaces, scalable APIs, and experiences that feel calm,
+              credible, and easy to use.
+            </p>
+          </div>
 
-          <p className={`text-lg md:text-xl font-medium mb-12 max-w-xl mx-auto lg:mx-0 leading-relaxed ${theme === "dark" ? "text-slate-400" : "text-slate-600"}`}>
-            I am <span className="text-cyan-400 font-bold underline decoration-cyan-400/30 underline-offset-4">Sumanth Poojary</span>, a Full-Stack MERN Specialist dedicated to creating performant web applications with cutting-edge technologies.
-          </p>
-
-          <div className="flex flex-col sm:flex-row items-center gap-4 justify-center lg:justify-start mb-16">
-            <motion.a 
+          <div className="flex flex-wrap gap-4">
+            <a
               href="#projects"
-              whileHover={{ scale: 1.05, boxShadow: "0 0 30px rgba(6,182,212,0.4)" }}
-              whileTap={{ scale: 0.95 }}
-              className="px-8 py-4 rounded-2xl bg-cyan-500 text-white font-black text-sm uppercase tracking-widest no-underline flex items-center gap-3 transition-shadow"
+              className="inline-flex items-center gap-2 rounded-full bg-cyan-500 px-6 py-3 text-sm font-semibold text-white no-underline shadow-lg shadow-cyan-500/20 transition hover:bg-cyan-400"
             >
-              View My Work <ChevronRight size={18} />
-            </motion.a>
-            <motion.a 
+              View projects <ArrowRight size={16} />
+            </a>
+            <a
               href="#contact"
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              className={`px-8 py-4 rounded-2xl font-black text-sm uppercase tracking-widest no-underline border transition-colors ${
-                theme === "dark" 
-                  ? "border-white/10 text-white hover:bg-white/5" 
-                  : "border-slate-200 text-slate-900 hover:bg-slate-50"
+              className={`inline-flex items-center gap-2 rounded-full border px-6 py-3 text-sm font-semibold no-underline transition ${
+                theme === 'dark'
+                  ? 'border-white/10 text-white hover:bg-white/5'
+                  : 'border-slate-200 text-slate-900 hover:bg-white'
               }`}
             >
-              Contact Me
-            </motion.a>
+              Start a conversation <Mail size={16} />
+            </a>
+            <a
+              href="/Resume%20_2k25.pdf"
+              download
+              className={`inline-flex items-center gap-2 rounded-full px-6 py-3 text-sm font-semibold no-underline transition ${
+                theme === 'dark' ? 'text-slate-300 hover:text-white' : 'text-slate-600 hover:text-slate-900'
+              }`}
+            >
+              Download resume <Download size={16} />
+            </a>
           </div>
 
-          {/* Featured Skills Bar */}
-          <div className="flex flex-wrap justify-center lg:justify-start items-center gap-6 opacity-60">
-             <span className={`text-xs font-bold uppercase tracking-widest ${theme === "dark" ? "text-slate-500" : "text-slate-400"}`}>Stack:</span>
-             <div className="flex flex-wrap justify-center gap-6">
-                {[<SiMongodb size={24} />, <SiExpress size={24} />, <FaReact size={24} />, <FaNodeJs size={24} />, <FaAws size={24} />].map((icon, i) => (
-                  <motion.div key={i} whileHover={{ scale: 1.2, opacity: 1 }} className={theme === "dark" ? "text-white" : "text-slate-900"}>{icon}</motion.div>
-                ))}
-             </div>
+          <div className="grid gap-4 pt-6 sm:grid-cols-3">
+            {stats.map((item) => (
+              <div
+                key={item.label}
+                className={`surface-card rounded-3xl border p-5 ${
+                  theme === 'dark' ? 'border-white/10 bg-white/5' : 'border-slate-200 bg-white/80'
+                }`}
+              >
+                <p className="text-2xl font-semibold text-cyan-500">{item.value}</p>
+                <p className={`mt-2 text-sm leading-6 ${theme === 'dark' ? 'text-slate-300' : 'text-slate-600'}`}>{item.label}</p>
+              </div>
+            ))}
           </div>
-        </motion.div>
 
-        {/* Right: Image Content */}
-        <div className="order-1 lg:order-2">
-           <HeroImage src={profile} />
-        </div>
+          <div className="flex flex-wrap items-center gap-4 pt-4 text-slate-400">
+            <span className="text-xs font-semibold uppercase tracking-[0.3em]">Core stack</span>
+            {stack.map((Icon, index) => (
+              <div
+                key={index}
+                className={`flex h-11 w-11 items-center justify-center rounded-2xl border ${
+                  theme === 'dark' ? 'border-white/10 bg-white/5' : 'border-slate-200 bg-white'
+                }`}
+              >
+                <Icon size={18} />
+              </div>
+            ))}
+          </div>
+        </Motion.div>
+
+        <Motion.div
+          initial={{ opacity: 0, y: 32 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.15, duration: 0.7 }}
+          className="relative mx-auto w-full max-w-md"
+        >
+          <div className="absolute inset-0 rounded-[2rem] bg-gradient-to-br from-cyan-500/20 to-blue-600/10 blur-3xl" />
+          <div className={`surface-card relative overflow-hidden rounded-[2rem] border p-4 ${theme === 'dark' ? 'border-white/10 bg-slate-900/75' : 'border-white bg-white/90'}`}>
+            <div className="overflow-hidden rounded-[1.5rem] bg-slate-950">
+              <img src={profile} alt="Sumanth Poojary portrait" className="h-full w-full object-cover" />
+            </div>
+            <div className="mt-4 grid gap-4 sm:grid-cols-2">
+              <div className={`rounded-2xl p-4 ${theme === 'dark' ? 'bg-white/5' : 'bg-slate-100'}`}>
+                <p className="text-xs font-semibold uppercase tracking-[0.3em] text-slate-500">Specialty</p>
+                <p className="mt-2 text-base font-semibold">Frontend systems & API integration</p>
+              </div>
+              <div className={`rounded-2xl p-4 ${theme === 'dark' ? 'bg-white/5' : 'bg-slate-100'}`}>
+                <p className="text-xs font-semibold uppercase tracking-[0.3em] text-slate-500">Location</p>
+                <p className="mt-2 text-base font-semibold">Udupi, Karnataka</p>
+              </div>
+            </div>
+          </div>
+        </Motion.div>
       </div>
-      
-      {/* Scroll Indicator */}
-      <motion.div 
-        animate={{ y: [0, 10, 0] }}
-        transition={{ repeat: Infinity, duration: 2 }}
-        className="absolute bottom-10 left-1/2 -translate-x-1/2 hidden md:flex flex-col items-center gap-2"
-      >
-        <div className={`w-6 h-10 rounded-full border-2 p-1 ${theme === "dark" ? "border-white/20" : "border-slate-200"}`}>
-           <div className="w-full h-2 bg-cyan-500 rounded-full" />
-        </div>
-        <span className={`text-[10px] font-black uppercase tracking-widest ${theme === "dark" ? "text-slate-500" : "text-slate-400"}`}>SCROLL</span>
-      </motion.div>
-    </div>
+    </section>
   );
 }
