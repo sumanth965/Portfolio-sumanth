@@ -4,12 +4,13 @@ import SkillsSection from '@/components/SkillsSection'
 import ProjectCard from '@/components/ProjectCard'
 import Footer from '@/components/Footer'
 import { ChevronLeft, ChevronRight } from 'lucide-react'
+import Link from 'next/link'
 
 const featuredProjects = [
   {
     title: 'E-commerce Platform',
     description:
-      'Expertly your conversion large without enc ensure profession with E-commerce platform.',
+      'I\'m a self motivated developer capable scaling scalable, high-performance web applications using MongoDB, Express, React and Node.js',
     technologies: ['React', 'Node.js', 'MongoDB', 'Express', 'Redux', 'Tailwind CSS'],
     githubLink: '#',
     liveLink: '#',
@@ -17,7 +18,7 @@ const featuredProjects = [
   {
     title: 'Task Management App',
     description:
-      'Develop a robust agile design, Task Management App, and create a work.',
+      'Task Management app is an unassuming performance is a cleaner, measurable software system implementation.',
     technologies: ['React', 'Node.js', 'MongoDB', 'Express', 'Redux'],
     githubLink: '#',
     liveLink: '#',
@@ -31,10 +32,10 @@ const featuredProjects = [
     liveLink: '#',
   },
   {
-    title: 'Social Media',
+    title: 'React CSS Ihdocument',
     description:
-      'Develop a modern and minimal, minimine, the',
-    technologies: ['React', 'Node.js', 'MongoDB'],
+      'Welcome React CSS Document for your frontend projects and styling.',
+    technologies: ['React', 'CSS', 'JavaScript'],
     githubLink: '#',
     liveLink: '#',
   },
@@ -56,21 +57,31 @@ export default function Home() {
         <div className="max-w-7xl mx-auto">
           <div className="flex justify-between items-center mb-12">
             <h2 className="text-4xl sm:text-5xl font-bold">Featured Projects</h2>
-            <div className="flex gap-4">
-              <button className="p-2 rounded-full hover:bg-slate-800 transition-all">
-                <ChevronLeft className="w-6 h-6 text-gray-400" />
+            <div className="flex gap-2 sm:gap-4">
+              <button className="p-2 rounded-full hover:bg-slate-800 transition-all text-gray-400 hover:text-gray-200" aria-label="Previous">
+                <ChevronLeft className="w-5 h-5 sm:w-6 sm:h-6" />
               </button>
-              <button className="p-2 rounded-full hover:bg-slate-800 transition-all">
-                <ChevronRight className="w-6 h-6 text-gray-400" />
+              <button className="p-2 rounded-full hover:bg-slate-800 transition-all text-gray-400 hover:text-gray-200" aria-label="Next">
+                <ChevronRight className="w-5 h-5 sm:w-6 sm:h-6" />
               </button>
             </div>
           </div>
 
           {/* Projects Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
             {featuredProjects.map((project, index) => (
               <ProjectCard key={index} {...project} />
             ))}
+          </div>
+
+          {/* View All Projects Link */}
+          <div className="flex justify-center">
+            <Link
+              href="/projects"
+              className="text-center text-gray-400 hover:text-blue-400 transition-colors font-medium"
+            >
+              View All Projects →
+            </Link>
           </div>
         </div>
       </section>
