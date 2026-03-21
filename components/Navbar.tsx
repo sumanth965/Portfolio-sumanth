@@ -2,90 +2,74 @@
 
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import { Menu, X, Home, User, Briefcase, Mail } from 'lucide-react'
+import { Menu, X } from 'lucide-react'
 import { useState } from 'react'
+import { navItems, profile } from '@/lib/site-data'
 
 export default function Navbar() {
   const pathname = usePathname()
   const [isOpen, setIsOpen] = useState(false)
 
-  const navItems = [
-    { label: 'Home', href: '/', icon: Home },
-    { label: 'About', href: '/about', icon: User },
-    { label: 'Projects', href: '/projects', icon: Briefcase },
-    { label: 'Contact', href: '/contact', icon: Mail },
-  ]
-
   return (
-    <nav className="fixed top-0 w-full bg-slate-950 bg-opacity-90 backdrop-blur-md z-50 border-b border-orange-500 border-opacity-20">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between items-center h-20">
-          {/* Logo */}
-          <Link href="/" className="text-2xl font-bold flex items-center">
-            <span className="text-white">Sumanth</span>
-          </Link>
+    <header className="sticky top-0 z-50 border-b border-white/10 bg-[#081120]/70 backdrop-blur-xl">
+      <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-4 sm:px-6 lg:px-8">
+        <Link href="/" className="text-3xl font-semibold tracking-tight text-white">
+          <span className="bg-gradient-to-r from-orange-300 via-orange-400 to-amber-200 bg-clip-text text-transparent">
+            {profile.name}
+          </span>
+        </Link>
 
-          {/* Desktop Navigation */}
-          <div className="hidden md:flex items-center gap-1 bg-slate-800 bg-opacity-40 rounded-full px-2 py-2 backdrop-blur-sm">
-            {navItems.map((item) => {
-              const isActive = pathname === item.href
-              const Icon = item.icon
-              return (
-                <Link
-                  key={item.href}
-                  href={item.href}
-                  className={`flex items-center gap-2 px-4 py-2 rounded-full transition-all duration-200 ${
-                    isActive
-                      ? 'bg-blue-500 text-white'
-                      : 'text-gray-300 hover:text-white'
-                  }`}
-                >
-                  <Icon size={18} />
-                  <span className="font-medium">{item.label}</span>
-                </Link>
-              )
-            })}
-          </div>
+        <nav className="hidden items-center gap-2 rounded-full border border-white/10 bg-white/5 p-2 shadow-[0_10px_40px_rgba(3,7,18,0.45)] md:flex">
+          {navItems.map((item) => {
+            const active = pathname === item.href
+            return (
+              <Link
+                key={item.href}
+                href={item.href}
+                className={`rounded-full px-5 py-2 text-sm font-medium transition ${
+                  active
+                    ? 'bg-gradient-to-r from-cyan-500 to-blue-500 text-white shadow-[0_0_30px_rgba(34,211,238,0.35)]'
+                    : 'text-slate-200 hover:bg-white/10 hover:text-white'
+                }`}
+              >
+                {item.label}
+              </Link>
+            )
+          })}
+        </nav>
 
-          {/* Theme Toggle */}
-          <button className="hidden md:flex items-center justify-center w-10 h-10 rounded-full bg-slate-800 bg-opacity-50 hover:bg-opacity-70 text-orange-500 transition-all">
-            ☀️
-          </button>
-
-          {/* Mobile Menu Button */}
-          <button
-            className="md:hidden text-white p-2"
-            onClick={() => setIsOpen(!isOpen)}
-          >
-            {isOpen ? <X size={24} /> : <Menu size={24} />}
-          </button>
-        </div>
-
-        {/* Mobile Navigation */}
-        {isOpen && (
-          <div className="md:hidden pb-4 space-y-2">
-            {navItems.map((item) => {
-              const isActive = pathname === item.href
-              const Icon = item.icon
-              return (
-                <Link
-                  key={item.href}
-                  href={item.href}
-                  className={`flex items-center gap-3 px-4 py-3 rounded-lg transition-all ${
-                    isActive
-                      ? 'bg-blue-500 text-white'
-                      : 'text-gray-300 hover:text-white hover:bg-slate-700'
-                  }`}
-                  onClick={() => setIsOpen(false)}
-                >
-                  <Icon size={18} />
-                  <span>{item.label}</span>
-                </Link>
-              )
-            })}
-          </div>
-        )}
+        <button
+          className="inline-flex rounded-full border border-white/10 bg-white/5 p-3 text-white md:hidden"
+          onClick={() => setIsOpen((value) => !value)}
+          aria-label="Toggle navigation menu"
+        >
+          {isOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+        </button>
       </div>
-    </nav>
+
+      {isOpen ? (
+        <div className="border-t border-white/10 bg-[#0b1528]/95 px-4 py-4 md:hidden">
+          <nav className="mx-auto flex max-w-7xl flex-col gap-2">
+            {navItems.map((item) => {
+              const active = pathname === item.href
+              return (
+                <Link
+                  key={item.href}
+                  href={item.href}
+                  onClick={() => setIsOpen(false)}
+                  className={`rounded-2xl px-4 py-3 text-sm font-medium transition ${
+                    active
+                      ? 'bg-gradient-to-r from-cyan-500 to-blue-500 text-white'
+                      : 'bg-white/5 text-slate-200 hover:bg-white/10 hover:text-white'
+                  }`}
+                >
+                  {item.label}
+                </Link>
+              )
+            })}
+          </nav>
+        </div>
+      ) : null}
+    </header>
   )
 }

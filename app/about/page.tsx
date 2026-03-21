@@ -1,44 +1,40 @@
-import Navbar from '@/components/Navbar'
 import Footer from '@/components/Footer'
+import Navbar from '@/components/Navbar'
+import SectionHeading from '@/components/SectionHeading'
+import { profile, skills } from '@/lib/site-data'
+
+const highlights = [
+  'Build responsive, component-driven interfaces with Next.js and Tailwind CSS.',
+  'Design backend systems and APIs for scalable full stack applications.',
+  'Refactor codebases into reusable, maintainable structures for long-term growth.',
+]
 
 export default function AboutPage() {
   return (
-    <main className="min-h-screen bg-slate-950">
+    <main className="min-h-screen bg-[#07111f] text-white">
       <Navbar />
 
-      <section className="pt-40 pb-20 px-4 sm:px-6 lg:px-8">
-        <div className="max-w-4xl mx-auto">
-          <h1 className="text-5xl sm:text-6xl font-bold mb-2">About Me</h1>
-          <div className="w-32 h-1 bg-orange-500 mb-12"></div>
-
-          <div className="space-y-8 text-gray-400 text-lg leading-relaxed">
-            <p>
-              I'm a passionate Full Stack Developer with expertise in the MERN stack. I specialize in building scalable, high-performance web applications using MongoDB, Express.js, React, and Node.js.
-            </p>
-
-            <div>
-              <h2 className="text-2xl font-bold text-white mb-4">Experience</h2>
-              <p>
-                With several years of experience in web development, I've worked on diverse projects ranging from e-commerce platforms to real-time collaboration tools. I'm committed to writing clean, maintainable code and following best practices in software development.
-              </p>
+      <section className="px-4 pb-20 pt-16 sm:px-6 lg:px-8 lg:pt-20">
+        <div className="mx-auto grid max-w-7xl gap-10 lg:grid-cols-[1.1fr_0.9fr]">
+          <div className="space-y-8">
+            <SectionHeading eyebrow="About" title="About Me" description={profile.about} />
+            <div className="grid gap-4">
+              {highlights.map((item) => (
+                <div key={item} className="rounded-[1.5rem] border border-white/10 bg-white/5 p-5 text-slate-300">
+                  {item}
+                </div>
+              ))}
             </div>
+          </div>
 
-            <div>
-              <h2 className="text-2xl font-bold text-white mb-4">Skills & Expertise</h2>
-              <ul className="list-disc list-inside space-y-2">
-                <li>Frontend: React, JavaScript, CSS, Tailwind CSS</li>
-                <li>Backend: Node.js, Express, MongoDB</li>
-                <li>Tools: Git, Docker, AWS, Linux</li>
-                <li>Database: MongoDB, MySQL, PostgreSQL</li>
-                <li>Other: RESTful APIs, JWT Authentication, Real-time applications</li>
-              </ul>
-            </div>
-
-            <div>
-              <h2 className="text-2xl font-bold text-white mb-4">Philosophy</h2>
-              <p>
-                I believe in writing code that's not just functional, but also readable and maintainable. I'm always eager to learn new technologies and best practices to stay updated with the ever-evolving web development landscape.
-              </p>
+          <div className="rounded-[2rem] border border-white/10 bg-white/5 p-6 shadow-[0_10px_40px_rgba(2,8,23,0.35)]">
+            <h2 className="mb-6 text-2xl font-semibold text-white">Core Expertise</h2>
+            <div className="flex flex-wrap gap-3">
+              {skills.map((skill) => (
+                <span key={skill.name} className="rounded-full border border-white/10 bg-white/5 px-4 py-2 text-sm text-slate-200">
+                  {skill.name}
+                </span>
+              ))}
             </div>
           </div>
         </div>
