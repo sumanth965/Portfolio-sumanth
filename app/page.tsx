@@ -1,92 +1,57 @@
-import Navbar from '@/components/Navbar'
-import HeroSection from '@/components/HeroSection'
-import SkillsSection from '@/components/SkillsSection'
-import ProjectCard from '@/components/ProjectCard'
-import Footer from '@/components/Footer'
-import { ChevronLeft, ChevronRight } from 'lucide-react'
 import Link from 'next/link'
+import { ChevronLeft, ChevronRight } from 'lucide-react'
+import Footer from '@/components/Footer'
+import HeroSection from '@/components/HeroSection'
+import Navbar from '@/components/Navbar'
+import ProjectCard from '@/components/ProjectCard'
+import SectionHeading from '@/components/SectionHeading'
+import SkillsSection from '@/components/SkillsSection'
+import { projects } from '@/lib/site-data'
 
-const featuredProjects = [
-  {
-    title: 'E-commerce Platform',
-    description:
-      'I\'m a self motivated developer capable scaling scalable, high-performance web applications using MongoDB, Express, React and Node.js',
-    technologies: ['React', 'Node.js', 'MongoDB', 'Express', 'Redux', 'Tailwind CSS'],
-    githubLink: '#',
-    liveLink: '#',
-  },
-  {
-    title: 'Task Management App',
-    description:
-      'Task Management app is an unassuming performance is a cleaner, measurable software system implementation.',
-    technologies: ['React', 'Node.js', 'MongoDB', 'Express', 'Redux'],
-    githubLink: '#',
-    liveLink: '#',
-  },
-  {
-    title: 'Social Media Dashboard',
-    description:
-      'Insole your loving with respenie, and social media dashboard, she alco new',
-    technologies: ['React', 'Node.js', 'MongoDB', 'AI', 'Redux', 'Tailwind CSS'],
-    githubLink: '#',
-    liveLink: '#',
-  },
-  {
-    title: 'React CSS Ihdocument',
-    description:
-      'Welcome React CSS Document for your frontend projects and styling.',
-    technologies: ['React', 'CSS', 'JavaScript'],
-    githubLink: '#',
-    liveLink: '#',
-  },
-]
+const featuredProjects = projects.slice(0, 4)
 
 export default function Home() {
   return (
-    <main className="min-h-screen bg-slate-950">
+    <main className="min-h-screen bg-[#07111f] text-white">
       <Navbar />
-
-      {/* Hero Section */}
       <HeroSection />
-
-      {/* Skills Section */}
       <SkillsSection />
 
-      {/* Featured Projects Section */}
-      <section className="py-20 px-4 sm:px-6 lg:px-8">
-        <div className="max-w-7xl mx-auto">
-          <div className="flex justify-between items-center mb-12">
-            <h2 className="text-4xl sm:text-5xl font-bold">Featured Projects</h2>
-            <div className="flex gap-2 sm:gap-4">
-              <button className="p-2 rounded-full hover:bg-slate-800 transition-all text-gray-400 hover:text-gray-200" aria-label="Previous">
-                <ChevronLeft className="w-5 h-5 sm:w-6 sm:h-6" />
+      <section className="px-4 py-20 sm:px-6 lg:px-8">
+        <div className="mx-auto max-w-7xl space-y-10">
+          <div className="flex flex-col gap-6 sm:flex-row sm:items-end sm:justify-between">
+            <SectionHeading
+              eyebrow="Portfolio"
+              title="Featured Projects"
+              description="Selected work that blends polished interface design, strong product thinking, and full stack implementation."
+            />
+            <div className="flex gap-3 self-start sm:self-auto">
+              <button className="rounded-full border border-white/10 bg-white/5 p-3 text-slate-300 transition hover:border-cyan-400/40 hover:text-white" aria-label="Previous featured projects">
+                <ChevronLeft className="h-5 w-5" />
               </button>
-              <button className="p-2 rounded-full hover:bg-slate-800 transition-all text-gray-400 hover:text-gray-200" aria-label="Next">
-                <ChevronRight className="w-5 h-5 sm:w-6 sm:h-6" />
+              <button className="rounded-full border border-white/10 bg-white/5 p-3 text-slate-300 transition hover:border-cyan-400/40 hover:text-white" aria-label="Next featured projects">
+                <ChevronRight className="h-5 w-5" />
               </button>
             </div>
           </div>
 
-          {/* Projects Grid */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-            {featuredProjects.map((project, index) => (
-              <ProjectCard key={index} {...project} />
+          <div className="grid grid-cols-1 gap-6 md:grid-cols-2 xl:grid-cols-4">
+            {featuredProjects.map((project) => (
+              <ProjectCard key={project.title} {...project} />
             ))}
           </div>
 
-          {/* View All Projects Link */}
           <div className="flex justify-center">
             <Link
               href="/projects"
-              className="text-center text-gray-400 hover:text-blue-400 transition-colors font-medium"
+              className="inline-flex rounded-full border border-cyan-400/30 bg-cyan-400/10 px-6 py-3 text-sm font-semibold text-cyan-100 transition hover:bg-cyan-400/20"
             >
-              View All Projects →
+              View All Projects
             </Link>
           </div>
         </div>
       </section>
 
-      {/* Footer */}
       <Footer />
     </main>
   )

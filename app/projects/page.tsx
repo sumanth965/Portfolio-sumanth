@@ -1,131 +1,87 @@
 'use client'
 
+import { useMemo, useState } from 'react'
+import { Search } from 'lucide-react'
+import Footer from '@/components/Footer'
 import Navbar from '@/components/Navbar'
 import ProjectCard from '@/components/ProjectCard'
-import Footer from '@/components/Footer'
-import { Search, ChevronDown } from 'lucide-react'
-import { useState, useMemo } from 'react'
-
-const allProjects = [
-  {
-    title: 'E-commerce Platform',
-    description: 'I\'m a self motivated developer capable scaling scalable, high-performance web applications using MongoDB, Express, React and Node.js',
-    technologies: ['React', 'Node.js', 'MongoDB', 'Express', 'Redux', 'Tailwind CSS'],
-    githubLink: '#',
-    liveLink: '#',
-  },
-  {
-    title: 'Task Management App',
-    description: 'Task Management app is an unassuming performance is a cleaner, measurable software system implementation.',
-    technologies: ['React', 'Node.js', 'MongoDB', 'Express', 'Redux'],
-    githubLink: '#',
-    liveLink: '#',
-  },
-  {
-    title: 'E-commerce West App',
-    description: 'A ecommercial developer caerble as withaker holtiocoo/atorium web application using MongoDB, Express.js, React.js, and continuous learning.',
-    technologies: ['React', 'Node.js', 'MongoDB', 'Express'],
-    githubLink: '#',
-    liveLink: '#',
-  },
-  {
-    title: 'Entrances App',
-    description: 'A accostal developer eraisham application using asli inkfor with modern water flow and noitio, performaning web applications, and reasserve about problem solving',
-    technologies: ['React', 'Node.js', 'MongoDB', 'Express', 'Tailwind CSS'],
-    githubLink: '#',
-    liveLink: '#',
-  },
-  {
-    title: 'Wolding Start App',
-    description: 'I\'m a junior developer warehoused with prerequisite or using online creation drosping and remarkend immobilization and anevece.',
-    technologies: ['React', 'Node.js', 'MongoDB', 'Redux', 'Tailwind CSS'],
-    githubLink: '#',
-    liveLink: '#',
-  },
-  {
-    title: 'React CSS Ihdocument',
-    description: 'Create a React and CSS Document for your frontend projects.',
-    technologies: ['React', 'CSS', 'JavaScript'],
-    githubLink: '#',
-    liveLink: '#',
-  },
-]
-
-const categories = ['All', 'Frontend', 'Full Stack']
+import SectionHeading from '@/components/SectionHeading'
+import { projectCategories, projects } from '@/lib/site-data'
 
 export default function ProjectsPage() {
   const [searchTerm, setSearchTerm] = useState('')
-  const [selectedCategory, setSelectedCategory] = useState('All')
+  const [selectedCategory, setSelectedCategory] = useState<(typeof projectCategories)[number]>('All')
 
   const filteredProjects = useMemo(() => {
-    return allProjects.filter((project) => {
-      const matchesSearch = project.title
-        .toLowerCase()
-        .includes(searchTerm.toLowerCase())
+    return projects.filter((project) => {
+      const query = searchTerm.toLowerCase()
+      const matchesSearch =
+        project.title.toLowerCase().includes(query) ||
+        project.description.toLowerCase().includes(query) ||
+        project.technologies.some((tech) => tech.toLowerCase().includes(query))
+
       const matchesCategory =
-        selectedCategory === 'All' ||
-        project.technologies.some((tech) =>
-          tech.toLowerCase().includes(selectedCategory.toLowerCase())
-        )
+        selectedCategory === 'All' || project.category === selectedCategory
+
       return matchesSearch && matchesCategory
     })
   }, [searchTerm, selectedCategory])
 
   return (
-    <main className="min-h-screen bg-slate-950">
+    <main className="min-h-screen bg-[#07111f] text-white">
       <Navbar />
 
-      <section className="pt-40 pb-20 px-4 sm:px-6 lg:px-8">
-        <div className="max-w-7xl mx-auto">
-          <h1 className="text-5xl sm:text-6xl font-bold mb-2">My Projects</h1>
-          <div className="w-32 h-1 bg-orange-500 mb-8"></div>
+      <section className="px-4 pb-20 pt-16 sm:px-6 lg:px-8 lg:pt-20">
+        <div className="mx-auto max-w-7xl space-y-10">
+          <SectionHeading
+            eyebrow="Projects"
+            title="My Projects"
+            description="Explore case studies and product builds across frontend experiences and full stack applications."
+          />
 
-          {/* Search and Filters */}
-          <div className="flex flex-col sm:flex-row gap-4 mb-12">
-            {/* Search Bar */}
-            <div className="relative flex-1">
-              <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
+          <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
+            <div className="relative w-full max-w-md">
+              <Search className="pointer-events-none absolute left-4 top-1/2 h-5 w-5 -translate-y-1/2 text-slate-400" />
               <input
                 type="text"
                 placeholder="Search projects..."
                 value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
-                className="w-full pl-12 pr-4 py-3 bg-slate-800 border border-slate-700 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:border-blue-500 transition-colors"
+                onChange={(event) => setSearchTerm(event.target.value)}
+                className="w-full rounded-2xl border border-white/10 bg-white/5 py-3 pl-12 pr-4 text-white outline-none transition placeholder:text-slate-500 focus:border-cyan-400/50 focus:bg-white/10"
               />
             </div>
 
-            {/* Category Filter */}
-            <div className="flex gap-2">
-              {['All', 'Frontend', 'Full Stack'].map((category) => (
-                <button
-                  key={category}
-                  onClick={() => setSelectedCategory(category)}
-                  className={`px-4 py-2 rounded-lg font-semibold transition-all ${
-                    selectedCategory === category
-                      ? 'bg-orange-500 text-white'
-                      : 'bg-slate-800 text-gray-400 hover:text-white hover:bg-slate-700'
-                  }`}
-                >
-                  {category}
-                </button>
-              ))}
+            <div className="flex flex-wrap gap-3">
+              {projectCategories.map((category) => {
+                const active = category === selectedCategory
+                return (
+                  <button
+                    key={category}
+                    onClick={() => setSelectedCategory(category)}
+                    className={`rounded-2xl px-5 py-3 text-sm font-semibold transition ${
+                      active
+                        ? 'bg-gradient-to-r from-orange-400 to-amber-300 text-slate-950 shadow-[0_0_24px_rgba(251,146,60,0.35)]'
+                        : 'border border-white/10 bg-white/5 text-slate-200 hover:bg-white/10'
+                    }`}
+                  >
+                    {category}
+                  </button>
+                )
+              })}
             </div>
           </div>
 
-          {/* Projects Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {filteredProjects.map((project, index) => (
-              <ProjectCard key={index} {...project} />
+          <div className="grid grid-cols-1 gap-6 md:grid-cols-2 xl:grid-cols-3">
+            {filteredProjects.map((project) => (
+              <ProjectCard key={project.title} {...project} />
             ))}
           </div>
 
-          {filteredProjects.length === 0 && (
-            <div className="text-center py-12">
-              <p className="text-gray-400 text-lg">
-                No projects found. Try adjusting your search.
-              </p>
+          {filteredProjects.length === 0 ? (
+            <div className="rounded-[2rem] border border-white/10 bg-white/5 px-6 py-16 text-center text-slate-300">
+              No projects matched your search. Try another keyword or filter.
             </div>
-          )}
+          ) : null}
         </div>
       </section>
 
