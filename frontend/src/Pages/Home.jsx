@@ -1,256 +1,142 @@
-import { useEffect, useRef } from 'react'
-import profile from '../assets/img2.png';
+import profile from '../assets/img2.png'
 
-const particles = [
-  { size: 5, top: '12%', left: '6%', delay: '0s', dur: '6s' },
-  { size: 3, top: '28%', left: '14%', delay: '1.2s', dur: '7s' },
-  { size: 4, top: '62%', left: '4%', delay: '2.4s', dur: '5.5s' },
-  { size: 6, top: '18%', right: '10%', delay: '0.6s', dur: '6.5s' },
-  { size: 3, top: '48%', right: '18%', delay: '1.8s', dur: '8s' },
-  { size: 5, top: '76%', right: '7%', delay: '3s', dur: '6s' },
-  { size: 4, top: '40%', left: '50%', delay: '1.5s', dur: '7.5s' },
-  { size: 2, top: '85%', left: '30%', delay: '0.9s', dur: '5s' },
+const metrics = [
+  { value: '3+', label: 'Years building products' },
+  { value: '20+', label: 'Projects delivered' },
+  { value: 'MERN', label: 'Primary specialization' },
 ]
 
-export default function Hero() {
-  const cursorRef = useRef(null)
+const highlights = [
+  'Responsive web interfaces for desktop, tablet, and mobile.',
+  'Clean frontend architecture with scalable backend integration.',
+  'Strong focus on performance, clarity, and polished user experience.',
+]
 
-  /* blinking cursor effect on title */
-  useEffect(() => {
-    const el = cursorRef.current
-    if (!el) return
-    let visible = true
-    const id = setInterval(() => {
-      el.style.opacity = visible ? '0' : '1'
-      visible = !visible
-    }, 600)
-    return () => clearInterval(id)
-  }, [])
-
+export default function Home() {
   return (
     <section
-      className="relative min-h-screen flex flex-col overflow-hidden noise"
+      id="home"
+      className="relative overflow-hidden px-4 pb-16 pt-28 sm:px-6 sm:pb-20 lg:px-8 lg:pt-32"
       style={{
         background: `
-          radial-gradient(ellipse 75% 55% at 68% 38%, rgba(59,158,255,0.13) 0%, transparent 62%),
-          radial-gradient(ellipse 55% 45% at 18% 78%, rgba(168,85,247,0.11) 0%, transparent 58%),
-          radial-gradient(ellipse 40% 40% at 50% 10%, rgba(6,182,212,0.06) 0%, transparent 55%),
-          linear-gradient(180deg, #060d1a 0%, #0a1628 55%, #060d1a 100%)
-        `
+          radial-gradient(circle at 15% 20%, rgba(59,130,246,0.18), transparent 28%),
+          radial-gradient(circle at 85% 18%, rgba(168,85,247,0.18), transparent 26%),
+          radial-gradient(circle at 50% 75%, rgba(34,211,238,0.1), transparent 35%),
+          linear-gradient(180deg, #06111f 0%, #091523 48%, #08111d 100%)
+        `,
       }}
     >
-      {/* Grid overlay */}
-      <div
-        className="absolute inset-0 pointer-events-none opacity-[0.03]"
-        style={{
-          backgroundImage: `
-            linear-gradient(rgba(59,158,255,1) 1px, transparent 1px),
-            linear-gradient(90deg, rgba(59,158,255,1) 1px, transparent 1px)
-          `,
-          backgroundSize: '60px 60px'
-        }}
-      />
+      <div className="pointer-events-none absolute inset-0 opacity-20">
+        <div className="absolute left-0 top-20 h-72 w-72 rounded-full bg-blue-500/20 blur-3xl" />
+        <div className="absolute right-0 top-24 h-80 w-80 rounded-full bg-violet-500/20 blur-3xl" />
+        <div className="absolute bottom-0 left-1/2 h-64 w-64 -translate-x-1/2 rounded-full bg-cyan-400/10 blur-3xl" />
+      </div>
 
-      {/* Particles */}
-      {particles.map((p, i) => (
-        <div
-          key={i}
-          className="particle-dot absolute"
-          style={{
-            width: p.size, height: p.size,
-            top: p.top, left: p.left, right: p.right,
-            background: i % 2 === 0
-              ? 'rgba(59,158,255,0.7)'
-              : 'rgba(168,85,247,0.6)',
-            boxShadow: `0 0 ${p.size * 3}px currentColor`,
-            animation: `float ${p.dur} ease-in-out infinite`,
-            animationDelay: p.delay,
-          }}
-        />
-      ))}
-
-      {/* Main hero content */}
-      <div className="flex-1 flex items-center pt-24 pb-20 px-4 sm:px-6 lg:px-8">
-        <div className="max-w-6xl mx-auto w-full flex flex-col lg:flex-row items-center gap-10 lg:gap-16">
-
-          {/* ── LEFT TEXT ── */}
-          <div
-            className="flex-1 text-center lg:text-left order-2 lg:order-1"
-            style={{ animation: 'fade-up 0.8s ease both' }}
-          >
-            {/* Badge */}
-            <div className="inline-flex items-center gap-2 glass-nav rounded-full px-4 py-1.5 mb-5">
-              <span className="w-2 h-2 rounded-full bg-[#22c55e] shadow-[0_0_8px_#22c55e] animate-pulse" />
-              <span className="text-xs font-semibold text-[#94a3b8] tracking-wider uppercase">
-                Available for work
-              </span>
+      <div className="relative mx-auto max-w-7xl">
+        <div className="grid items-center gap-12 lg:grid-cols-[1.15fr_0.85fr] lg:gap-16">
+          <div className="order-2 lg:order-1">
+            <div className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/6 px-4 py-2 text-xs font-semibold uppercase tracking-[0.24em] text-slate-300 shadow-[0_10px_30px_rgba(0,0,0,0.22)] backdrop-blur-xl">
+              <span className="h-2.5 w-2.5 rounded-full bg-emerald-400 shadow-[0_0_14px_rgba(74,222,128,0.9)]" />
+              Available for full-stack opportunities
             </div>
 
-            <p
-              className="text-[#94a3b8] text-base sm:text-lg font-medium mb-2 tracking-wide"
-              style={{ fontFamily: 'var(--font-display)', animation: 'fade-up 0.7s ease 0.1s both' }}
-            >
-              Hello. I'm Sumanth
-            </p>
-
-            <h1
-              className="font-extrabold leading-[1.05] mb-2"
-              style={{
-                fontFamily: 'var(--font-display)',
-                fontSize: 'clamp(2.6rem, 6vw, 4.2rem)',
-                animation: 'fade-up 0.7s ease 0.2s both'
-              }}
-            >
-              <span className="text-white">Full Stack</span>
-            </h1>
-
-            <h1
-              className="font-extrabold leading-[1.05] mb-6"
-              style={{
-                fontFamily: 'var(--font-display)',
-                fontSize: 'clamp(2.6rem, 6vw, 4.2rem)',
-                animation: 'fade-up 0.7s ease 0.3s both'
-              }}
-            >
-              <span className="shimmer-text">Developer | MERN</span>
-              <br />
-              <span className="shimmer-text">Specialist</span>
-              <span
-                ref={cursorRef}
-                className="text-[#3b9eff] ml-1"
-                style={{ fontSize: 'clamp(2rem, 5vw, 3.5rem)' }}
-              >|</span>
-            </h1>
-
-            <p
-              className="text-[#64748b] text-sm sm:text-base leading-relaxed mb-8 max-w-md mx-auto lg:mx-0"
-              style={{ animation: 'fade-up 0.7s ease 0.4s both' }}
-            >
-              I have a passion for building scalable web applications using{' '}
-              <span className="text-[#3b9eff] font-medium">MongoDB</span>,{' '}
-              <span className="text-[#a855f7] font-medium">Express.js</span>,{' '}
-              <span className="text-[#06b6d4] font-medium">React.js</span>, and{' '}
-              <span className="text-[#22c55e] font-medium">Node.js</span> — crafting
-              robust, elegant solutions from front to back.
-            </p>
-
-            {/* CTAs */}
-            <div
-              className="flex flex-wrap gap-3 justify-center lg:justify-start"
-              style={{ animation: 'fade-up 0.7s ease 0.5s both' }}
-            >
-              <button className="btn-primary hover:opacity-85 hover:-translate-y-0.5 active:translate-y-0 transition-all">
-                <span>View My Projects</span>
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><path d="M5 12h14M12 5l7 7-7 7" /></svg>
-              </button>
-              <button className="btn-outline hover:border-[#3b9eff] hover:text-[#3b9eff] hover:-translate-y-0.5 active:translate-y-0 transition-all">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.6 1.27h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L7.91 9a16 16 0 0 0 6.09 6.09l1.09-1.09a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z" /></svg>
-                <span>Contact Me</span>
-              </button>
+            <div className="mt-6 max-w-3xl">
+              <p className="text-lg font-medium text-slate-300 sm:text-xl">Hello, I&apos;m Sumanth</p>
+              <h1 className="mt-4 text-4xl font-extrabold leading-tight text-white sm:text-5xl lg:text-6xl xl:text-[4.6rem] xl:leading-[1.02]">
+                Full Stack
+                <span className="block bg-gradient-to-r from-sky-400 via-cyan-300 to-violet-400 bg-clip-text text-transparent">
+                  Developer | MERN
+                </span>
+                <span className="block text-slate-100">Specialist</span>
+              </h1>
+              <p className="mt-6 max-w-2xl text-base leading-8 text-slate-300/90 sm:text-lg">
+                I design and build modern digital products with responsive interfaces, scalable APIs,
+                and a professional user experience across desktop and mobile devices.
+              </p>
             </div>
 
-            {/* Stats */}
-            <div
-              className="flex gap-6 sm:gap-8 justify-center lg:justify-start mt-10"
-              style={{ animation: 'fade-up 0.7s ease 0.6s both' }}
-            >
-              {[
-                { val: '3+', label: 'Years Exp.' },
-                { val: '20+', label: 'Projects' },
-                { val: '15+', label: 'Clients' },
-              ].map(({ val, label }) => (
-                <div key={label} className="text-center lg:text-left">
-                  <div
-                    className="grad-text font-extrabold leading-none"
-                    style={{ fontFamily: 'var(--font-display)', fontSize: 'clamp(1.4rem, 3vw, 1.9rem)' }}
-                  >
-                    {val}
-                  </div>
-                  <div className="text-xs text-[#475569] font-medium mt-0.5 uppercase tracking-widest">
-                    {label}
-                  </div>
+            <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
+              <a
+                href="#projects"
+                className="inline-flex items-center justify-center rounded-2xl bg-gradient-to-r from-sky-500 to-blue-600 px-6 py-3.5 text-sm font-semibold text-white shadow-[0_14px_40px_rgba(37,99,235,0.35)] transition duration-300 hover:-translate-y-0.5 hover:shadow-[0_18px_45px_rgba(37,99,235,0.45)]"
+              >
+                View My Projects
+              </a>
+              <a
+                href="#contact"
+                className="inline-flex items-center justify-center rounded-2xl border border-sky-400/35 bg-slate-950/20 px-6 py-3.5 text-sm font-semibold text-slate-100 backdrop-blur-md transition duration-300 hover:border-sky-300 hover:bg-slate-900/40"
+              >
+                Contact Me
+              </a>
+            </div>
+
+            <div className="mt-10 grid gap-4 sm:grid-cols-3">
+              {metrics.map((item) => (
+                <div
+                  key={item.label}
+                  className="rounded-3xl border border-white/10 bg-white/5 p-5 shadow-[0_10px_40px_rgba(2,8,23,0.35)] backdrop-blur-xl"
+                >
+                  <p className="text-2xl font-bold text-sky-300">{item.value}</p>
+                  <p className="mt-2 text-sm leading-6 text-slate-300">{item.label}</p>
                 </div>
               ))}
             </div>
+
+            <div className="mt-10 rounded-[28px] border border-white/10 bg-slate-950/30 p-6 shadow-[0_14px_50px_rgba(2,8,23,0.35)] backdrop-blur-xl">
+              <p className="text-sm font-semibold uppercase tracking-[0.22em] text-slate-400">What I deliver</p>
+              <div className="mt-5 grid gap-4 sm:grid-cols-3">
+                {highlights.map((item) => (
+                  <div key={item} className="rounded-2xl border border-white/8 bg-white/4 p-4 text-sm leading-7 text-slate-300">
+                    {item}
+                  </div>
+                ))}
+              </div>
+            </div>
           </div>
 
-          {/* ── RIGHT PHOTO ── */}
-          <div
-            className="order-1 lg:order-2 flex-shrink-0"
-            style={{ animation: 'fade-up 0.9s ease 0.3s both' }}
-          >
+          <div className="order-1 mx-auto w-full max-w-md lg:order-2 lg:max-w-lg">
             <div className="relative">
-              {/* Outer glow ring */}
-              <div
-                className="absolute -inset-4 rounded-3xl opacity-40 blur-xl"
-                style={{
-                  background: 'linear-gradient(135deg, #3b9eff, #a855f7)',
-                  animation: 'glow-pulse 3s ease-in-out infinite'
-                }}
-              />
-              {/* Spinning ring */}
-              <div
-                className="absolute -inset-2 rounded-3xl border border-dashed border-[rgba(59,158,255,0.3)]"
-                style={{ animation: 'spin-slow 20s linear infinite' }}
-              />
+              <div className="absolute -inset-8 rounded-[38px] bg-gradient-to-br from-sky-500/20 via-transparent to-violet-500/20 blur-3xl" />
+              <div className="absolute -left-5 top-10 hidden h-24 w-24 rounded-3xl border border-cyan-400/30 bg-cyan-400/10 backdrop-blur-xl sm:block" />
+              <div className="absolute -right-4 bottom-12 hidden h-20 w-20 rounded-full border border-violet-400/30 bg-violet-400/10 backdrop-blur-xl sm:block" />
 
-              {/* Frame */}
-              <div className="photo-frame-border relative" style={{ width: 'clamp(220px,28vw,290px)' }}>
-                <div
-                  className="rounded-2xl overflow-hidden relative"
-                  style={{
-                    background: 'linear-gradient(160deg, #1a2a4a 0%, #0d1929 100%)',
-                    height: 'clamp(260px,34vw,350px)'
-                  }}
-                >
-                  <img src={profile} className="w-full h-full object-cover object-top" alt="Sumanth" />
-                  <div className="w-full h-full flex flex-col items-center justify-center gap-3 opacity-60">
-                    <svg width="72" height="72" viewBox="0 0 24 24" fill="none">
-                      <circle cx="12" cy="8" r="4" stroke="#3b9eff" strokeWidth="1.5" />
-                      <path d="M4 20c0-4 3.582-7 8-7s8 3 8 7" stroke="#a855f7" strokeWidth="1.5" strokeLinecap="round" />
-                    </svg>
-                    <p className="text-xs text-[#475569] font-medium tracking-wide text-center px-4">
-                      Add your photo here
-                    </p>
+              <div className="relative overflow-hidden rounded-[34px] border border-white/12 bg-[linear-gradient(145deg,rgba(15,23,42,0.94),rgba(15,23,42,0.6))] p-4 shadow-[0_24px_80px_rgba(2,8,23,0.55)] backdrop-blur-2xl sm:p-5">
+                <div className="rounded-[28px] border border-sky-400/20 bg-[radial-gradient(circle_at_top,rgba(59,130,246,0.2),transparent_40%),linear-gradient(180deg,rgba(15,23,42,0.92),rgba(2,6,23,0.95))] p-4 sm:p-5">
+                  <div className="relative overflow-hidden rounded-[24px] border border-white/10 bg-slate-900">
+                    <div className="absolute inset-x-0 top-0 h-28 bg-gradient-to-b from-sky-400/15 to-transparent" />
+                    <img
+                      src={profile}
+                      alt="Portrait of Sumanth"
+                      className="h-[430px] w-full object-cover object-top sm:h-[520px]"
+                    />
+                    <div className="absolute left-4 top-4 rounded-2xl border border-white/10 bg-slate-950/60 px-4 py-3 backdrop-blur-md">
+                      <p className="text-[11px] font-semibold uppercase tracking-[0.22em] text-slate-400">Role</p>
+                      <p className="mt-1 text-sm font-semibold text-white">Full Stack Developer</p>
+                    </div>
+                    <div className="absolute bottom-4 right-4 rounded-2xl border border-sky-400/20 bg-slate-950/70 px-4 py-3 backdrop-blur-md">
+                      <p className="text-[11px] font-semibold uppercase tracking-[0.22em] text-slate-400">Focus</p>
+                      <p className="mt-1 text-sm font-semibold text-sky-300">Responsive MERN Apps</p>
+                    </div>
                   </div>
 
-                  {/* Floating tech badges */}
-                  <div
-                    className="absolute top-3 right-3 glass-card rounded-lg px-2 py-1 text-[10px] font-bold text-[#3b9eff] border-[rgba(59,158,255,0.2)]"
-                    style={{ animation: 'float 4s ease-in-out infinite', animationDelay: '0s', fontFamily: 'var(--font-display)' }}
-                  >
-                    React ⚛️
-                  </div>
-                  <div
-                    className="absolute bottom-3 left-3 glass-card rounded-lg px-2 py-1 text-[10px] font-bold text-[#22c55e] border-[rgba(34,197,94,0.2)]"
-                    style={{ animation: 'float 5s ease-in-out infinite', animationDelay: '1.5s', fontFamily: 'var(--font-display)' }}
-                  >
-                    Node.js 🟢
+                  <div className="mt-5 grid gap-4 sm:grid-cols-2">
+                    <div className="rounded-2xl border border-white/10 bg-white/5 p-4">
+                      <p className="text-[11px] font-semibold uppercase tracking-[0.24em] text-slate-400">Frontend</p>
+                      <p className="mt-2 text-sm leading-6 text-slate-200">Modern React interfaces with clear information hierarchy and polished interactions.</p>
+                    </div>
+                    <div className="rounded-2xl border border-white/10 bg-white/5 p-4">
+                      <p className="text-[11px] font-semibold uppercase tracking-[0.24em] text-slate-400">Backend</p>
+                      <p className="mt-2 text-sm leading-6 text-slate-200">Reliable APIs, data flow, and maintainable architecture for scalable products.</p>
+                    </div>
                   </div>
                 </div>
               </div>
-
-              {/* Corner accents */}
-              {[
-                { cls: 'top-[-3px] left-[-3px]', style: { borderWidth: '3px 0 0 3px', borderRadius: '5px 0 0 0' } },
-                { cls: 'top-[-3px] right-[-3px]', style: { borderWidth: '3px 3px 0 0', borderRadius: '0 5px 0 0' } },
-                { cls: 'bottom-[-3px] left-[-3px]', style: { borderWidth: '0 0 3px 3px', borderRadius: '0 0 0 5px' } },
-                { cls: 'bottom-[-3px] right-[-3px]', style: { borderWidth: '0 3px 3px 0', borderRadius: '0 0 5px 0' } },
-              ].map(({ cls, style }, i) => (
-                <div
-                  key={i}
-                  className={`corner-accent absolute w-6 h-6 border-[#06b6d4] ${cls}`}
-                  style={{ ...style, borderStyle: 'solid', animation: 'glow-pulse 2.5s ease-in-out infinite', animationDelay: `${i * 0.4}s` }}
-                />
-              ))}
             </div>
           </div>
-
         </div>
-      </div>
 
-      {/* Glow line */}
-      <div className="glow-line w-full" />
+        <div className="mt-16 h-px w-full bg-gradient-to-r from-transparent via-sky-400/70 to-transparent shadow-[0_0_30px_rgba(56,189,248,0.4)] sm:mt-20" />
+      </div>
     </section>
   )
 }
