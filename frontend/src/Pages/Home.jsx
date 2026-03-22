@@ -1,5 +1,5 @@
 import { useEffect, useRef } from 'react'
-import profile from '../assets/img2.png';
+import profile from '../assets/IMG.png';
 
 const particles = [
   { size: 5, top: '12%', left: '6%', delay: '0s', dur: '6s' },
@@ -157,47 +157,43 @@ export default function Hero() {
           >
             <div
               className="relative"
-              style={{ width: 'clamp(220px, 28vw, 285px)' }}
+              style={{ width: 'clamp(200px, 28vw, 300px)', margin: '90px' }}
             >
 
-              {/* ── Deep background glow ── */}
+              {/* ── Deep ambient glow ── */}
               <div
                 className="absolute"
                 style={{
-                  inset: '-30px',
-                  background: 'radial-gradient(ellipse at 60% 40%, rgba(59,130,246,0.12) 0%, rgba(139,92,246,0.08) 50%, transparent 75%)',
+                  inset: '-40px',
+                  background: 'radial-gradient(ellipse at 55% 45%, rgba(59,130,246,0.14) 0%, rgba(139,92,246,0.10) 45%, transparent 72%)',
                   borderRadius: '50%',
-                  filter: 'blur(24px)',
+                  filter: 'blur(28px)',
                   zIndex: 0,
                 }}
               />
 
-              {/* ── Offset glass panel behind photo (visible on right/bottom) ── */}
-              <div
-                className="absolute"
-                style={{
-                  top: '10px',
-                  left: '14px',
-                  right: '-14px',
-                  bottom: '-10px',
-                  background: 'rgba(255,255,255,0.04)',
-                  border: '1px solid rgba(255,255,255,0.06)',
-                  borderRadius: '14px',
-                  backdropFilter: 'blur(6px)',
-                  zIndex: 1,
-                }}
-              />
+         
 
-              {/* ── Photo card ── */}
+              {/* ── Photo card with diagonal cut ── */}
               <div
                 className="relative overflow-hidden"
                 style={{
-                  borderRadius: '14px',
+                  clipPath: 'polygon(28% 0%, 100% 0%, 100% 100%, 0% 100%, 0% 22%)',
                   height: 'clamp(260px, 34vw, 350px)',
-                  background: 'linear-gradient(160deg, #1a2a4a 0%, #0d1929 100%)',
-                  boxShadow: '0 20px 60px rgba(0,0,0,0.7)',
-                  zIndex: 2,
+                  background: 'rgba(255, 255, 255, 0.09)',
+                  boxShadow: `
+    0 24px 64px rgba(0,0,0,0.75),
+    inset 0 10px 300px rgba(255, 255, 255, 0.12)
+
+  `,
+    //   inset 0 -1px 30px rgba(255, 255, 255, 0.77),
+    // inset 1px 0 30px rgba(255, 255, 255, 0.29),
+    // inset -1px 0 30px rgba(255, 255, 255, 0.34)
+                  border: '1px solid rgba(255, 255, 255, 0.25)',
+                  backdropFilter: 'blur(12px)',
+                  WebkitBackdropFilter: 'blur(12px)',
                   position: 'relative',
+                  zIndex: 2,
                 }}
               >
                 <img
@@ -205,42 +201,88 @@ export default function Hero() {
                   alt="Sumanth"
                   className="w-full h-full object-cover object-top"
                 />
-                {/* Subtle bottom fade */}
+                {/* Bottom fade */}
                 <div
                   className="absolute bottom-0 left-0 right-0"
                   style={{
-                    height: '35%',
-                    background: 'linear-gradient(to top, rgba(4,8,20,0.75) 0%, transparent 100%)',
+                    height: '30%',
+                    background: 'linear-gradient(to top, rgba(4,8,22,0.80) 0%, transparent 100%)',
                   }}
                 />
               </div>
 
-              {/* ── Corner brackets — CYAN on RIGHT corners ── */}
-
-              {/* Top-right cyan */}
-              <div className="absolute" style={{ top: '-5px', right: '-5px', width: '28px', height: '28px', zIndex: 3 }}>
-                <div style={{ position: 'absolute', top: 0, right: 0, width: '100%', height: '3px', background: '#22d3ee', borderRadius: '2px', boxShadow: '0 0 8px #22d3ee, 0 0 16px rgba(34,211,238,0.5)' }} />
-                <div style={{ position: 'absolute', top: 0, right: 0, width: '3px', height: '100%', background: '#22d3ee', borderRadius: '2px', boxShadow: '0 0 8px #22d3ee, 0 0 16px rgba(34,211,238,0.5)' }} />
+              {/* ══ CYAN brackets — TOP-RIGHT ══ */}
+              <div className="absolute" style={{ top: '-6px', right: '-6px', width: '100px', height: '100px', zIndex: 4 }}>
+                <div style={{
+                  position: 'absolute', top: -2, right: -2,
+                  width: '100%', height: '2.5px',
+                  background: 'linear-gradient(90deg, transparent, #22d3ee)',
+                  borderRadius: '2px',
+                  boxShadow: '0 0 6px #22d3ee, 0 0 14px rgba(34,211,238,0.6)',
+                }} />
+                <div style={{
+                  position: 'absolute', top: 0, right: -2,
+                  width: '2.5px', height: '200%',
+                  background: 'linear-gradient(180deg, #22d3ee, transparent)',
+                  borderRadius: '2px',
+                  boxShadow: '0 0 6px #22d3ee, 0 0 14px rgba(34,211,238,0.6)',
+                }} />
               </div>
 
-              {/* Bottom-right cyan */}
-              <div className="absolute" style={{ bottom: '-5px', right: '-5px', width: '28px', height: '28px', zIndex: 3 }}>
-                <div style={{ position: 'absolute', bottom: 0, right: 0, width: '100%', height: '3px', background: '#22d3ee', borderRadius: '2px', boxShadow: '0 0 8px #22d3ee, 0 0 16px rgba(34,211,238,0.5)' }} />
-                <div style={{ position: 'absolute', bottom: 0, right: 0, width: '3px', height: '100%', background: '#22d3ee', borderRadius: '2px', boxShadow: '0 0 8px #22d3ee, 0 0 16px rgba(34,211,238,0.5)' }} />
+              {/* ══ CYAN brackets — BOTTOM-RIGHT ══ */}
+              <div className="absolute" style={{ bottom: '-6px', right: '-6px', width: '32px', height: '32px', zIndex: 4 }}>
+                <div style={{
+                  position: 'absolute', bottom: 0, right: 0,
+                  width: '100%', height: '2.5px',
+                  background: 'linear-gradient(90deg, transparent, #22d3ee)',
+                  borderRadius: '2px',
+                  boxShadow: '0 0 6px #22d3ee, 0 0 14px rgba(34,211,238,0.6)',
+                }} />
+                <div style={{
+                  position: 'absolute', bottom: 0, right: 0,
+                  width: '2.5px', height: '100%',
+                  background: 'linear-gradient(180deg, transparent, #22d3ee)',
+                  borderRadius: '2px',
+                  boxShadow: '0 0 6px #22d3ee, 0 0 14px rgba(34,211,238,0.6)',
+                }} />
               </div>
 
-              {/* ── Corner brackets — PURPLE on LEFT corners ── */}
-
-              {/* Top-left purple */}
-              <div className="absolute" style={{ top: '-5px', left: '-5px', width: '28px', height: '28px', zIndex: 3 }}>
-                <div style={{ position: 'absolute', top: 0, left: 0, width: '200%', height: '3px', background: '#a855f7', borderRadius: '2px', boxShadow: '0 0 8px #a855f7, 0 0 16px rgba(168,85,247,0.5)' }} />
-                <div style={{ position: 'absolute', top: 0, left: 0, width: '3px', height: '200%', background: '#a855f7', borderRadius: '2px', boxShadow: '0 0 8px #a855f7, 0 0 16px rgba(168,85,247,0.5)' }} />
+              {/* ══ PURPLE brackets — BOTTOM-LEFT ══ */}
+              <div className="absolute" style={{ bottom: '-6px', left: '-6px', width: '100px', height: '100px', zIndex: 4 }}>
+                <div style={{
+                  position: 'absolute', bottom: -2, left: -2,
+                  width: '100%', height: '2.5px',
+                  background: 'linear-gradient(90deg, #a855f7, transparent)',
+                  borderRadius: '2px',
+                  boxShadow: '0 0 6px #a855f7, 0 0 14px rgba(168,85,247,0.6)',
+                }} />
+                <div style={{
+                  position: 'absolute', bottom: -2, left: -2,
+                  width: '2.5px', height: '200%',
+                  background: 'linear-gradient(180deg, transparent, #a855f7)',
+                  borderRadius: '2px',
+                  boxShadow: '0 0 6px #a855f7, 0 0 14px rgba(168,85,247,0.6)',
+                }} />
               </div>
 
-              {/* Bottom-left purple */}
-              <div className="absolute" style={{ bottom: '-5px', left: '-5px', width: '28px', height: '28px', zIndex: 3 }}>
-                <div style={{ position: 'absolute', bottom: 0, left: 0, width: '100%', height: '3px', background: '#a855f7', borderRadius: '2px', boxShadow: '0 0 8px #a855f7, 0 0 16px rgba(168,85,247,0.5)' }} />
-                <div style={{ position: 'absolute', bottom: 0, left: 0, width: '3px', height: '100%', background: '#a855f7', borderRadius: '2px', boxShadow: '0 0 8px #a855f7, 0 0 16px rgba(168,85,247,0.5)' }} />
+              {/* ══ PURPLE small tick — LEFT MIDDLE (as seen in image) ══ */}
+              <div className="absolute" style={{ left: '-8px', top: '42%', width: '14px', height: '32px', zIndex: 4 }}>
+                <div style={{
+                  position: 'absolute', top: 0, left: 0,
+                  width: '2.5px', height: '100%',
+                  background: 'linear-gradient(180deg, transparent, #a855f7, transparent)',
+                  borderRadius: '2px',
+                  boxShadow: '0 0 6px #a855f7, 0 0 14px rgba(247, 85, 85, 0.5)',
+                }} />
+              </div>
+              <div className="absolute" style={{ left: '305.5px', top: '48%', width: '14px', height: '32px', zIndex: 4 }}>
+                <div style={{
+                  position: 'absolute', top: 0, left: 0,
+                  width: '2.5px', height: '100%',
+                  background: 'linear-gradient(180deg, transparent, #22d3ee, transparent)',
+                  borderRadius: '2px',
+                  boxShadow: '0 0 6px #a855f7, 0 0 14px rgba(247, 85, 85, 0.5)',
+                }} />
               </div>
 
             </div>
