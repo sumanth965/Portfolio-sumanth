@@ -1,45 +1,20 @@
-import { useEffect, useState } from 'react';
-import './App.css';
-import Footer from './Components/Footer';
-import Navbar from './Components/Navbar';
-import About from './Pages/About';
-import Contact from './Pages/Contact';
-import Home from './Pages/Home';
-import Projects from './Pages/Projects';
+import Navbar from './Components/Navbar'
+import Home from './Pages/Home'
+import Skills from './Pages/Skills'
+import Projects from './Pages/Projects'
+import Footer from './Components/Footer'
+import './index.css'
 
-function App() {
-  const [theme, setTheme] = useState(localStorage.getItem('theme') || 'dark');
-
-  useEffect(() => {
-    document.documentElement.classList.toggle('dark', theme === 'dark');
-    localStorage.setItem('theme', theme);
-  }, [theme]);
-
+export default function App() {
   return (
-    <div
-      className={`min-h-screen transition-colors duration-500 ${
-        theme === 'dark'
-          ? 'bg-slate-950 text-slate-50'
-          : 'bg-slate-50 text-slate-900'
-      }`}
-    >
-      <div className="fixed inset-0 -z-10 overflow-hidden">
-        <div className="absolute inset-x-0 top-0 h-[34rem] bg-[radial-gradient(circle_at_top,_rgba(34,211,238,0.22),_transparent_58%)]" />
-        <div className="absolute inset-x-0 bottom-0 h-[28rem] bg-[radial-gradient(circle_at_bottom,_rgba(59,130,246,0.14),_transparent_55%)]" />
-      </div>
-
-      <Navbar theme={theme} setTheme={setTheme} />
-
-      <main className="relative">
-        <Home theme={theme} />
-        <About theme={theme} />
-        <Projects theme={theme} />
-        <Contact theme={theme} />
+    <div className="relative min-h-screen" style={{ backgroundColor: '#060d1a', color: '#f1f5f9' }}>
+      <Navbar />
+      <main>
+        <Home />
+        <Skills />
+        <Projects />
       </main>
-
-      <Footer theme={theme} />
+      <Footer />
     </div>
-  );
+  )
 }
-
-export default App;

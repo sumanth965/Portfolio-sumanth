@@ -1,0 +1,553 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sumanth – Full Stack Developer</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,300&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --neon-blue: #3b9eff;
+      --neon-purple: #a855f7;
+      --neon-cyan: #06b6d4;
+      --bg-dark: #060d1a;
+      --bg-card: #0d1929;
+      --border-glow: rgba(59,158,255,0.35);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--bg-dark);
+      color: #e2e8f0;
+      overflow-x: hidden;
+    }
+    h1, h2, h3, nav { font-family: 'Syne', sans-serif; }
+
+    /* ── Neon glow text ── */
+    .grad-text {
+      background: linear-gradient(135deg, #3b9eff 0%, #a855f7 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .grad-text-white {
+      background: linear-gradient(135deg, #ffffff 0%, #94a3b8 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    /* ── Hero background ── */
+    .hero-bg {
+      background: radial-gradient(ellipse 80% 60% at 70% 40%, rgba(59,158,255,0.12) 0%, transparent 60%),
+                  radial-gradient(ellipse 50% 50% at 20% 80%, rgba(168,85,247,0.10) 0%, transparent 55%),
+                  linear-gradient(180deg, #060d1a 0%, #0a1628 50%, #060d1a 100%);
+    }
+
+    /* ── Glowing line separator ── */
+    .glow-line {
+      height: 2px;
+      background: linear-gradient(90deg, transparent 0%, #3b9eff 30%, #a855f7 70%, transparent 100%);
+      box-shadow: 0 0 12px 2px rgba(59,158,255,0.6);
+    }
+
+    /* ── Nav pill ── */
+    .nav-pill {
+      background: rgba(255,255,255,0.06);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 999px;
+      padding: 6px 8px;
+      display: inline-flex;
+      gap: 4px;
+    }
+    .nav-pill a {
+      padding: 6px 22px;
+      border-radius: 999px;
+      font-size: 0.88rem;
+      font-weight: 600;
+      color: #94a3b8;
+      transition: color .2s;
+      text-decoration: none;
+    }
+    .nav-pill a.active {
+      background: linear-gradient(135deg, #3b9eff, #a855f7);
+      color: #fff;
+    }
+    .nav-pill a:hover:not(.active) { color: #e2e8f0; }
+
+    /* ── Photo frame ── */
+    .photo-frame {
+      position: relative;
+      width: 260px;
+      height: 310px;
+      flex-shrink: 0;
+    }
+    .photo-frame::before {
+      content: '';
+      position: absolute;
+      inset: -3px;
+      border-radius: 16px 16px 16px 16px;
+      background: linear-gradient(135deg, #3b9eff, #a855f7, #06b6d4);
+      z-index: 0;
+      filter: blur(2px);
+    }
+    .photo-frame-inner {
+      position: relative;
+      z-index: 1;
+      width: 100%;
+      height: 100%;
+      border-radius: 14px;
+      overflow: hidden;
+      background: linear-gradient(160deg, #1a2a4a 0%, #0d1929 100%);
+      display: flex;
+      align-items: flex-end;
+      justify-content: center;
+    }
+    /* corner accents */
+    .photo-frame .corner {
+      position: absolute;
+      width: 22px; height: 22px;
+      border-color: #06b6d4;
+      border-style: solid;
+      z-index: 2;
+    }
+    .photo-frame .corner.tl { top: -4px; left: -4px; border-width: 3px 0 0 3px; border-radius: 4px 0 0 0; }
+    .photo-frame .corner.tr { top: -4px; right: -4px; border-width: 3px 3px 0 0; border-radius: 0 4px 0 0; }
+    .photo-frame .corner.bl { bottom: -4px; left: -4px; border-width: 0 0 3px 3px; border-radius: 0 0 0 4px; }
+    .photo-frame .corner.br { bottom: -4px; right: -4px; border-width: 0 3px 3px 0; border-radius: 0 0 4px 0; }
+
+    .avatar-placeholder {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 7rem;
+      opacity: .55;
+    }
+
+    /* ── CTA Buttons ── */
+    .btn-primary {
+      padding: 10px 28px;
+      border-radius: 8px;
+      background: linear-gradient(135deg, #3b9eff, #a855f7);
+      color: #fff;
+      font-weight: 600;
+      font-size: 0.92rem;
+      cursor: pointer;
+      border: none;
+      transition: opacity .2s, transform .15s;
+      font-family: 'Syne', sans-serif;
+    }
+    .btn-primary:hover { opacity: .85; transform: translateY(-1px); }
+    .btn-outline {
+      padding: 9px 26px;
+      border-radius: 8px;
+      background: transparent;
+      color: #e2e8f0;
+      font-weight: 600;
+      font-size: 0.92rem;
+      cursor: pointer;
+      border: 1.5px solid rgba(255,255,255,0.35);
+      transition: border-color .2s, transform .15s;
+      font-family: 'Syne', sans-serif;
+    }
+    .btn-outline:hover { border-color: #3b9eff; transform: translateY(-1px); }
+
+    /* ── Skills section ── */
+    .skills-bg {
+      background: linear-gradient(180deg, #060d1a 0%, #080f1e 100%);
+    }
+    .skill-card {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+      padding: 20px 16px 14px;
+      border-radius: 14px;
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(59,158,255,0.15);
+      transition: border-color .25s, transform .2s, box-shadow .25s;
+      cursor: default;
+      min-width: 90px;
+    }
+    .skill-card:hover {
+      border-color: rgba(59,158,255,0.5);
+      transform: translateY(-4px);
+      box-shadow: 0 8px 28px rgba(59,158,255,0.12);
+    }
+    .skill-icon {
+      width: 52px; height: 52px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.6rem;
+    }
+    .skill-label { font-size: 0.78rem; font-weight: 600; color: #94a3b8; letter-spacing: .5px; }
+
+    /* ── Skill carousel dots ── */
+    .dot { width: 8px; height: 8px; border-radius: 50%; background: rgba(59,158,255,0.3); }
+    .dot.active { background: #3b9eff; width: 22px; border-radius: 4px; }
+
+    /* ── Projects section ── */
+    .projects-bg {
+      background: linear-gradient(180deg, #080f1e 0%, #060d1a 100%);
+    }
+    .project-card {
+      border-radius: 14px;
+      overflow: hidden;
+      background: var(--bg-card);
+      border: 1px solid rgba(59,158,255,0.12);
+      transition: border-color .25s, transform .2s, box-shadow .25s;
+      flex: 0 0 220px;
+    }
+    .project-card:hover {
+      border-color: rgba(59,158,255,0.45);
+      transform: translateY(-4px);
+      box-shadow: 0 12px 36px rgba(59,158,255,0.10);
+    }
+    .project-thumb {
+      height: 130px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2.5rem;
+      position: relative;
+      overflow: hidden;
+    }
+    .project-card h3 { font-size: 0.95rem; font-weight: 700; color: #e2e8f0; }
+    .project-card p { font-size: 0.75rem; color: #64748b; line-height: 1.5; }
+
+    /* ── Carousel arrow ── */
+    .arrow-btn {
+      width: 36px; height: 36px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.1);
+      display: flex; align-items: center; justify-content: center;
+      cursor: pointer; color: #94a3b8;
+      transition: background .2s, color .2s;
+      font-size: 1rem;
+    }
+    .arrow-btn:hover { background: rgba(59,158,255,0.2); color: #3b9eff; }
+
+    /* ── Footer icons ── */
+    .social-icon {
+      width: 38px; height: 38px;
+      border-radius: 8px;
+      display: flex; align-items: center; justify-content: center;
+      color: #64748b;
+      transition: color .2s, background .2s;
+      cursor: pointer;
+      font-size: 1.25rem;
+    }
+    .social-icon:hover { color: #3b9eff; background: rgba(59,158,255,0.1); }
+
+    /* ── Particle dots ── */
+    .particle {
+      position: absolute;
+      border-radius: 50%;
+      background: rgba(59,158,255,0.45);
+      pointer-events: none;
+      animation: float 6s ease-in-out infinite;
+    }
+    @keyframes float {
+      0%, 100% { transform: translateY(0); opacity: .4; }
+      50% { transform: translateY(-12px); opacity: .9; }
+    }
+
+    /* ── Typing cursor blink ── */
+    @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0} }
+    .cursor::after { content:'|'; animation: blink 1s step-end infinite; color:#3b9eff; }
+  </style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════ HERO ════════════════════════════════════════ -->
+<section class="hero-bg relative min-h-screen flex flex-col overflow-hidden">
+
+  <!-- particles -->
+  <div class="particle" style="width:5px;height:5px;top:12%;left:8%;animation-delay:0s;"></div>
+  <div class="particle" style="width:3px;height:3px;top:28%;left:15%;animation-delay:1.2s;"></div>
+  <div class="particle" style="width:4px;height:4px;top:60%;left:5%;animation-delay:2.4s;"></div>
+  <div class="particle" style="width:6px;height:6px;top:20%;right:12%;animation-delay:.6s;"></div>
+  <div class="particle" style="width:3px;height:3px;top:45%;right:20%;animation-delay:1.8s;"></div>
+  <div class="particle" style="width:5px;height:5px;top:75%;right:8%;animation-delay:3s;"></div>
+
+  <!-- NAV -->
+  <nav class="flex justify-center pt-8 pb-4 relative z-10">
+    <div class="nav-pill">
+      <a href="#" class="active">Home</a>
+      <a href="#">About</a>
+      <a href="#">Projects</a>
+      <a href="#">Contact</a>
+    </div>
+  </nav>
+
+  <!-- HERO CONTENT -->
+  <div class="flex-1 flex items-center justify-between px-12 max-w-5xl mx-auto w-full gap-8 pb-16">
+
+    <!-- left text -->
+    <div class="flex-1 max-w-lg">
+      <p class="text-slate-400 text-base mb-2 font-medium tracking-wide">Hello. I'm Sumanth</p>
+      <h1 class="font-black leading-none mb-1" style="font-size:3.4rem;">
+        <span class="text-white">Full Stack</span>
+      </h1>
+      <h1 class="font-black leading-none mb-4" style="font-size:3.4rem;">
+        <span class="grad-text">Developer | MERN</span><br>
+        <span class="grad-text">Specialist</span>
+      </h1>
+      <p class="text-slate-400 text-sm leading-relaxed mb-8 max-w-xs">
+        I have a passion for scalable web apps using MongoDB, Express.js, React.js, and Node.js — building robust and elegant solutions from front to back.
+      </p>
+      <div class="flex gap-3">
+        <button class="btn-primary">View My Projects</button>
+        <button class="btn-outline">Contact Me</button>
+      </div>
+    </div>
+
+    <!-- right photo -->
+    <div class="photo-frame">
+      <div class="corner tl"></div>
+      <div class="corner tr"></div>
+      <div class="corner bl"></div>
+      <div class="corner br"></div>
+      <div class="photo-frame-inner">
+        <div class="avatar-placeholder">👨‍💼</div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- glow separator line -->
+  <div class="glow-line w-full"></div>
+</section>
+
+<!-- ═══════════════════════════════════════ SKILLS ══════════════════════════════════════ -->
+<section class="skills-bg py-16 px-8">
+  <div class="max-w-3xl mx-auto">
+
+    <h2 class="text-2xl font-bold mb-10 text-white">Skills</h2>
+
+    <!-- row 1 -->
+    <div class="flex gap-4 justify-center flex-wrap mb-4">
+
+      <!-- MERN -->
+      <div class="skill-card">
+        <div class="skill-icon" style="background:rgba(59,158,255,0.12);">
+          <span style="font-family:'Syne',sans-serif;font-weight:800;font-size:.9rem;line-height:1;">
+            <span style="color:#3b9eff;">ME</span><br><span style="color:#a855f7;">RN</span>
+          </span>
+        </div>
+        <span class="skill-label">MERN stack</span>
+      </div>
+
+      <!-- Python -->
+      <div class="skill-card">
+        <div class="skill-icon" style="background:rgba(255,212,59,0.1);">
+          <svg width="32" height="32" viewBox="0 0 128 128"><path fill="#3572a5" d="M49.33 62h29.17..."/><g fill="#ffd43b"><path d="M64.43 3.5C37.35 3.5 38.9 15.14 38.9 15.14l.03 12.33h26v3.7H28.41S8.5 28.76 8.5 56.12c0 27.36 15.13 26.38 15.13 26.38h9.03V70.68s-.49-15.13 14.88-15.13h25.66s14.4.23 14.4-13.92V19.5S89.88 3.5 64.43 3.5zm-14.3 8.27a5.02 5.02 0 1 1 0 10.04 5.02 5.02 0 0 1 0-10.04z"/><path d="M63.57 124.5c27.08 0 25.53-11.64 25.53-11.64l-.03-12.33h-26v-3.7h36.55s19.91 2.51 19.91-24.85c0-27.36-15.13-26.38-15.13-26.38h-9.03v11.82s.49 15.13-14.88 15.13H55.24s-14.4-.23-14.4 13.92v23.13S38.12 124.5 63.57 124.5zm14.3-8.27a5.02 5.02 0 1 1 0-10.04 5.02 5.02 0 0 1 0 10.04z"/></g></svg>
+        </div>
+        <span class="skill-label">Python</span>
+      </div>
+
+      <!-- Java -->
+      <div class="skill-card">
+        <div class="skill-icon" style="background:rgba(249,115,22,0.1);">
+          <svg width="32" height="32" viewBox="0 0 128 128"><path fill="#ea2d2e" d="M47.617 98.12s-4.767 2.774 3.397 3.71c9.892 1.13 14.947.968 25.845-1.092 0 0 2.871 1.795 6.873 3.351-24.439 10.47-55.308-.607-36.115-5.969M44.629 84.455s-5.348 3.959 2.823 4.805c10.567 1.091 18.91 1.18 33.354-1.6 0 0 1.993 2.025 5.132 3.131-29.542 8.64-62.446.68-41.309-6.336"/><path fill="#ea2d2e" d="M69.802 61.271c6.025 6.935-1.58 13.17-1.58 13.17s15.289-7.891 8.269-17.777c-6.559-9.215-11.587-13.792 15.635-29.58 0 0-42.731 10.67-22.324 34.187"/><path fill="#f58219" d="M102.123 108.229s3.529 2.91-3.888 5.159c-14.102 4.272-58.706 5.56-71.094.171-4.451-1.938 3.899-4.625 6.526-5.192 2.739-.593 4.303-.485 4.303-.485-4.953-3.487-32.013 6.85-13.743 9.815 49.821 8.076 90.817-3.637 77.896-9.468M49.912 70.294s-22.686 5.389-8.033 7.348c6.188.828 18.518.638 30.011-.326 9.39-.789 18.813-2.474 18.813-2.474s-3.308 1.419-5.704 3.053c-23.042 6.061-67.544 3.238-54.731-2.958 10.832-5.239 19.644-4.643 19.644-4.643M90.609 93.041c23.421-12.167 12.591-23.86 5.032-22.285-1.848.385-2.677.72-2.677.72s.688-1.079 2-1.543c14.953-5.255 26.451 15.503-4.823 23.725 0 .002.359-.327.468-.617"/><path fill="#f58219" d="M76.491 1.587S89.459 14.563 64.188 34.51c-20.266 16.006-4.621 25.13-.007 35.559-11.831-10.673-20.509-20.07-14.688-28.815C58.041 28.42 81.722 22.195 76.491 1.587"/><path fill="#ea2d2e" d="M52.214 126.021c22.476 1.437 57-.8 57.817-11.436 0 0-1.571 4.032-18.577 7.231-19.186 3.612-42.854 3.191-56.887.874 0 .001 2.875 2.381 17.647 3.331"/></svg>
+        </div>
+        <span class="skill-label">Java</span>
+      </div>
+
+      <!-- AWS -->
+      <div class="skill-card">
+        <div class="skill-icon" style="background:rgba(255,153,0,0.1);">
+          <svg width="38" height="28" viewBox="0 0 128 128"><path fill="#f90" d="M40.7 52.3c0 1.7.2 3.1.5 4 .4.9.9 1.9 1.6 3 .3.4.4.8.4 1.1 0 .5-.3 1-.9 1.5l-3 2c-.4.3-.8.4-1.2.4-.5 0-1-.2-1.4-.6-1-1.1-1.9-2.3-2.6-3.5-1.5 1.8-3.4 3.3-5.8 4.3-.4.2-.8.3-1.2.3-1 0-1.8-.5-2.3-1.5-.4-.7-.5-1.5-.5-2.3 0-2 .8-3.6 2.3-5 1.2-1.1 2.9-1.9 5-2.4.8-.2 1.8-.4 3-.6v-.8c0-1.7-.4-2.9-1.2-3.6-.8-.7-2-.9-3.8-.9-1.2 0-2.5.3-3.9.8-1.4.5-2.7 1.2-3.9 1.9-.4.2-.8.4-1 .4-.5 0-.7-.4-.7-1.2v-1.9c0-.6.1-1 .4-1.3.3-.3.8-.6 1.5-.9a19 19 0 0 1 4.6-1.7c1.6-.4 3.2-.6 4.8-.6 3.7 0 6.4.8 8.1 2.5 1.7 1.6 2.6 4.1 2.6 7.4v10zm-8.1 2.9c.9 0 1.9-.2 2.8-.7.9-.5 1.7-1.1 2.3-2 .3-.5.6-1 .7-1.7.1-.7.2-1.5.2-2.5v-1.2c-1.2.1-2.2.3-3.1.5-1.4.3-2.5.7-3.1 1.3a3 3 0 0 0-.9 2.2c0 1 .3 1.7.8 2.2.5.5 1.1.9 2.3.9zm16.9 2.3c-.6 0-1-.1-1.3-.4-.3-.3-.5-.7-.7-1.4L41.4 30c-.1-.4-.2-.8-.2-1 0-.4.2-.6.6-.6h2.5c.7 0 1.1.1 1.3.4.3.3.5.7.6 1.4l4.8 18.9 4.5-18.9c.1-.7.3-1.1.6-1.4.3-.3.8-.4 1.4-.4h2c.7 0 1.1.1 1.4.4.3.3.5.7.6 1.4l4.5 19.1 4.9-19.1c.1-.7.4-1.1.6-1.4.3-.3.7-.4 1.3-.4h2.4c.4 0 .7.2.7.6 0 .1 0 .3-.1.5l-.2.5-7.2 25.8c-.1.7-.4 1.1-.7 1.4-.3.3-.7.4-1.3.4h-2.2c-.7 0-1.1-.1-1.4-.4-.3-.3-.5-.7-.6-1.4l-4.5-18.6-4.4 18.6c-.1.7-.4 1.1-.6 1.4-.3.3-.8.4-1.4.4h-2.2zm38.3.8c-1.3 0-2.7-.2-4-.5-1.3-.3-2.3-.7-3-1.1-.4-.2-.7-.5-.8-.9a2.5 2.5 0 0 1-.1-.8v-2c0-.8.3-1.2.8-1.2.2 0 .4 0 .6.1l.6.3c.8.4 1.7.6 2.6.8.9.2 1.9.3 2.9.3 1.5 0 2.7-.3 3.5-.8.8-.5 1.3-1.3 1.3-2.3 0-.7-.2-1.2-.6-1.7-.4-.5-1.3-.9-2.5-1.3L82.9 47c-1.8-.6-3.1-1.4-3.9-2.5-.8-1.1-1.2-2.3-1.2-3.6 0-1 .2-1.9.7-2.7.5-.8 1.1-1.5 1.9-2 .8-.6 1.7-1 2.8-1.3 1.1-.3 2.2-.4 3.4-.4.6 0 1.2 0 1.8.1.6.1 1.2.2 1.8.3.5.1 1 .3 1.5.5.5.2.9.4 1.2.6.4.2.7.5.8.8.2.3.2.6.2 1v1.8c0 .8-.3 1.2-.8 1.2-.3 0-.7-.1-1.2-.4-1.6-.7-3.5-1.1-5.5-1.1-1.4 0-2.5.2-3.2.7-.8.5-1.1 1.2-1.1 2.2 0 .7.2 1.3.7 1.8.5.5 1.4.9 2.8 1.3l3.4 1.1c1.8.6 3.1 1.3 3.9 2.3.8 1 1.1 2.2 1.1 3.5 0 1.1-.2 2-.7 2.9-.5.9-1.1 1.6-1.9 2.2-.8.6-1.8 1.1-2.9 1.4-1.1.3-2.3.5-3.6.5z"/><path fill="#f90" d="M90.9 73.7c-10.8 8-26.5 12.2-40 12.2-18.9 0-35.9-7-48.7-18.6-1-.9-.1-2.1 1.1-1.4 13.9 8.1 31.1 13 48.9 13 12 0 25.1-2.5 37.2-7.6 1.8-.8 3.3 1.2 1.5 2.4z"/><path fill="#f90" d="M95.3 68.7c-1.4-1.8-9.2-.9-12.7-.4-1.1.1-1.2-1.3-.3-1.9 6.2-4.4 16.4-3.1 17.6-1.6 1.2 1.5-.3 11.7-6.1 16.6-.9.8-1.7.4-1.3-.6 1.3-3.2 4.2-10.3 2.8-12.1z"/></svg>
+        </div>
+        <span class="skill-label">AWS</span>
+      </div>
+
+      <!-- Node.js -->
+      <div class="skill-card">
+        <div class="skill-icon" style="background:rgba(83,158,59,0.1);">
+          <svg width="36" height="36" viewBox="0 0 128 128"><path fill="#83cd29" d="M112.771 30.334L68.196 4.729c-2.617-1.511-5.88-1.511-8.504 0L15.229 30.334C12.612 31.845 11 34.63 11 37.667v50.666c0 3.037 1.612 5.822 4.229 7.333l44.575 25.605c2.616 1.511 5.888 1.511 8.504 0l44.575-25.605c2.617-1.511 4.229-4.296 4.229-7.333V37.667c-.001-3.037-1.612-5.822-4.341-7.333z"/><path fill="#404137" d="M107.599 93.47L63.028 68.938 18.399 93.47 63 119.133z"/><path fill="#35480c" d="M18.399 34.53L63 59.125l44.599-24.595L63 9.933z"/><path fill="#fff" d="M75.302 64.687c0 1.135-.613 2.195-1.597 2.764L63.003 73.87c-.493.284-1.04.425-1.589.425-.549 0-1.097-.141-1.59-.425L49.122 67.451c-.984-.569-1.597-1.629-1.597-2.764V51.42c0-1.134.613-2.195 1.597-2.764l10.702-6.417c.493-.284 1.04-.425 1.59-.425.548 0 1.096.141 1.589.425l10.702 6.417c.984.568 1.597 1.629 1.597 2.764v13.267z"/></svg>
+        </div>
+        <span class="skill-label">Node.js</span>
+      </div>
+    </div>
+
+    <!-- row 2 -->
+    <div class="flex gap-4 justify-center flex-wrap">
+
+      <!-- React.js -->
+      <div class="skill-card">
+        <div class="skill-icon" style="background:rgba(97,218,251,0.1);">
+          <svg width="36" height="36" viewBox="0 0 128 128"><g fill="#61dafb"><circle cx="64" cy="64" r="11.4"/><path d="M107.3 45.2c-2.2-.8-4.5-1.6-6.9-2.3.6-2.4 1.1-4.8 1.5-7.1 2.1-13-1.2-21.2-7.7-21.2-6.2 0-13.5 7-19.6 19.3-2.3-.3-4.7-.5-7.1-.5s-4.8.2-7.1.5c-6.1-12.3-13.5-19.3-19.6-19.3-6.5 0-9.8 8.2-7.7 21.2.5 2.3 1 4.7 1.6 7.1-2.4.7-4.7 1.4-6.9 2.3C12.5 49.3 7 55.3 7 61.8c0 6.5 5.5 12.5 14.3 16.5 2.2.9 4.5 1.7 6.9 2.4-.6 2.4-1.1 4.8-1.5 7.1-2.1 13 1.2 21.2 7.7 21.2 6.2 0 13.5-7 19.6-19.3 2.3.3 4.7.5 7.1.5s4.8-.2 7.1-.5c6.1 12.3 13.5 19.3 19.6 19.3 6.5 0 9.8-8.2 7.7-21.2-.5-2.3-1-4.7-1.5-7.1 2.4-.7 4.7-1.5 6.9-2.4 8.7-4 14.2-10 14.2-16.5.1-6.5-5.4-12.5-14.2-16.6zM84.7 30c1.5 0 2.5 2.6 2.5 7.7 0 2.3-.3 4.6-.8 6.9-2.4-.5-4.9-.9-7.5-1.2-1.7-2.7-3.5-5.4-5.3-7.8 3.2-3.4 6.3-5.6 11.1-5.6zm-41.4 0c4.8 0 7.9 2.2 11.1 5.6-1.8 2.4-3.6 5.1-5.3 7.8-2.6.3-5.1.7-7.5 1.2-.5-2.3-.8-4.6-.8-6.9 0-5.1 1-7.7 2.5-7.7zm-20.8 28c1.2-.5 2.6-1 4-1.4.6 2.4 1.4 4.9 2.4 7.4-1 2.4-1.8 4.9-2.4 7.3-1.4-.4-2.7-.9-4-1.4-5.6-2.5-8.5-5.4-8.5-8s2.9-5.4 8.5-7.9zm28.5 27.5c-1.7 2.7-3.5 5.4-5.3 7.8-3.2-3.4-6.3-5.6-11.1-5.6-1.5 0-2.5-2.6-2.5-7.7 0-2.3.3-4.6.8-6.9 2.4.5 4.9.9 7.5 1.2 1.7 2.7 3.5 5.4 5.3 7.8-.1 1 .3 2.2.3 3.4zm.9-9.7c-1.5-.2-3-.4-4.5-.7.5-1.7 1.1-3.5 1.8-5.2.7 1.8 1.3 3.5 1.8 5.2.1 0 1.6.5 2.7.7h-2zm9.9 21c-1.5 0-2.5-2.6-2.5-7.7 0-2.3.3-4.6.8-6.9 2.4.5 4.9.9 7.5 1.2 1.7 2.7 3.5 5.4 5.3 7.8-3.2 3.4-6.4 5.6-11.1 5.6zm11.1-16.3c-1.8-2.4-3.6-5.1-5.3-7.8 2.6-.3 5.1-.7 7.5-1.2.5 2.3.8 4.6.8 6.9-.1 5.1-1 7.7-2.5 7.7 0 0-.3-3.5-.5-5.6zm15.2-8.3c-1.4.5-2.8 1-4.2 1.4-.6-2.4-1.4-4.9-2.4-7.3 1-2.5 1.8-5 2.4-7.4 1.4.4 2.7.9 4 1.4 5.6 2.5 8.5 5.4 8.5 7.9s-2.9 5.5-8.3 8z"/></g></svg>
+        </div>
+        <span class="skill-label">React.js</span>
+      </div>
+
+      <!-- JavaScript -->
+      <div class="skill-card">
+        <div class="skill-icon" style="background:rgba(247,223,30,0.1); border-radius:10px;">
+          <svg width="36" height="36" viewBox="0 0 128 128"><path fill="#f7df1e" d="M1.408 1.408h125.184v125.185H1.408z"/><path d="M116.347 96.736c-.917-5.711-4.641-10.508-15.672-14.981-3.832-1.761-8.104-3.022-9.377-5.926-.452-1.69-.512-2.642-.226-3.665.821-3.32 4.784-4.355 7.925-3.403 2.023.678 3.938 2.237 5.093 4.724 5.402-3.498 5.391-3.475 9.163-5.879-1.381-2.141-2.118-3.129-3.022-4.045-3.249-3.629-7.676-5.498-14.756-5.355l-3.688.477c-3.534.893-6.902 2.748-8.877 5.235-5.926 6.724-4.236 18.492 2.975 23.335 7.104 5.332 17.54 6.545 18.873 11.531 1.297 6.104-4.486 8.08-10.234 7.378-4.236-.881-6.592-3.034-9.139-6.949-4.688 2.713-4.688 2.713-9.508 5.485 1.143 2.499 2.344 3.63 4.26 5.795 9.068 9.198 31.76 8.746 35.83-5.176.165-.478 1.261-3.666.38-8.581zm-46.885-37.793H57.766c0 7.43-.012 14.860-.012 22.285 0 4.730.245 9.060-.52 10.403-1.261 2.582-4.510 2.268-5.999 1.810-1.249-.953-1.857-2.250-2.535-4.040-.191-.567-.274-.994-.354-1.094-4.285 2.604-4.285 2.604-8.583 5.169 1.345 2.678 2.689 4.521 4.769 6.026 3.632 2.834 8.977 3.390 14.188 2.213 3.061-.799 5.759-2.439 7.736-5.073 3.690-4.640 3.668-10.700 3.644-17.507.027-6.999.0-13.974.0-21.186z"/></svg>
+        </div>
+        <span class="skill-label">JouL</span>
+      </div>
+
+      <!-- Express -->
+      <div class="skill-card">
+        <div class="skill-icon" style="background:rgba(0,200,100,0.1);">
+          <svg width="36" height="36" viewBox="0 0 128 128"><path fill="#fff" d="M126.67 98.44c-4.56 1.16-7.38.05-9.91-3.75-5.68-8.51-11.95-16.63-18-24.9-.78-1.07-1.59-2.12-2.6-3.45-6.23 8.51-12.34 16.63-18.33 24.85-2.61 3.58-5.23 5.00-9.73 3.57l26.38-35.81L69.67 33.32c4.43-1.05 7.21-.38 9.87 3.5 5.77 8.23 12.00 16.1 18.38 24.05L116.25 33c4.55-1.13 7.36-.40 9.8 3.6L100.67 68.79zM1.33 61.74c.72-3.51 1.28-7.08 2.19-10.54C9.56 32.55 27.37 22.01 47.3 26.72c15.05 3.51 24.39 16.94 24.1 34.02H9.38c-.15 16.99 11.11 27.2 28 24.89 6.52-.9 11.85-4.08 15.23-10.06 1.71-3.01 3.97-4.38 7.43-3.71-1.06 5.92-4.48 10.24-8.94 13.68-10.43 8.01-26.84 8.15-37.56.6C6.53 80.24 2.81 71.74 1.48 62.54c-.06-.45-.24-.88-.36-1.32zm8.23-5.11h46.88c-.33-13.34-9.01-22.67-22-22.47-13.81.2-24.01 9.78-24.88 22.47z"/></svg>
+        </div>
+        <span class="skill-label">Express</span>
+      </div>
+
+      <!-- AI -->
+      <div class="skill-card">
+        <div class="skill-icon" style="background:rgba(59,130,246,0.12);">
+          <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#60a5fa" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a2 2 0 0 1 2 2c0 .74-.4 1.39-1 1.73V7h1a7 7 0 0 1 7 7h1a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1h-1v1a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-1H2a1 1 0 0 1-1-1v-3a1 1 0 0 1 1-1h1a7 7 0 0 1 7-7h1V5.73c-.6-.34-1-.99-1-1.73a2 2 0 0 1 2-2M7.5 13a.5.5 0 0 0-.5.5v2a.5.5 0 0 0 1 0v-2a.5.5 0 0 0-.5-.5m9 0a.5.5 0 0 0-.5.5v2a.5.5 0 0 0 1 0v-2a.5.5 0 0 0-.5-.5M8 18h8v2H8z"/></svg>
+        </div>
+        <span class="skill-label">AI</span>
+      </div>
+
+      <!-- Other -->
+      <div class="skill-card">
+        <div class="skill-icon" style="background:rgba(168,85,247,0.12);">
+          <svg width="36" height="36" viewBox="0 0 128 128"><path fill="#9b4dca" d="M117.5 33.5l.3-.2c-.6-1.1-1.5-2.1-2.4-2.6L67.1 2.9c-.8-.5-1.9-.7-3.1-.7-1.2 0-2.3.3-3.1.7l-48 27.9c-.9.5-1.9 1.4-2.4 2.6l.3.2 49.2 28.5 57.5-28.6z"/><path fill="#6b2d9b" d="M64 95.8L7.5 67.2C7 68.2 7 69.3 7 70.5v54.4c0 2.5 1.8 5.5 4.1 6.8l48 27.9c.9.5 2 .7 3.1.7V95.8h1.8z"/><path fill="#9b4dca" d="M121 70.5c0-1.2-.1-2.3-.6-3.3L64 95.8v63.5c1.2 0 2.3-.3 3.1-.7l48-27.9c2.3-1.3 4.1-4.3 4.1-6.8V70.5z"/></svg>
+        </div>
+        <span class="skill-label">Other</span>
+      </div>
+    </div>
+
+    <!-- carousel dots -->
+    <div class="flex gap-2 justify-center mt-8">
+      <div class="dot active"></div>
+      <div class="dot"></div>
+      <div class="dot"></div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════ PROJECTS ═════════════════════════════════════ -->
+<section class="projects-bg py-16 px-8">
+  <div class="max-w-3xl mx-auto">
+
+    <div class="flex items-center justify-between mb-8">
+      <h2 class="text-2xl font-bold text-white">Featured Projects</h2>
+      <div class="flex gap-2">
+        <button class="arrow-btn">&#8592;</button>
+        <button class="arrow-btn">&#8594;</button>
+      </div>
+    </div>
+
+    <div class="flex gap-4 overflow-x-auto pb-2" style="scrollbar-width:none;">
+
+      <!-- E-commerce -->
+      <div class="project-card">
+        <div class="project-thumb" style="background:linear-gradient(135deg,#1e1b4b,#312e81);">
+          <div style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:12px;">
+            <div style="width:80%;background:rgba(255,255,255,0.07);border-radius:8px;padding:10px;border:1px solid rgba(255,255,255,0.1);">
+              <div style="font-size:.55rem;color:#a5b4fc;font-weight:700;margin-bottom:6px;">E-commerce Platform</div>
+              <div style="display:flex;gap:4px;flex-wrap:wrap;">
+                <div style="background:#312e81;border-radius:4px;width:50px;height:28px;display:flex;align-items:center;justify-content:center;font-size:.6rem;color:#c7d2fe;">👕 Shirts</div>
+                <div style="background:#312e81;border-radius:4px;width:50px;height:28px;display:flex;align-items:center;justify-content:center;font-size:.6rem;color:#c7d2fe;">👟 Shoes</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="p-4">
+          <h3 class="mb-1">E-commerce Platform</h3>
+          <p>Expand your commerce and build your profession with a scalable e-commerce platform.</p>
+        </div>
+      </div>
+
+      <!-- Task Management -->
+      <div class="project-card">
+        <div class="project-thumb" style="background:linear-gradient(135deg,#0c1a2e,#0f2744);">
+          <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;padding:12px;">
+            <div style="width:85%;background:rgba(255,255,255,0.04);border-radius:8px;padding:8px;border:1px solid rgba(59,158,255,0.2);">
+              <div style="font-size:.5rem;color:#60a5fa;font-weight:700;margin-bottom:5px;">Task Management</div>
+              <div style="display:flex;flex-direction:column;gap:3px;">
+                <div style="background:rgba(59,158,255,0.1);border-radius:3px;height:8px;width:90%;border-left:2px solid #3b9eff;"></div>
+                <div style="background:rgba(168,85,247,0.1);border-radius:3px;height:8px;width:70%;border-left:2px solid #a855f7;"></div>
+                <div style="background:rgba(34,197,94,0.1);border-radius:3px;height:8px;width:80%;border-left:2px solid #22c55e;"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="p-4">
+          <h3 class="mb-1">Task Management App</h3>
+          <p>Develop a modern app design for task management with real-time updates and collaboration.</p>
+        </div>
+      </div>
+
+      <!-- Social Media Dashboard -->
+      <div class="project-card">
+        <div class="project-thumb" style="background:linear-gradient(135deg,#0d1a0d,#14291a);">
+          <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;padding:12px;">
+            <div style="width:85%;background:rgba(255,255,255,0.04);border-radius:8px;padding:8px;border:1px solid rgba(34,197,94,0.2);">
+              <div style="font-size:.5rem;color:#4ade80;font-weight:700;margin-bottom:5px;">Social Media Dashboard</div>
+              <div style="display:flex;gap:4px;">
+                <div style="flex:1;background:rgba(34,197,94,0.1);border-radius:3px;height:30px;display:flex;align-items:flex-end;padding:2px;"><div style="width:100%;background:#22c55e;border-radius:2px;height:60%;"></div></div>
+                <div style="flex:1;background:rgba(34,197,94,0.1);border-radius:3px;height:30px;display:flex;align-items:flex-end;padding:2px;"><div style="width:100%;background:#22c55e;border-radius:2px;height:80%;"></div></div>
+                <div style="flex:1;background:rgba(34,197,94,0.1);border-radius:3px;height:30px;display:flex;align-items:flex-end;padding:2px;"><div style="width:100%;background:#22c55e;border-radius:2px;height:45%;"></div></div>
+                <div style="flex:1;background:rgba(34,197,94,0.1);border-radius:3px;height:30px;display:flex;align-items:flex-end;padding:2px;"><div style="width:100%;background:#22c55e;border-radius:2px;height:70%;"></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="p-4">
+          <h3 class="mb-1">Social Media Dashboard</h3>
+          <p>Innovative dashboard with real-time analytics and social media insights at a glance.</p>
+        </div>
+      </div>
+
+      <!-- Social M (partial) -->
+      <div class="project-card" style="opacity:.6;flex:0 0 100px;overflow:hidden;">
+        <div class="project-thumb" style="background:linear-gradient(135deg,#1a0a2e,#2e1a4a);">
+          <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;">
+            <div style="font-size:1.5rem;">💬</div>
+          </div>
+        </div>
+        <div class="p-4">
+          <h3 class="mb-1" style="font-size:.8rem;">Social M...</h3>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════ FOOTER ═══════════════════════════════════════ -->
+<footer class="py-8 px-8 border-t border-white/5">
+  <div class="max-w-3xl mx-auto flex flex-col items-center gap-4">
+    <div class="flex gap-3">
+
+      <!-- GitHub -->
+      <div class="social-icon" title="GitHub">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
+      </div>
+
+      <!-- LinkedIn -->
+      <div class="social-icon" title="LinkedIn">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+      </div>
+
+      <!-- Email -->
+      <div class="social-icon" title="Email">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+      </div>
+
+    </div>
+    <p class="text-xs text-slate-600">Copyright 2023 Sumanth's portfolio</p>
+  </div>
+</footer>
+
+</body>
+</html>

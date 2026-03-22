@@ -1,155 +1,82 @@
-import { useEffect, useState } from 'react';
-import { AnimatePresence, motion as Motion } from 'framer-motion';
-import { Briefcase, Home, Mail, Menu, Moon, Sparkles, Sun, User, X } from 'lucide-react';
+import { useState, useEffect } from 'react'
 
-const navLinks = [
-  { name: 'Home', href: '#home', icon: Home },
-  { name: 'About', href: '#about', icon: User },
-  { name: 'Projects', href: '#projects', icon: Briefcase },
-  { name: 'Contact', href: '#contact', icon: Mail },
-];
+const links = ['Home', 'About', 'Projects', 'Contact']
 
-export default function Navbar({ theme, setTheme }) {
-  const [isOpen, setIsOpen] = useState(false);
-  const [isScrolled, setIsScrolled] = useState(false);
-  const [activeTab, setActiveTab] = useState('Home');
+export default function Navbar() {
+    const [active, setActive] = useState('Home')
+    const [scrolled, setScrolled] = useState(false)
+    const [menuOpen, setMenuOpen] = useState(false)
 
-  useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 24);
-      const current = navLinks.find(({ href }) => {
-        const section = document.querySelector(href);
-        if (!section) return false;
-        const top = section.offsetTop - 140;
-        const bottom = top + section.offsetHeight;
-        return window.scrollY >= top && window.scrollY < bottom;
-      });
-      if (current) setActiveTab(current.name);
-    };
+    useEffect(() => {
+        const onScroll = () => setScrolled(window.scrollY > 20)
+        window.addEventListener('scroll', onScroll)
+        return () => window.removeEventListener('scroll', onScroll)
+    }, [])
 
-    handleScroll();
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
-
-  const navShell = theme === 'dark'
-    ? 'border-white/10 bg-slate-950/75 text-white shadow-2xl shadow-cyan-950/10'
-    : 'border-slate-200/80 bg-white/85 text-slate-900 shadow-xl shadow-slate-200/70';
-
-  return (
-    <header className="fixed inset-x-0 top-0 z-50 px-4 pt-4 sm:px-6 lg:px-10">
-      <nav
-        className={`mx-auto flex max-w-7xl items-center justify-between rounded-full border px-5 py-3 transition-all duration-300 ${navShell} ${
-          isScrolled ? 'surface-card' : ''
-        }`}
-      >
-        <a href="#home" className="flex items-center gap-3 no-underline">
-          <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-gradient-to-br from-cyan-400 to-blue-600 text-white shadow-lg shadow-cyan-500/30">
-            <Sparkles size={20} />
-          </div>
-          <div>
-            <p className="text-xs font-semibold uppercase tracking-[0.3em] text-cyan-500">Portfolio</p>
-            <h1 className="text-lg font-bold tracking-[0.2em]">SUMANTH</h1>
-          </div>
-        </a>
-
-        <div className="hidden items-center gap-2 md:flex">
-          {navLinks.map((link) => (
-            <a
-              key={link.name}
-              href={link.href}
-              onClick={() => setActiveTab(link.name)}
-              className={`relative flex items-center gap-2 rounded-full px-4 py-2 text-sm font-medium no-underline transition ${
-                activeTab === link.name
-                  ? 'text-cyan-500'
-                  : theme === 'dark'
-                    ? 'text-slate-300 hover:text-white'
-                    : 'text-slate-600 hover:text-slate-950'
-              }`}
+    return (
+        <nav
+            className={`
+        fixed top-0 left-0 right-0 z-50 flex items-center justify-between
+        px-4 sm:px-6 lg:px-8 py-3 transition-all duration-300
+        ${scrolled ? 'glass-nav shadow-[0_4px_30px_rgba(0,0,0,0.4)]' : 'bg-transparent'}
+      `}
+        >
+            {/* Logo */}
+            <span
+                className="grad-text font-display font-extrabold text-lg sm:text-xl tracking-tight cursor-pointer select-none"
+                style={{ fontFamily: 'var(--font-display)' }}
             >
-              {activeTab === link.name && (
-                <Motion.span
-                  layoutId="nav-highlight"
-                  className="absolute inset-0 rounded-full bg-cyan-500/10"
-                  transition={{ type: 'spring', stiffness: 280, damping: 28 }}
-                />
-              )}
-              <link.icon size={16} className="relative z-10" />
-              <span className="relative z-10">{link.name}</span>
-            </a>
-          ))}
+                &lt;Sumanth /&gt;
+            </span>
 
-          <button
-            type="button"
-            onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
-            className={`ml-2 flex h-11 w-11 items-center justify-center rounded-full border transition ${
-              theme === 'dark'
-                ? 'border-white/10 bg-white/5 text-amber-300 hover:bg-white/10'
-                : 'border-slate-200 bg-slate-100 text-slate-700 hover:bg-slate-200'
-            }`}
-            aria-label="Toggle theme"
-          >
-            {theme === 'dark' ? <Sun size={18} /> : <Moon size={18} />}
-          </button>
-        </div>
-
-        <div className="flex items-center gap-2 md:hidden">
-          <button
-            type="button"
-            onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
-            className={`flex h-10 w-10 items-center justify-center rounded-full border ${
-              theme === 'dark' ? 'border-white/10 bg-white/5 text-amber-300' : 'border-slate-200 bg-white text-slate-700'
-            }`}
-            aria-label="Toggle theme"
-          >
-            {theme === 'dark' ? <Sun size={18} /> : <Moon size={18} />}
-          </button>
-          <button
-            type="button"
-            onClick={() => setIsOpen((prev) => !prev)}
-            className={`flex h-10 w-10 items-center justify-center rounded-full border ${
-              theme === 'dark' ? 'border-white/10 bg-white/5 text-white' : 'border-slate-200 bg-white text-slate-900'
-            }`}
-            aria-label="Toggle navigation"
-          >
-            {isOpen ? <X size={18} /> : <Menu size={18} />}
-          </button>
-        </div>
-      </nav>
-
-      <AnimatePresence>
-        {isOpen && (
-          <Motion.div
-            initial={{ opacity: 0, y: -12 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -12 }}
-            className={`surface-card mx-auto mt-3 max-w-7xl rounded-3xl border p-4 md:hidden ${navShell}`}
-          >
-            <div className="space-y-2">
-              {navLinks.map((link) => (
-                <a
-                  key={link.name}
-                  href={link.href}
-                  onClick={() => {
-                    setActiveTab(link.name);
-                    setIsOpen(false);
-                  }}
-                  className={`flex items-center gap-3 rounded-2xl px-4 py-3 text-sm font-medium no-underline ${
-                    activeTab === link.name
-                      ? 'bg-cyan-500/10 text-cyan-500'
-                      : theme === 'dark'
-                        ? 'text-slate-300 hover:bg-white/5'
-                        : 'text-slate-700 hover:bg-slate-100'
-                  }`}
-                >
-                  <link.icon size={18} />
-                  {link.name}
-                </a>
-              ))}
+            {/* Desktop nav pills */}
+            <div className="hidden sm:flex items-center glass-nav rounded-full px-2 py-1.5 gap-1">
+                {links.map((link) => (
+                    <button
+                        key={link}
+                        onClick={() => setActive(link)}
+                        className={`
+              px-4 py-1.5 rounded-full text-sm font-semibold transition-all duration-200 cursor-pointer
+              ${active === link
+                                ? 'bg-gradient-to-r from-[#3b9eff] to-[#a855f7] text-white shadow-[0_0_16px_rgba(59,158,255,0.5)]'
+                                : 'text-[#94a3b8] hover:text-white'}
+            `}
+                        style={{ fontFamily: 'var(--font-display)' }}
+                    >
+                        {link}
+                    </button>
+                ))}
             </div>
-          </Motion.div>
-        )}
-      </AnimatePresence>
-    </header>
-  );
+
+            {/* Mobile hamburger */}
+            <button
+                className="sm:hidden flex flex-col gap-1.5 p-2 cursor-pointer"
+                onClick={() => setMenuOpen(!menuOpen)}
+                aria-label="Toggle menu"
+            >
+                <span className={`block w-6 h-0.5 bg-[#3b9eff] transition-all duration-300 ${menuOpen ? 'rotate-45 translate-y-2' : ''}`} />
+                <span className={`block w-6 h-0.5 bg-[#a855f7] transition-all duration-300 ${menuOpen ? 'opacity-0' : ''}`} />
+                <span className={`block w-6 h-0.5 bg-[#3b9eff] transition-all duration-300 ${menuOpen ? '-rotate-45 -translate-y-2' : ''}`} />
+            </button>
+
+            {/* Mobile dropdown */}
+            {menuOpen && (
+                <div className="sm:hidden absolute top-full left-0 right-0 glass-nav border-t border-white/10 flex flex-col py-3">
+                    {links.map((link) => (
+                        <button
+                            key={link}
+                            onClick={() => { setActive(link); setMenuOpen(false) }}
+                            className={`
+                px-6 py-3 text-left text-sm font-semibold transition-colors cursor-pointer
+                ${active === link ? 'grad-text' : 'text-[#94a3b8] hover:text-white'}
+              `}
+                            style={{ fontFamily: 'var(--font-display)' }}
+                        >
+                            {link}
+                        </button>
+                    ))}
+                </div>
+            )}
+        </nav>
+    )
 }
