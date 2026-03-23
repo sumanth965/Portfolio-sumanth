@@ -1,5 +1,5 @@
 import { useEffect, useRef } from 'react'
-import profile from '../assets/IMG.png';
+import profile from '../assets/p2.png';
 
 const particles = [
   { size: 5, top: '12%', left: '6%', delay: '0s', dur: '6s' },
@@ -157,7 +157,7 @@ export default function Hero() {
           >
             <div
               className="relative"
-              style={{ width: 'clamp(200px, 28vw, 300px)', margin: '90px' }}
+              style={{ width: 'clamp(290px, 34vw, 390px)', margin: '40px' }}
             >
 
               {/* ── Deep ambient glow ── */}
@@ -172,23 +172,23 @@ export default function Hero() {
                 }}
               />
 
-         
+
 
               {/* ── Photo card with diagonal cut ── */}
               <div
                 className="relative overflow-hidden"
                 style={{
                   clipPath: 'polygon(28% 0%, 100% 0%, 100% 100%, 0% 100%, 0% 22%)',
-                  height: 'clamp(260px, 34vw, 350px)',
+                  height: 'clamp(460px, 34vw, 350px)',
                   background: 'rgba(255, 255, 255, 0.09)',
                   boxShadow: `
     0 24px 64px rgba(0,0,0,0.75),
     inset 0 10px 300px rgba(255, 255, 255, 0.12)
 
   `,
-    //   inset 0 -1px 30px rgba(255, 255, 255, 0.77),
-    // inset 1px 0 30px rgba(255, 255, 255, 0.29),
-    // inset -1px 0 30px rgba(255, 255, 255, 0.34)
+                  //   inset 0 -1px 30px rgba(255, 255, 255, 0.77),
+                  // inset 1px 0 30px rgba(255, 255, 255, 0.29),
+                  // inset -1px 0 30px rgba(255, 255, 255, 0.34)
                   border: '1px solid rgba(255, 255, 255, 0.25)',
                   backdropFilter: 'blur(12px)',
                   WebkitBackdropFilter: 'blur(12px)',
@@ -200,6 +200,7 @@ export default function Hero() {
                   src={profile}
                   alt="Sumanth"
                   className="w-full h-full object-cover object-top"
+
                 />
                 {/* Bottom fade */}
                 <div
@@ -210,6 +211,8 @@ export default function Hero() {
                   }}
                 />
               </div>
+
+
 
               {/* ══ CYAN brackets — TOP-RIGHT ══ */}
               <div className="absolute" style={{ top: '-6px', right: '-6px', width: '100px', height: '100px', zIndex: 4 }}>
@@ -275,7 +278,7 @@ export default function Hero() {
                   boxShadow: '0 0 6px #a855f7, 0 0 14px rgba(247, 85, 85, 0.5)',
                 }} />
               </div>
-              <div className="absolute" style={{ left: '305.5px', top: '48%', width: '14px', height: '32px', zIndex: 4 }}>
+              <div className="absolute" style={{ left: '395.5px', top: '48%', width: '14px', height: '32px', zIndex: 4 }}>
                 <div style={{
                   position: 'absolute', top: 0, left: 0,
                   width: '2.5px', height: '100%',
