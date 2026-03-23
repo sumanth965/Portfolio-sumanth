@@ -4,6 +4,7 @@ import Skills from './Pages/Skills'
 import Projects from './Pages/Projects'
 import Footer from './Components/Footer'
 import './index.css'
+import Contact from './Pages/Contact'
 
 export default function App() {
   return (
@@ -13,6 +14,7 @@ export default function App() {
         <Home />
         <Skills />
         <Projects />
+        <Contact/>
       </main>
       <Footer />
     </div>
