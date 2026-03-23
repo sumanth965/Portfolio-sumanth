@@ -1,4 +1,6 @@
 import { useState, useRef, useEffect, useCallback } from 'react'
+import { motion as Motion } from 'framer-motion'
+import { sectionFadeUp, staggerContainer, staggerItem } from '../utils/motion'
 
 /* ─────────────────── DATA ─────────────────── */
 const CATEGORIES = ['All', 'Frontend', 'Backend', 'Database', 'Cloud', 'Language']
@@ -163,21 +165,21 @@ function RadarChart({ skills: skillList }) {
 }
 
 /* ─────────────────── TILT CARD ─────────────────── */
-function TiltCard({ children, style, className, onMouseEnter, onMouseLeave, onClick }) {
+function TiltCard({ children, style, className, onMouseEnter, onMouseLeave, onClick, variants }) {
     const ref = useRef(null)
     const animRef = useRef(null)
     const state = useRef({ rx: 0, ry: 0, gx: 50, gy: 50, scale: 1 })
 
     const lerp = (a, b, t) => a + (b - a) * t
 
-    const animate = useCallback(() => {
+    const animate = useCallback(function animateFrame() {
         const s = state.current
         if (!ref.current) return
         ref.current.style.transform =
             `perspective(800px) rotateX(${s.rx}deg) rotateY(${s.ry}deg) scale(${s.scale})`
         ref.current.style.setProperty('--gx', `${s.gx}%`)
         ref.current.style.setProperty('--gy', `${s.gy}%`)
-        animRef.current = requestAnimationFrame(animate)
+        animRef.current = requestAnimationFrame(animateFrame)
     }, [])
 
     const handleMove = useCallback((e) => {
@@ -208,8 +210,11 @@ function TiltCard({ children, style, className, onMouseEnter, onMouseLeave, onCl
     useEffect(() => () => cancelAnimationFrame(animRef.current), [])
 
     return (
-        <div
+        <Motion.div
             ref={ref}
+            variants={variants}
+            whileHover={{ scale: 1.04 }}
+            transition={{ duration: 0.25, ease: [0.22, 1, 0.36, 1] }}
             className={className}
             style={{ ...style, willChange: 'transform', cursor: 'pointer' }}
             onMouseMove={handleMove}
@@ -218,20 +223,12 @@ function TiltCard({ children, style, className, onMouseEnter, onMouseLeave, onCl
             onClick={onClick}
         >
             {children}
-        </div>
+        </Motion.div>
     )
 }
 
 /* ─────────────────── DETAIL PANEL ─────────────────── */
 function DetailPanel({ skill, onClose }) {
-    const [barWidth, setBarWidth] = useState(0)
-    useEffect(() => {
-        if (!skill) return
-        setBarWidth(0)
-        const t = setTimeout(() => setBarWidth(skill.proficiency), 80)
-        return () => clearTimeout(t)
-    }, [skill])
-
     if (!skill) return null
 
     const level =
@@ -308,7 +305,7 @@ function DetailPanel({ skill, onClose }) {
                     <div style={{ height: '6px', background: 'rgba(255,255,255,0.06)', borderRadius: '6px', overflow: 'hidden' }}>
                         <div style={{
                             height: '100%', borderRadius: '6px',
-                            width: `${barWidth}%`,
+                            width: `${skill.proficiency}%`,
                             background: `linear-gradient(90deg, ${skill.color}, ${skill.color}88)`,
                             boxShadow: `0 0 12px ${skill.color}88`,
                             transition: 'width 1s cubic-bezier(0.22,1,0.36,1)',
@@ -397,7 +394,7 @@ export default function Skills() {
     return (
         <>
 
-            <section style={{
+            <Motion.section id="skills" {...sectionFadeUp} style={{
                 minHeight: '100vh',
                 background: 'linear-gradient(180deg,#060c19 0%,#070d1b 100%)',
                 padding: '4rem 1.5rem',
@@ -567,7 +564,12 @@ export default function Skills() {
 
                     {/* ── GRID VIEW ── */}
                     {view === 'grid' && (
-                        <div style={{
+                        <Motion.div
+                            variants={staggerContainer(0.08)}
+                            initial="initial"
+                            whileInView="whileInView"
+                            viewport={{ once: true, amount: 0.15 }}
+                            style={{
                             display: 'grid',
                             gridTemplateColumns: 'repeat(auto-fill,minmax(160px,1fr))',
                             gap: 14,
@@ -630,15 +632,23 @@ export default function Skills() {
                                     </span>
                                 </TiltCard>
                             ))}
-                        </div>
+                        </Motion.div>
                     )}
 
                     {/* ── LIST VIEW ── */}
                     {view === 'list' && (
-                        <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
+                        <Motion.div
+                            variants={staggerContainer(0.07)}
+                            initial="initial"
+                            whileInView="whileInView"
+                            viewport={{ once: true, amount: 0.15 }}
+                            style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
                             {filtered.map((sk, i) => (
-                                <div
+                                <Motion.div
                                     key={sk.label}
+                                    variants={staggerItem}
+                                    whileHover={{ scale: 1.03 }}
+                                    transition={{ duration: 0.25, ease: [0.22, 1, 0.36, 1] }}
                                     className="sk-card"
                                     onClick={() => setSelected(sk)}
                                     style={{
@@ -687,9 +697,9 @@ export default function Skills() {
                                         <div style={{ fontSize: 10, color: '#475569', fontWeight: 600 }}>{sk.years}yr exp</div>
                                     </div>
                                     <span style={{ color: '#334155', fontSize: 16 }}>›</span>
-                                </div>
+                                </Motion.div>
                             ))}
-                        </div>
+                        </Motion.div>
                     )}
 
                     {/* ── RADAR VIEW ── */}
@@ -705,9 +715,14 @@ export default function Skills() {
                                 </div>
                                 <RadarChart skills={filtered.slice(0, 8)} />
                             </div>
-                            <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
+                            <Motion.div
+                                variants={staggerContainer(0.06)}
+                                initial="initial"
+                                whileInView="whileInView"
+                                viewport={{ once: true, amount: 0.15 }}
+                                style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
                                 {filtered.map((sk, i) => (
-                                    <div key={sk.label} onClick={() => setSelected(sk)}
+                                    <Motion.div key={sk.label} variants={staggerItem} whileHover={{ scale: 1.03 }} transition={{ duration: 0.25, ease: [0.22, 1, 0.36, 1] }} onClick={() => setSelected(sk)}
                                         style={{
                                             display: 'flex', alignItems: 'center', gap: 12,
                                             padding: '10px 14px', borderRadius: 12,
@@ -730,9 +745,9 @@ export default function Skills() {
                                         <span style={{ fontSize: 11, fontWeight: 800, color: sk.color, fontFamily: 'monospace', minWidth: 34, textAlign: 'right' }}>
                                             {sk.proficiency}%
                                         </span>
-                                    </div>
+                                    </Motion.div>
                                 ))}
-                            </div>
+                            </Motion.div>
                         </div>
                     )}
 
@@ -771,7 +786,7 @@ export default function Skills() {
                 {/* ── DETAIL PANEL ── */}
                 {selected && <DetailPanel skill={selected} onClose={() => setSelected(null)} />}
 
-            </section>
+            </Motion.section>
             {/* Glow line */}
             <div className="relative w-full overflow-hidden" style={{ height: '60px' }}>
                 <svg

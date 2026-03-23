@@ -1,4 +1,6 @@
 import { useEffect, useRef } from 'react'
+import { motion as Motion } from 'framer-motion'
+import { sectionFadeUp } from '../utils/motion'
 import profile from '../assets/p2.png';
 
 const particles = [
@@ -28,7 +30,9 @@ export default function Hero() {
   }, [])
 
   return (
-    <section
+    <Motion.section
+      id="home"
+      {...sectionFadeUp}
       className="relative min-h-screen flex flex-col overflow-hidden noise"
       style={{
         background: `
@@ -74,9 +78,13 @@ export default function Hero() {
         <div className="max-w-6xl mx-auto w-full flex flex-col lg:flex-row items-center gap-10 lg:gap-16">
 
           {/* ── LEFT TEXT ── */}
-          <div
+          <Motion.div
+            variants={{ hidden: { opacity: 0, y: 50 }, visible: { opacity: 1, y: 0 } }}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, amount: 0.35 }}
+            transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
             className="flex-1 text-center lg:text-left order-2 lg:order-1"
-            style={{ animation: 'fade-up 0.8s ease both' }}
           >
             {/* Badge */}
             <div className="inline-flex items-center gap-2 glass-nav rounded-full px-4 py-1.5 mb-5">
@@ -148,12 +156,15 @@ export default function Hero() {
             </div>
 
 
-          </div>
+          </Motion.div>
 
           {/* ── RIGHT PHOTO ── */}
-          <div
+          <Motion.div
+            initial={{ opacity: 0, y: 50 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.35 }}
+            transition={{ duration: 0.65, ease: [0.22, 1, 0.36, 1], delay: 0.1 }}
             className="order-1 lg:order-2 flex-shrink-0"
-            style={{ animation: 'fade-up 0.9s ease 0.3s both' }}
           >
             <div
               className="relative"
@@ -289,7 +300,7 @@ export default function Hero() {
               </div>
 
             </div>
-          </div>
+          </Motion.div>
 
         </div>
       </div>
@@ -332,6 +343,6 @@ export default function Hero() {
           />
         </svg>
       </div>
-    </section>
+    </Motion.section>
   )
 }

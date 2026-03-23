@@ -1,4 +1,6 @@
 import { useState, useRef, useMemo } from 'react'
+import { motion as Motion } from 'framer-motion'
+import { sectionFadeUp, staggerContainer, staggerItem } from '../utils/motion'
 
 /* ─────────────────── REAL PROJECT DATA + MOCKUPS ─────────────────── */
 const projects = [
@@ -258,14 +260,17 @@ const ExternalIcon = () => (
 )
 
 /* ─────────────────── PROJECT CARD ─────────────────── */
-function ProjectCard({ project, index, isActive, onHover }) {
+function ProjectCard({ project, index, onHover }) {
   const [hovered, setHovered] = useState(false)
 
   const enter = () => { setHovered(true); onHover(index) }
   const leave = () => { setHovered(false) }
 
   return (
-    <div
+    <Motion.div
+      variants={staggerItem}
+      whileHover={{ scale: 1.04 }}
+      transition={{ duration: 0.25, ease: [0.22, 1, 0.36, 1] }}
       onMouseEnter={enter}
       onMouseLeave={leave}
       style={{
@@ -420,7 +425,7 @@ function ProjectCard({ project, index, isActive, onHover }) {
           )}
         </div>
       </div>
-    </div>
+    </Motion.div>
   )
 }
 
@@ -445,7 +450,7 @@ export default function Projects() {
 
   return (
     <>
-      <section style={{
+      <Motion.section id="projects" {...sectionFadeUp} style={{
         position: 'relative',
         padding: '4rem 1.5rem',
         background: 'linear-gradient(180deg, #080f1e 0%, #060d1a 100%)',
@@ -600,7 +605,11 @@ export default function Projects() {
           {/* ── CARDS SCROLL ── */}
           {filtered.length > 0 ? (
             <>
-              <div
+              <Motion.div
+                variants={staggerContainer(0.1)}
+                initial="initial"
+                whileInView="whileInView"
+                viewport={{ once: true, amount: 0.15 }}
                 ref={scrollRef}
                 className="hide-scroll"
                 style={{
@@ -616,11 +625,10 @@ export default function Projects() {
                     key={p.name}
                     project={p}
                     index={i}
-                    isActive={activeIdx === i}
                     onHover={setActiveIdx}
                   />
                 ))}
-              </div>
+              </Motion.div>
 
               {/* dot indicators */}
               <div style={{ display: 'flex', gap: 6, justifyContent: 'center', marginTop: 16 }}>
@@ -652,7 +660,7 @@ export default function Projects() {
           )}
 
         </div>
-      </section>
+      </Motion.section>
       {/* Glow line */}
       <div className="relative w-full overflow-hidden" style={{ height: '60px' }}>
         <svg
