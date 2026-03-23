@@ -1,3 +1,6 @@
+import { motion as Motion } from 'framer-motion'
+import { sectionFadeUp, staggerContainer, staggerItem } from '../utils/motion'
+
 const socials = [
     {
         label: 'GitHub',
@@ -44,15 +47,22 @@ const socials = [
 
 export default function Footer() {
     return (
-        <footer
+        <Motion.footer
+            id="contact"
+            {...sectionFadeUp}
             className="relative py-12 px-4 sm:px-6 lg:px-8 overflow-hidden"
             style={{ borderTop: '1px solid rgba(255,255,255,0.05)' }}
         >
             {/* subtle top glow line */}
             <div className="glow-line w-full absolute top-0 left-0" style={{ opacity: 0.4 }} />
 
-            <div className="max-w-6xl mx-auto">
-                <div className="flex flex-col sm:flex-row items-center justify-between gap-6">
+            <Motion.div
+                variants={staggerContainer(0.1)}
+                initial="initial"
+                whileInView="whileInView"
+                viewport={{ once: true, amount: 0.2 }}
+                className="max-w-6xl mx-auto">
+                <Motion.div variants={staggerItem} className="flex flex-col sm:flex-row items-center justify-between gap-6">
 
                     {/* Left: brand */}
                     <div className="text-center sm:text-left">
@@ -98,10 +108,11 @@ export default function Footer() {
                             </a>
                         ))}
                     </div>
-                </div>
+                </Motion.div>
 
                 {/* Bottom bar */}
-                <div
+                <Motion.div
+                    variants={staggerItem}
                     className="mt-8 pt-6 flex flex-col sm:flex-row items-center justify-between gap-2"
                     style={{ borderTop: '1px solid rgba(255,255,255,0.04)' }}
                 >
@@ -114,8 +125,8 @@ export default function Footer() {
                         {' '}+{' '}
                         <span className="text-[#38bdf8]">Tailwind CSS v4</span>
                     </p>
-                </div>
-            </div>
-        </footer>
+                </Motion.div>
+            </Motion.div>
+        </Motion.footer>
     )
 }
