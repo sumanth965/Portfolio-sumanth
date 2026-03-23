@@ -395,15 +395,17 @@ export default function Skills() {
     const topSkill = [...skills].sort((a, b) => b.proficiency - a.proficiency)[0]
 
     return (
-        <section style={{
-            minHeight: '100vh',
-            background: 'linear-gradient(180deg,#060c19 0%,#070d1b 100%)',
-            padding: '4rem 1.5rem',
-            position: 'relative',
-            overflow: 'hidden',
-            fontFamily: 'system-ui, sans-serif',
-        }}>
-            <style>{`
+        <>
+
+            <section style={{
+                minHeight: '100vh',
+                background: 'linear-gradient(180deg,#060c19 0%,#070d1b 100%)',
+                padding: '4rem 1.5rem',
+                position: 'relative',
+                overflow: 'hidden',
+                fontFamily: 'system-ui, sans-serif',
+            }}>
+                <style>{`
         @keyframes fade-up{from{opacity:0;transform:translateY(28px)}to{opacity:1;transform:none}}
         @keyframes slideIn{from{transform:translateX(100%)}to{transform:none}}
         @keyframes pulse-ring{0%,100%{opacity:0.15;transform:scale(1)}50%{opacity:0.3;transform:scale(1.06)}}
@@ -444,7 +446,7 @@ export default function Skills() {
           border:1px solid rgba(255,255,255,0.08);
           color:#e2e8f0;font-size:13px;font-weight:500;
           padding:9px 14px 9px 36px;border-radius:12px;outline:none;
-          width:200px;transition:border-color .2s;
+          width:100%;transition:border-color .2s;
         }
         .search-input:focus{border-color:rgba(59,158,255,0.4);}
         .search-input::placeholder{color:#334155;}
@@ -452,310 +454,362 @@ export default function Skills() {
         .prog-ring{transition:stroke-dashoffset 1s cubic-bezier(0.22,1,0.36,1);}
       `}</style>
 
-            {/* Ambient blobs */}
-            <div style={{
-                position: 'absolute', top: '10%', left: '5%', width: 400, height: 400, borderRadius: '50%',
-                background: 'radial-gradient(circle,#3b9eff,transparent)', opacity: .04, filter: 'blur(60px)',
-                animation: 'pulse-ring 6s ease-in-out infinite', pointerEvents: 'none'
-            }} />
-            <div style={{
-                position: 'absolute', bottom: '15%', right: '8%', width: 350, height: 350, borderRadius: '50%',
-                background: 'radial-gradient(circle,#a855f7,transparent)', opacity: .04, filter: 'blur(60px)',
-                animation: 'pulse-ring 8s ease-in-out infinite', pointerEvents: 'none'
-            }} />
-
-            <div style={{ maxWidth: 1100, margin: '0 auto', position: 'relative', zIndex: 10 }}>
-
-                {/* ── HEADER ── */}
-                <div style={{ marginBottom: '2.5rem', animation: 'fade-up .7s ease both' }}>
-                    <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 8 }}>
-                        <div style={{ width: 32, height: 2, background: 'linear-gradient(90deg,#3b9eff,transparent)' }} />
-                        <span style={{ fontSize: 11, fontWeight: 800, color: '#3b9eff', letterSpacing: '.2em' }}>TECH STACK</span>
-                    </div>
-                    <h2 style={{ fontSize: 'clamp(2rem,4vw,3rem)', fontWeight: 900, color: '#f1f5f9', margin: 0, lineHeight: 1.1, fontFamily: 'monospace' }}>
-                        Skills &{' '}
-                        <span style={{ background: 'linear-gradient(135deg,#3b9eff,#a855f7)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>
-                            Expertise
-                        </span>
-                    </h2>
-                    <p style={{ color: '#475569', fontSize: 14, marginTop: 8, maxWidth: 480 }}>
-                        Technologies I use to build performant, scalable full-stack applications.
-                    </p>
-                </div>
-
-                {/* ── STATS STRIP ── */}
+                {/* Ambient blobs */}
                 <div style={{
-                    display: 'grid', gridTemplateColumns: 'repeat(auto-fit,minmax(140px,1fr))',
-                    gap: 12, marginBottom: '2rem',
-                    animation: 'fade-up .7s ease .1s both',
-                }}>
-                    {[
-                        { label: 'Technologies', value: `${skills.length}+`, color: '#3b9eff' },
-                        { label: 'Avg Proficiency', value: `${avgProf}%`, color: '#a855f7' },
-                        { label: 'Top Skill', value: topSkill.label, color: '#13aa52' },
-                        { label: 'Years Coding', value: '5+', color: '#f7df1e' },
-                    ].map(stat => (
-                        <div key={stat.label} className="sk-card" style={{ borderRadius: 16, padding: '14px 18px' }}>
-                            <div style={{ fontSize: '1.4rem', fontWeight: 900, color: stat.color, fontFamily: 'monospace' }}>{stat.value}</div>
-                            <div style={{ fontSize: 10, color: '#475569', fontWeight: 700, letterSpacing: '.12em', marginTop: 2 }}>{stat.label.toUpperCase()}</div>
+                    position: 'absolute', top: '10%', left: '5%', width: 400, height: 400, borderRadius: '50%',
+                    background: 'radial-gradient(circle,#3b9eff,transparent)', opacity: .04, filter: 'blur(60px)',
+                    animation: 'pulse-ring 6s ease-in-out infinite', pointerEvents: 'none'
+                }} />
+                <div style={{
+                    position: 'absolute', bottom: '15%', right: '8%', width: 350, height: 350, borderRadius: '50%',
+                    background: 'radial-gradient(circle,#a855f7,transparent)', opacity: .04, filter: 'blur(60px)',
+                    animation: 'pulse-ring 8s ease-in-out infinite', pointerEvents: 'none'
+                }} />
+
+                <div style={{ maxWidth: 1100, margin: '0 auto', position: 'relative', zIndex: 10 }}>
+
+                    {/* ── HEADER ── */}
+                    <div style={{ marginBottom: '2.5rem', animation: 'fade-up .7s ease both' }}>
+                        <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 8 }}>
+                            <div style={{ width: 32, height: 2, background: 'linear-gradient(90deg,#3b9eff,transparent)' }} />
+                            <span style={{ fontSize: 11, fontWeight: 800, color: '#3b9eff', letterSpacing: '.2em' }}>TECH STACK</span>
                         </div>
-                    ))}
-                </div>
+                        <h2 style={{ fontSize: 'clamp(2rem,4vw,3rem)', fontWeight: 900, color: '#f1f5f9', margin: 0, lineHeight: 1.1, fontFamily: 'monospace' }}>
+                            Skills &{' '}
+                            <span style={{ background: 'linear-gradient(135deg,#3b9eff,#a855f7)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>
+                                Expertise
+                            </span>
+                        </h2>
+                        <p style={{ color: '#475569', fontSize: 14, marginTop: 8, maxWidth: 480 }}>
+                            Technologies I use to build performant, scalable full-stack applications.
+                        </p>
+                    </div>
 
-                {/* ── CONTROLS ── */}
-                <div style={{
-                    display: 'flex', flexWrap: 'wrap', gap: 12, alignItems: 'center',
-                    marginBottom: '2rem', animation: 'fade-up .7s ease .15s both',
-                }}>
-                    {/* View toggle */}
-                    <div style={{ display: 'flex', gap: 4, marginLeft: 'auto' }}>
+                    {/* ── STATS STRIP ── */}
+                    <div style={{
+                        display: 'grid', gridTemplateColumns: 'repeat(auto-fit,minmax(140px,1fr))',
+                        gap: 12, marginBottom: '2rem',
+                        animation: 'fade-up .7s ease .1s both',
+                    }}>
                         {[
-                            { id: 'grid', icon: '⊞' },
-                            { id: 'list', icon: '☰' },
-                            { id: 'radar', icon: '◎' },
-                        ].map(v => (
-                            <button key={v.id} className={`view-btn ${view === v.id ? 'active' : ''}`}
-                                onClick={() => setView(v.id)} title={v.id}>
-                                {v.icon}
-                            </button>
-                        ))}
-                    </div>
-
-                    {/* Sort */}
-                    <select className="sort-select" value={sortBy} onChange={e => setSortBy(e.target.value)}>
-                        <option value="proficiency">SORT: PROFICIENCY</option>
-                        <option value="name">SORT: NAME</option>
-                        <option value="years">SORT: EXPERIENCE</option>
-                    </select>
-
-
-                    {/* Category pills */}
-                    <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6 }}>
-                        {CATEGORIES.map(cat => (
-                            <button key={cat} className={`cat-btn ${activeCategory === cat ? 'active' : ''}`}
-                                onClick={() => setActiveCategory(cat)}>
-                                {cat.toUpperCase()}
-                            </button>
-                        ))}
-                    </div>
-
-
-
-                    {/* Search */}
-                    <div style={{ position: 'relative' }}>
-                        <span style={{ position: 'absolute', left: 12, top: '50%', transform: 'translateY(-50%)', color: '#334155', fontSize: 14, pointerEvents: 'none' }}>⌕</span>
-                        <input
-                            className="search-input"
-                            placeholder="Search skills..."
-                            value={query}
-                            onChange={e => setQuery(e.target.value)}
-                        />
-                    </div>
-                </div>
-
-                {/* ── GRID VIEW ── */}
-                {view === 'grid' && (
-                    <div style={{
-                        display: 'grid',
-                        gridTemplateColumns: 'repeat(auto-fill,minmax(160px,1fr))',
-                        gap: 14,
-                    }}>
-                        {filtered.map((sk, i) => (
-                            <TiltCard
-                                key={sk.label}
-                                className="sk-card"
-                                onClick={() => setSelected(sk)}
-                                style={{
-                                    borderRadius: 20, padding: '1.2rem 1rem',
-                                    display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 12,
-                                    animation: `fade-up .5s ease ${i * 0.05}s both`,
-                                }}
-                            >
-                                {/* shimmer glare from tilt */}
-                                <div style={{
-                                    position: 'absolute', inset: 0, borderRadius: 20, pointerEvents: 'none',
-                                    background: 'radial-gradient(circle at var(--gx,50%) var(--gy,50%), rgba(255,255,255,0.05) 0%, transparent 60%)',
-                                }} />
-
-                                {/* category dot */}
-                                <div style={{
-                                    alignSelf: 'flex-end', width: 6, height: 6, borderRadius: '50%',
-                                    background: sk.color, boxShadow: `0 0 8px ${sk.color}`, marginBottom: -6,
-                                }} />
-
-                                {/* icon */}
-                                <div style={{
-                                    width: 64, height: 64, borderRadius: 18,
-                                    background: `${sk.color}12`, border: `1px solid ${sk.color}30`,
-                                    display: 'flex', alignItems: 'center', justifyContent: 'center',
-                                    boxShadow: `0 0 24px ${sk.color}18`,
-                                    transition: 'box-shadow .3s',
-                                }}>
-                                    {sk.icon}
-                                </div>
-
-                                {/* label */}
-                                <span style={{ fontSize: 12, fontWeight: 800, color: '#94a3b8', textAlign: 'center', fontFamily: 'monospace' }}>
-                                    {sk.label}
-                                </span>
-
-
-
-                                {/* proficiency bar */}
-                                <div style={{ width: '100%', height: 3, background: 'rgba(255,255,255,0.06)', borderRadius: 3, overflow: 'hidden' }}>
-                                    <div style={{
-                                        height: '100%', borderRadius: 3,
-                                        width: `${sk.proficiency}%`,
-                                        background: `linear-gradient(90deg,${sk.color},${sk.color}88)`,
-                                        boxShadow: `0 0 8px ${sk.color}88`,
-                                    }} />
-                                </div>
-
-                                <span style={{ fontSize: 10, color: '#475569', fontWeight: 700 }}>
-                                    {sk.proficiency}% · {sk.years}yr
-                                </span>
-                            </TiltCard>
-                        ))}
-                    </div>
-                )}
-
-                {/* ── LIST VIEW ── */}
-                {view === 'list' && (
-                    <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
-                        {filtered.map((sk, i) => (
-                            <div
-                                key={sk.label}
-                                className="sk-card"
-                                onClick={() => setSelected(sk)}
-                                style={{
-                                    borderRadius: 16, padding: '1rem 1.4rem',
-                                    display: 'flex', alignItems: 'center', gap: '1.2rem',
-                                    cursor: 'pointer',
-                                    animation: `fade-up .4s ease ${i * 0.04}s both`,
-                                    transition: 'all .25s',
-                                }}
-                                onMouseEnter={e => {
-                                    e.currentTarget.style.borderColor = `${sk.color}40`
-                                    e.currentTarget.style.background = `${sk.color}08`
-                                }}
-                                onMouseLeave={e => {
-                                    e.currentTarget.style.borderColor = 'rgba(255,255,255,0.07)'
-                                    e.currentTarget.style.background = 'rgba(255,255,255,0.03)'
-                                }}
-                            >
-                                <div style={{
-                                    width: 48, height: 48, borderRadius: 14, flexShrink: 0,
-                                    background: `${sk.color}12`, border: `1px solid ${sk.color}30`,
-                                    display: 'flex', alignItems: 'center', justifyContent: 'center',
-                                }}>
-                                    {sk.icon}
-                                </div>
-                                <div style={{ flex: 1, minWidth: 0 }}>
-                                    <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 6 }}>
-                                        <span style={{ fontWeight: 800, color: '#e2e8f0', fontSize: 14, fontFamily: 'monospace' }}>{sk.label}</span>
-                                        <span style={{
-                                            fontSize: 9, fontWeight: 700, padding: '2px 7px', borderRadius: 20,
-                                            background: `${sk.color}18`, color: sk.color, border: `1px solid ${sk.color}35`,
-                                            letterSpacing: '.08em',
-                                        }}>{sk.category}</span>
-                                    </div>
-                                    <div style={{ height: 5, background: 'rgba(255,255,255,0.05)', borderRadius: 5, overflow: 'hidden' }}>
-                                        <div style={{
-                                            height: '100%', borderRadius: 5,
-                                            width: `${sk.proficiency}%`,
-                                            background: `linear-gradient(90deg,${sk.color},${sk.color}80)`,
-                                            boxShadow: `0 0 8px ${sk.color}60`,
-                                        }} />
-                                    </div>
-                                </div>
-                                <div style={{ textAlign: 'right', flexShrink: 0 }}>
-                                    <div style={{ fontSize: '1.1rem', fontWeight: 900, color: sk.color, fontFamily: 'monospace' }}>{sk.proficiency}%</div>
-                                    <div style={{ fontSize: 10, color: '#475569', fontWeight: 600 }}>{sk.years}yr exp</div>
-                                </div>
-                                <span style={{ color: '#334155', fontSize: 16 }}>›</span>
+                            { label: 'Technologies', value: `${skills.length}+`, color: '#3b9eff' },
+                            { label: 'Avg Proficiency', value: `${avgProf}%`, color: '#a855f7' },
+                            { label: 'Top Skill', value: topSkill.label, color: '#13aa52' },
+                            { label: 'Years Coding', value: '5+', color: '#f7df1e' },
+                        ].map(stat => (
+                            <div key={stat.label} className="sk-card" style={{ borderRadius: 16, padding: '14px 18px' }}>
+                                <div style={{ fontSize: '1.4rem', fontWeight: 900, color: stat.color, fontFamily: 'monospace' }}>{stat.value}</div>
+                                <div style={{ fontSize: 10, color: '#475569', fontWeight: 700, letterSpacing: '.12em', marginTop: 2 }}>{stat.label.toUpperCase()}</div>
                             </div>
                         ))}
                     </div>
-                )}
 
-                {/* ── RADAR VIEW ── */}
-                {view === 'radar' && (
+                    {/* ── CONTROLS ── */}
+                    {/* ── CONTROLS ── */}
                     <div style={{
-                        display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '2rem',
-                        alignItems: 'start',
-                        animation: 'fade-up .5s ease both',
+                        display: 'flex',
+                        flexDirection: 'column',
+                        gap: 12,
+                        marginBottom: '2rem',
+                        animation: 'fade-up .7s ease .15s both',
                     }}>
-                        <div className="sk-card" style={{ borderRadius: 24, padding: '2rem' }}>
-                            <div style={{ fontSize: 10, fontWeight: 700, color: '#64748b', letterSpacing: '.15em', marginBottom: '1.5rem' }}>
-                                PROFICIENCY RADAR
+                        {/* Top row: Search and View toggle */}
+                        <div style={{ display: 'flex', flexWrap: 'wrap', gap: 12, alignItems: 'center', justifyContent: 'space-between' }}>
+
+                            {/* View toggle */}
+                            <div style={{ display: 'flex', gap: 4 }}>
+                                {[
+                                    { id: 'grid', icon: '⊞' },
+                                    { id: 'list', icon: '☰' },
+                                    { id: 'radar', icon: '◎' },
+                                ].map(v => (
+                                    <button key={v.id} className={`view-btn ${view === v.id ? 'active' : ''}`}
+                                        onClick={() => setView(v.id)} title={v.id}>
+                                        {v.icon}
+                                    </button>
+                                ))}
                             </div>
-                            <RadarChart skills={filtered.slice(0, 8)} />
+                            {/* Search */}
+                            <div style={{ position: 'relative', flex: '1 1 200px', minWidth: '200px' }}>
+                                <span style={{ position: 'absolute', left: 12, top: '50%', transform: 'translateY(-50%)', color: '#334155', fontSize: 14, pointerEvents: 'none' }}>⌕</span>
+                                <input
+                                    className="search-input"
+                                    placeholder="Search skills..."
+                                    value={query}
+                                    onChange={e => setQuery(e.target.value)}
+                                    style={{ width: '100%' }}
+                                />
+                            </div>
+
+
                         </div>
-                        <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
+
+                        {/* Bottom row: Category pills and Sort */}
+                        <div style={{ display: 'flex', flexWrap: 'wrap', gap: 12, alignItems: 'center', justifyContent: 'space-between' }}>
+                            {/* Category pills */}
+                            <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6 }}>
+                                {CATEGORIES.map(cat => (
+                                    <button key={cat} className={`cat-btn ${activeCategory === cat ? 'active' : ''}`}
+                                        onClick={() => setActiveCategory(cat)}>
+                                        {cat.toUpperCase()}
+                                    </button>
+                                ))}
+                            </div>
+
+                            {/* Sort */}
+                            <select className="sort-select" value={sortBy} onChange={e => setSortBy(e.target.value)}>
+                                <option value="proficiency">SORT: PROFICIENCY</option>
+                                <option value="name">SORT: NAME</option>
+                                <option value="years">SORT: EXPERIENCE</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    {/* ── GRID VIEW ── */}
+                    {view === 'grid' && (
+                        <div style={{
+                            display: 'grid',
+                            gridTemplateColumns: 'repeat(auto-fill,minmax(160px,1fr))',
+                            gap: 14,
+                        }}>
                             {filtered.map((sk, i) => (
-                                <div key={sk.label} onClick={() => setSelected(sk)}
+                                <TiltCard
+                                    key={sk.label}
+                                    className="sk-card"
+                                    onClick={() => setSelected(sk)}
                                     style={{
-                                        display: 'flex', alignItems: 'center', gap: 12,
-                                        padding: '10px 14px', borderRadius: 12,
-                                        background: 'rgba(255,255,255,0.02)',
-                                        border: '1px solid rgba(255,255,255,0.06)',
-                                        cursor: 'pointer', transition: 'all .2s',
-                                        animation: `fade-up .4s ease ${i * 0.04}s both`,
+                                        borderRadius: 20, padding: '1.2rem 1rem',
+                                        display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 12,
+                                        animation: `fade-up .5s ease ${i * 0.05}s both`,
                                     }}
-                                    onMouseEnter={e => { e.currentTarget.style.background = `${sk.color}08`; e.currentTarget.style.borderColor = `${sk.color}30` }}
-                                    onMouseLeave={e => { e.currentTarget.style.background = 'rgba(255,255,255,0.02)'; e.currentTarget.style.borderColor = 'rgba(255,255,255,0.06)' }}
                                 >
-                                    <div style={{ width: 8, height: 8, borderRadius: '50%', background: sk.color, flexShrink: 0 }} />
-                                    <span style={{ color: '#94a3b8', fontSize: 12, fontWeight: 700, fontFamily: 'monospace', minWidth: 100 }}>{sk.label}</span>
-                                    <div style={{ flex: 1, height: 4, background: 'rgba(255,255,255,0.05)', borderRadius: 4, overflow: 'hidden' }}>
+                                    {/* shimmer glare from tilt */}
+                                    <div style={{
+                                        position: 'absolute', inset: 0, borderRadius: 20, pointerEvents: 'none',
+                                        background: 'radial-gradient(circle at var(--gx,50%) var(--gy,50%), rgba(255,255,255,0.05) 0%, transparent 60%)',
+                                    }} />
+
+                                    {/* category dot */}
+                                    <div style={{
+                                        alignSelf: 'flex-end', width: 6, height: 6, borderRadius: '50%',
+                                        background: sk.color, boxShadow: `0 0 8px ${sk.color}`, marginBottom: -6,
+                                    }} />
+
+                                    {/* icon */}
+                                    <div style={{
+                                        width: 64, height: 64, borderRadius: 18,
+                                        background: `${sk.color}12`, border: `1px solid ${sk.color}30`,
+                                        display: 'flex', alignItems: 'center', justifyContent: 'center',
+                                        boxShadow: `0 0 24px ${sk.color}18`,
+                                        transition: 'box-shadow .3s',
+                                    }}>
+                                        {sk.icon}
+                                    </div>
+
+
+
+                                    {/* label */}
+                                    <span style={{ fontSize: 12, fontWeight: 800, color: '#94a3b8', textAlign: 'center', fontFamily: 'monospace' }}>
+                                        {sk.label}
+                                    </span>
+
+
+
+                                    {/* proficiency bar */}
+                                    <div style={{ width: '100%', height: 3, background: 'rgba(255,255,255,0.06)', borderRadius: 3, overflow: 'hidden' }}>
                                         <div style={{
-                                            height: '100%', borderRadius: 4, width: `${sk.proficiency}%`,
-                                            background: sk.color, transition: 'width 1s ease',
+                                            height: '100%', borderRadius: 3,
+                                            width: `${sk.proficiency}%`,
+                                            background: `linear-gradient(90deg,${sk.color},${sk.color}88)`,
+                                            boxShadow: `0 0 8px ${sk.color}88`,
                                         }} />
                                     </div>
-                                    <span style={{ fontSize: 11, fontWeight: 800, color: sk.color, fontFamily: 'monospace', minWidth: 34, textAlign: 'right' }}>
-                                        {sk.proficiency}%
+
+                                    <span style={{ fontSize: 10, color: '#475569', fontWeight: 700 }}>
+                                        {sk.proficiency}% · {sk.years}yr
                                     </span>
+                                </TiltCard>
+                            ))}
+                        </div>
+                    )}
+
+                    {/* ── LIST VIEW ── */}
+                    {view === 'list' && (
+                        <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
+                            {filtered.map((sk, i) => (
+                                <div
+                                    key={sk.label}
+                                    className="sk-card"
+                                    onClick={() => setSelected(sk)}
+                                    style={{
+                                        borderRadius: 16, padding: '1rem 1.4rem',
+                                        display: 'flex', alignItems: 'center', gap: '1.2rem',
+                                        cursor: 'pointer',
+                                        animation: `fade-up .4s ease ${i * 0.04}s both`,
+                                        transition: 'all .25s',
+                                    }}
+                                    onMouseEnter={e => {
+                                        e.currentTarget.style.borderColor = `${sk.color}40`
+                                        e.currentTarget.style.background = `${sk.color}08`
+                                    }}
+                                    onMouseLeave={e => {
+                                        e.currentTarget.style.borderColor = 'rgba(255,255,255,0.07)'
+                                        e.currentTarget.style.background = 'rgba(255,255,255,0.03)'
+                                    }}
+                                >
+                                    <div style={{
+                                        width: 48, height: 48, borderRadius: 14, flexShrink: 0,
+                                        background: `${sk.color}12`, border: `1px solid ${sk.color}30`,
+                                        display: 'flex', alignItems: 'center', justifyContent: 'center',
+                                    }}>
+                                        {sk.icon}
+                                    </div>
+                                    <div style={{ flex: 1, minWidth: 0 }}>
+                                        <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 6 }}>
+                                            <span style={{ fontWeight: 800, color: '#e2e8f0', fontSize: 14, fontFamily: 'monospace' }}>{sk.label}</span>
+                                            <span style={{
+                                                fontSize: 9, fontWeight: 700, padding: '2px 7px', borderRadius: 20,
+                                                background: `${sk.color}18`, color: sk.color, border: `1px solid ${sk.color}35`,
+                                                letterSpacing: '.08em',
+                                            }}>{sk.category}</span>
+                                        </div>
+                                        <div style={{ height: 5, background: 'rgba(255,255,255,0.05)', borderRadius: 5, overflow: 'hidden' }}>
+                                            <div style={{
+                                                height: '100%', borderRadius: 5,
+                                                width: `${sk.proficiency}%`,
+                                                background: `linear-gradient(90deg,${sk.color},${sk.color}80)`,
+                                                boxShadow: `0 0 8px ${sk.color}60`,
+                                            }} />
+                                        </div>
+                                    </div>
+                                    <div style={{ textAlign: 'right', flexShrink: 0 }}>
+                                        <div style={{ fontSize: '1.1rem', fontWeight: 900, color: sk.color, fontFamily: 'monospace' }}>{sk.proficiency}%</div>
+                                        <div style={{ fontSize: 10, color: '#475569', fontWeight: 600 }}>{sk.years}yr exp</div>
+                                    </div>
+                                    <span style={{ color: '#334155', fontSize: 16 }}>›</span>
+                                </div>
+                            ))}
+                        </div>
+                    )}
+
+                    {/* ── RADAR VIEW ── */}
+                    {view === 'radar' && (
+                        <div style={{
+                            display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '2rem',
+                            alignItems: 'start',
+                            animation: 'fade-up .5s ease both',
+                        }}>
+                            <div className="sk-card" style={{ borderRadius: 24, padding: '2rem' }}>
+                                <div style={{ fontSize: 10, fontWeight: 700, color: '#64748b', letterSpacing: '.15em', marginBottom: '1.5rem' }}>
+                                    PROFICIENCY RADAR
+                                </div>
+                                <RadarChart skills={filtered.slice(0, 8)} />
+                            </div>
+                            <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
+                                {filtered.map((sk, i) => (
+                                    <div key={sk.label} onClick={() => setSelected(sk)}
+                                        style={{
+                                            display: 'flex', alignItems: 'center', gap: 12,
+                                            padding: '10px 14px', borderRadius: 12,
+                                            background: 'rgba(255,255,255,0.02)',
+                                            border: '1px solid rgba(255,255,255,0.06)',
+                                            cursor: 'pointer', transition: 'all .2s',
+                                            animation: `fade-up .4s ease ${i * 0.04}s both`,
+                                        }}
+                                        onMouseEnter={e => { e.currentTarget.style.background = `${sk.color}08`; e.currentTarget.style.borderColor = `${sk.color}30` }}
+                                        onMouseLeave={e => { e.currentTarget.style.background = 'rgba(255,255,255,0.02)'; e.currentTarget.style.borderColor = 'rgba(255,255,255,0.06)' }}
+                                    >
+                                        <div style={{ width: 8, height: 8, borderRadius: '50%', background: sk.color, flexShrink: 0 }} />
+                                        <span style={{ color: '#94a3b8', fontSize: 12, fontWeight: 700, fontFamily: 'monospace', minWidth: 100 }}>{sk.label}</span>
+                                        <div style={{ flex: 1, height: 4, background: 'rgba(255,255,255,0.05)', borderRadius: 4, overflow: 'hidden' }}>
+                                            <div style={{
+                                                height: '100%', borderRadius: 4, width: `${sk.proficiency}%`,
+                                                background: sk.color, transition: 'width 1s ease',
+                                            }} />
+                                        </div>
+                                        <span style={{ fontSize: 11, fontWeight: 800, color: sk.color, fontFamily: 'monospace', minWidth: 34, textAlign: 'right' }}>
+                                            {sk.proficiency}%
+                                        </span>
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+                    )}
+
+                    {/* ── EMPTY STATE ── */}
+                    {filtered.length === 0 && (
+                        <div style={{ textAlign: 'center', padding: '4rem', color: '#334155' }}>
+                            <div style={{ fontSize: '3rem', marginBottom: '1rem' }}>⌀</div>
+                            <div style={{ fontWeight: 700 }}>No skills match "{query}"</div>
+                        </div>
+                    )}
+
+                    {/* ── MARQUEE ── */}
+                    <div style={{ marginTop: '3rem', overflow: 'hidden', position: 'relative' }}>
+                        <div style={{
+                            position: 'absolute', left: 0, top: 0, bottom: 0, width: 60, zIndex: 1,
+                            background: 'linear-gradient(90deg,#070d1b,transparent)', pointerEvents: 'none'
+                        }} />
+                        <div style={{
+                            position: 'absolute', right: 0, top: 0, bottom: 0, width: 60, zIndex: 1,
+                            background: 'linear-gradient(-90deg,#070d1b,transparent)', pointerEvents: 'none'
+                        }} />
+                        <div className="marquee-track">
+                            {[...skills, ...skills].map((sk, i) => (
+                                <div key={i} style={{ display: 'flex', alignItems: 'center', gap: 8, margin: '0 24px', opacity: .25 }}>
+                                    <div style={{ transform: 'scale(0.6)', transformOrigin: 'center' }}>{sk.icon}</div>
+                                    <span style={{ fontSize: 11, fontWeight: 800, color: '#64748b', whiteSpace: 'nowrap', fontFamily: 'monospace' }}>
+                                        {sk.label}
+                                    </span>
+                                    <span style={{ color: '#1e293b', fontSize: 18, marginLeft: 8 }}>·</span>
                                 </div>
                             ))}
                         </div>
                     </div>
-                )}
-
-                {/* ── EMPTY STATE ── */}
-                {filtered.length === 0 && (
-                    <div style={{ textAlign: 'center', padding: '4rem', color: '#334155' }}>
-                        <div style={{ fontSize: '3rem', marginBottom: '1rem' }}>⌀</div>
-                        <div style={{ fontWeight: 700 }}>No skills match "{query}"</div>
-                    </div>
-                )}
-
-                {/* ── MARQUEE ── */}
-                <div style={{ marginTop: '3rem', overflow: 'hidden', position: 'relative' }}>
-                    <div style={{
-                        position: 'absolute', left: 0, top: 0, bottom: 0, width: 60, zIndex: 1,
-                        background: 'linear-gradient(90deg,#070d1b,transparent)', pointerEvents: 'none'
-                    }} />
-                    <div style={{
-                        position: 'absolute', right: 0, top: 0, bottom: 0, width: 60, zIndex: 1,
-                        background: 'linear-gradient(-90deg,#070d1b,transparent)', pointerEvents: 'none'
-                    }} />
-                    <div className="marquee-track">
-                        {[...skills, ...skills].map((sk, i) => (
-                            <div key={i} style={{ display: 'flex', alignItems: 'center', gap: 8, margin: '0 24px', opacity: .25 }}>
-                                <div style={{ transform: 'scale(0.6)', transformOrigin: 'center' }}>{sk.icon}</div>
-                                <span style={{ fontSize: 11, fontWeight: 800, color: '#64748b', whiteSpace: 'nowrap', fontFamily: 'monospace' }}>
-                                    {sk.label}
-                                </span>
-                                <span style={{ color: '#1e293b', fontSize: 18, marginLeft: 8 }}>·</span>
-                            </div>
-                        ))}
-                    </div>
                 </div>
-            </div>
 
-            {/* ── DETAIL PANEL ── */}
-            {selected && <DetailPanel skill={selected} onClose={() => setSelected(null)} />}
-        </section>
+                {/* ── DETAIL PANEL ── */}
+                {selected && <DetailPanel skill={selected} onClose={() => setSelected(null)} />}
+
+            </section>
+            {/* Glow line */}
+            <div className="relative w-full overflow-hidden" style={{ height: '60px' }}>
+                <svg
+                    viewBox="0 0 1200 60"
+                    preserveAspectRatio="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                    style={{ width: '100%', height: '100%' }}
+                >
+                    <defs>
+                        <linearGradient id="lineGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+                            <stop offset="0%" stopColor="#818cf8" stopOpacity="0.9" />
+                            <stop offset="35%" stopColor="#38bdf8" stopOpacity="0.8" />
+                            <stop offset="100%" stopColor="#22d3ee" stopOpacity="1" />
+                        </linearGradient>
+                        <filter id="glow">
+                            <feGaussianBlur stdDeviation="2.5" result="blur" />
+                            <feMerge><feMergeNode in="blur" /><feMergeNode in="SourceGraphic" /></feMerge>
+                        </filter>
+                    </defs>
+
+                    {/* Glow blur layer */}
+                    <path
+                        d="M0,14 L350,14 L420,46 L1200,46" fill="none"
+                        stroke="url(#lineGrad)"
+                        strokeWidth="4"
+                        strokeLinecap="round"
+                        filter="url(#glow)"
+                        opacity="0.5"
+                    />
+                    {/* Sharp line on top */}
+                    <path
+                        d="M0,14 L350,14 L420,46 L1200,46" fill="none"
+                        stroke="url(#lineGrad)"
+                        strokeWidth="1.2"
+                        strokeLinecap="round"
+                    />
+                </svg>
+            </div>
+        </>
     )
 }
