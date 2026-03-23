@@ -1,6 +1,3 @@
-import { motion as Motion } from 'framer-motion'
-import { sectionFadeUp, staggerContainer, staggerItem } from '../utils/motion'
-
 const socials = [
     {
         label: 'GitHub',
@@ -24,7 +21,7 @@ const socials = [
     },
     {
         label: 'Email',
-        href: 'mailto:sumanth@example.com',
+        href: 'mailto:sumanthpoojary965@gmail.com',
         icon: (
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
                 <rect x="2" y="4" width="20" height="16" rx="2" />
@@ -47,86 +44,191 @@ const socials = [
 
 export default function Footer() {
     return (
-        <Motion.footer
-            id="contact"
-            {...sectionFadeUp}
-            className="relative py-12 px-4 sm:px-6 lg:px-8 overflow-hidden"
-            style={{ borderTop: '1px solid rgba(255,255,255,0.05)' }}
+        <footer
+            id="footer"
+            style={{
+                position: 'relative',
+                padding: 'clamp(2rem, 5vw, 3rem) clamp(1rem, 3vw, 2rem)',
+                overflow: 'hidden',
+                borderTop: '1px solid rgba(255,255,255,0.05)',
+                background: 'linear-gradient(180deg, #060c19 0%, #050b16 100%)',
+            }}
         >
-            {/* subtle top glow line */}
-            <div className="glow-line w-full absolute top-0 left-0" style={{ opacity: 0.4 }} />
+            <style>{`
+                @keyframes fade-up-footer { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: none; } }
+                .footer-link {
+                    font-size: 12px;
+                    font-weight: 600;
+                    color: #475569;
+                    transition: color 0.2s;
+                    cursor: pointer;
+                    text-decoration: none;
+                }
+                .footer-link:hover {
+                    color: #3b9eff;
+                }
+                .social-icon {
+                    width: 40px;
+                    height: 40px;
+                    border-radius: 12px;
+                    background: rgba(255, 255, 255, 0.03);
+                    border: 1px solid rgba(255, 255, 255, 0.07);
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    color: #475569;
+                    transition: all 0.2s;
+                    text-decoration: none;
+                }
+                .social-icon:hover {
+                    transform: translateY(-2px);
+                }
+            `}</style>
 
-            <Motion.div
-                variants={staggerContainer(0.1)}
-                initial="initial"
-                whileInView="whileInView"
-                viewport={{ once: true, amount: 0.2 }}
-                className="max-w-6xl mx-auto">
-                <Motion.div variants={staggerItem} className="flex flex-col sm:flex-row items-center justify-between gap-6">
+            {/* Subtle top glow line */}
+            <div style={{
+                position: 'absolute',
+                top: 0,
+                left: 0,
+                width: '100%',
+                height: '1px',
+                background: 'linear-gradient(90deg, transparent, #3b9eff, transparent)',
+                opacity: 0.4,
+            }} />
 
-                    {/* Left: brand */}
-                    <div className="text-center sm:text-left">
-                        <span
-                            className="grad-text font-extrabold text-xl block mb-1"
-                            style={{ fontFamily: 'var(--font-display)' }}
-                        >
-                            &lt;Sumanth /&gt;
-                        </span>
-                        <p className="text-[#475569] text-xs">
-                            Full Stack Developer · MERN Specialist
+            <div style={{
+                maxWidth: '1200px',
+                margin: '0 auto',
+                animation: 'fade-up-footer 0.8s ease both',
+            }}>
+                <div style={{
+                    display: 'flex',
+                    flexDirection: 'column',
+                    alignItems: 'center',
+                    justifyContent: 'space-between',
+                    gap: '1.5rem',
+                }}>
+                    {/* Top section */}
+                    <div style={{
+                        display: 'flex',
+                        flexDirection: 'column',
+                        width: '100%',
+                        gap: '1.5rem',
+                    }}>
+                        <div style={{
+                            display: 'flex',
+                            flexWrap: 'wrap',
+                            alignItems: 'center',
+                            justifyContent: 'space-between',
+                            gap: '1.5rem',
+                        }}>
+                            {/* Left: brand */}
+                            <div style={{ textAlign: 'center' }}>
+                                <span style={{
+                                    background: 'linear-gradient(135deg, #3b9eff, #a855f7)',
+                                    WebkitBackgroundClip: 'text',
+                                    WebkitTextFillColor: 'transparent',
+                                    fontWeight: 800,
+                                    fontSize: '20px',
+                                    display: 'block',
+                                    marginBottom: '4px',
+                                    fontFamily: 'monospace',
+                                }}>
+                                    &lt;Sumanth /&gt;
+                                </span>
+                                <p style={{
+                                    color: '#475569',
+                                    fontSize: '11px',
+                                    margin: 0,
+                                }}>
+                                    Full Stack Developer · MERN Specialist
+                                </p>
+                            </div>
+
+                            {/* Center: nav links */}
+                            <div style={{
+                                display: 'flex',
+                                gap: 'clamp(1rem, 3vw, 1.5rem)',
+                                flexWrap: 'wrap',
+                                justifyContent: 'center',
+                            }}>
+                                {['Home', 'Skills', 'Projects', 'Contact'].map((link) => (
+                                    <a
+                                        key={link}
+                                        href={`#${link.toLowerCase()}`}
+                                        className="footer-link"
+                                    >
+                                        {link}
+                                    </a>
+                                ))}
+                            </div>
+
+                            {/* Right: social icons */}
+                            <div style={{
+                                display: 'flex',
+                                gap: '12px',
+                                justifyContent: 'center',
+                            }}>
+                                {socials.map(({ label, href, icon, color }) => (
+                                    <a
+                                        key={label}
+                                        href={href}
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        aria-label={label}
+                                        className="social-icon"
+                                        onMouseEnter={e => {
+                                            e.currentTarget.style.color = color;
+                                            e.currentTarget.style.boxShadow = `0 0 16px ${color}33`;
+                                            e.currentTarget.style.borderColor = `${color}44`;
+                                        }}
+                                        onMouseLeave={e => {
+                                            e.currentTarget.style.color = '#475569';
+                                            e.currentTarget.style.boxShadow = 'none';
+                                            e.currentTarget.style.borderColor = 'rgba(255,255,255,0.07)';
+                                        }}
+                                    >
+                                        {icon}
+                                    </a>
+                                ))}
+                            </div>
+                        </div>
+                    </div>
+
+                    {/* Bottom bar */}
+                    <div style={{
+                        marginTop: '1.5rem',
+                        paddingTop: '1.5rem',
+                        width: '100%',
+                        display: 'flex',
+                        flexDirection: 'column',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        gap: '8px',
+                        borderTop: '1px solid rgba(255,255,255,0.04)',
+                    }}>
+                        <p style={{
+                            color: '#2d3a4a',
+                            fontSize: '11px',
+                            margin: 0,
+                            textAlign: 'center',
+                        }}>
+                            Copyright © 2025 Sumanth's Portfolio. All rights reserved.
+                        </p>
+                        <p style={{
+                            color: '#2d3a4a',
+                            fontSize: '11px',
+                            margin: 0,
+                            textAlign: 'center',
+                        }}>
+                            Built with{' '}
+                            <span style={{ color: '#61dafb' }}>React</span>
+                            {' '}+{' '}
+                            <span style={{ color: '#38bdf8' }}>Tailwind CSS</span>
                         </p>
                     </div>
-
-                    {/* Center: nav links */}
-                    <div className="flex gap-4 sm:gap-6">
-                        {['Home', 'About', 'Projects', 'Contact'].map((link) => (
-                            <button
-                                key={link}
-                                className="text-xs font-semibold text-[#475569] hover:text-[#3b9eff] transition-colors cursor-pointer"
-                                style={{ fontFamily: 'var(--font-display)' }}
-                            >
-                                {link}
-                            </button>
-                        ))}
-                    </div>
-
-                    {/* Right: social icons */}
-                    <div className="flex gap-3">
-                        {socials.map(({ label, href, icon, color }) => (
-                            <a
-                                key={label}
-                                href={href}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                aria-label={label}
-                                className="w-10 h-10 rounded-xl glass-card flex items-center justify-center text-[#475569] transition-all duration-200 hover:-translate-y-0.5"
-                                style={{ border: '1px solid rgba(255,255,255,0.07)' }}
-                                onMouseEnter={e => { e.currentTarget.style.color = color; e.currentTarget.style.boxShadow = `0 0 16px ${color}33`; e.currentTarget.style.borderColor = `${color}44` }}
-                                onMouseLeave={e => { e.currentTarget.style.color = '#475569'; e.currentTarget.style.boxShadow = 'none'; e.currentTarget.style.borderColor = 'rgba(255,255,255,0.07)' }}
-                            >
-                                {icon}
-                            </a>
-                        ))}
-                    </div>
-                </Motion.div>
-
-                {/* Bottom bar */}
-                <Motion.div
-                    variants={staggerItem}
-                    className="mt-8 pt-6 flex flex-col sm:flex-row items-center justify-between gap-2"
-                    style={{ borderTop: '1px solid rgba(255,255,255,0.04)' }}
-                >
-                    <p className="text-[#2d3a4a] text-xs">
-                        Copyright © 2024 Sumanth's Portfolio. All rights reserved.
-                    </p>
-                    <p className="text-[#2d3a4a] text-xs">
-                        Built with{' '}
-                        <span className="text-[#61dafb]">React</span>
-                        {' '}+{' '}
-                        <span className="text-[#38bdf8]">Tailwind CSS v4</span>
-                    </p>
-                </Motion.div>
-            </Motion.div>
-        </Motion.footer>
+                </div>
+            </div>
+        </footer>
     )
 }
