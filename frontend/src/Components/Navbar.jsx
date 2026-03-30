@@ -1,149 +1,204 @@
-import { useEffect, useMemo, useState } from 'react'
+import React, { useState, useEffect } from "react";
+import { motion, AnimatePresence, useScroll, useSpring } from "framer-motion";
+import { Menu, X, Home, User, Briefcase, Mail, Sun, Moon, Sparkles, ChevronRight } from "lucide-react";
+
+/**
+ * Premium Glassmorphic Navbar Redesign
+ * Focus: High-end aesthetics, sophisticated animations, and professional micro-interactions.
+ */
 
 const NAV_LINKS = [
-  { label: 'Home', href: '#home' },
-  { label: 'Skills', href: '#skills' },
-  { label: 'Projects', href: '#projects' },
-  { label: 'Contact', href: '#contact' },
-]
+  { name: "Home", href: "#home", icon: Home },
+  { name: "About", href: "#about", icon: User },
+  { name: "Projects", href: "#projects", icon: Briefcase },
+  { name: "Contact", href: "#contact", icon: Mail },
+];
 
-export default function Navbar() {
-  const [active, setActive] = useState('#home')
-  const [scrolled, setScrolled] = useState(false)
-  const [menuOpen, setMenuOpen] = useState(false)
+export default function Navbar({ theme, setTheme }) {
+  const [isOpen, setIsOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+  const [hoveredLink, setHoveredLink] = useState(null);
+  const [activeTab, setActiveTab] = useState("Home");
+  
+  const { scrollYProgress } = useScroll();
+  const scaleX = useSpring(scrollYProgress, {
+    stiffness: 100,
+    damping: 30,
+    restDelta: 0.001
+  });
 
-  const sectionIds = useMemo(() => NAV_LINKS.map((link) => link.href.slice(1)), [])
-
+  // Track scroll activity for glassy effect
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 18)
-    window.addEventListener('scroll', onScroll, { passive: true })
-    return () => window.removeEventListener('scroll', onScroll)
-  }, [])
+    const handleScroll = () => {
+      setScrolled(window.scrollY > 30);
 
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        const visible = entries
-          .filter((entry) => entry.isIntersecting)
-          .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0]
+      // Update active tab based on scroll position
+      const scrollPos = window.scrollY + 100;
+      const sections = NAV_LINKS.map(link => document.querySelector(link.href));
 
-        if (visible?.target?.id) {
-          setActive(`#${visible.target.id}`)
+      sections.forEach((section, index) => {
+        if (section && scrollPos >= section.offsetTop && scrollPos < section.offsetTop + section.offsetHeight) {
+          setActiveTab(NAV_LINKS[index].name);
         }
-      },
-      {
-        rootMargin: '-35% 0px -45% 0px',
-        threshold: [0.2, 0.35, 0.6],
-      },
-    )
+      });
+    };
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
-    sectionIds.forEach((id) => {
-      const section = document.getElementById(id)
-      if (section) observer.observe(section)
-    })
-
-    return () => observer.disconnect()
-  }, [sectionIds])
-
-  useEffect(() => {
-    document.body.style.overflow = menuOpen ? 'hidden' : ''
-    return () => {
-      document.body.style.overflow = ''
-    }
-  }, [menuOpen])
-
-  const onNavigate = (href) => {
-    const target = document.querySelector(href)
-    if (target) {
-      target.scrollIntoView({ behavior: 'smooth', block: 'start' })
-    }
-    setActive(href)
-    setMenuOpen(false)
-  }
+  const toggleTheme = () => setTheme(theme === "dark" ? "light" : "dark");
 
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 px-3 sm:px-6 lg:px-8 pt-3 sm:pt-4">
-      <nav
-        className={[
-          'mx-auto flex w-full max-w-7xl items-center justify-between rounded-2xl border px-3 py-2 sm:px-4 transition-all duration-300',
-          scrolled
-            ? 'border-white/15 bg-[#061123]/80 shadow-[0_10px_35px_rgba(0,0,0,0.5)] backdrop-blur-xl'
-            : 'border-white/8 bg-[#061123]/55 backdrop-blur-md',
-        ].join(' ')}
-      >
-        <button
-          type="button"
-          onClick={() => onNavigate('#home')}
-          className="grad-text cursor-pointer select-none text-base font-extrabold tracking-tight sm:text-lg"
-          style={{ fontFamily: 'var(--font-display)' }}
-        >
-          &lt;Sumanth /&gt;
-        </button>
+    <nav
+      className={`fixed top-0 left-0 right-0 z-[1000] transition-all duration-700 ${
+        scrolled ? "py-3" : "py-6"
+      }`}
+    >
+      {/* Top Scroll Indicator Bar */}
+      <motion.div
+        className="fixed top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-cyan-400 via-blue-500 to-indigo-600 origin-left z-[1001]"
+        style={{ scaleX }}
+      />
 
-        <div className="hidden items-center gap-1 rounded-full border border-white/10 bg-white/[0.03] p-1 sm:flex">
-          {NAV_LINKS.map((link) => (
-            <button
-              key={link.href}
-              type="button"
-              onClick={() => onNavigate(link.href)}
-              className={[
-                'rounded-full px-4 py-1.5 text-sm font-semibold transition-all duration-200 cursor-pointer',
-                active === link.href
-                  ? 'bg-gradient-to-r from-[#3b9eff] to-[#a855f7] text-white shadow-[0_0_18px_rgba(59,158,255,0.42)]'
-                  : 'text-[#94a3b8] hover:bg-white/5 hover:text-white',
-              ].join(' ')}
-              style={{ fontFamily: 'var(--font-display)' }}
-            >
-              {link.label}
-            </button>
-          ))}
-        </div>
+      <div className="max-w-7xl mx-auto px-6 flex items-center justify-between">
 
-        <button
-          type="button"
-          className="flex h-10 w-10 items-center justify-center rounded-xl border border-white/10 bg-white/5 p-2 sm:hidden"
-          onClick={() => setMenuOpen((state) => !state)}
-          aria-expanded={menuOpen}
-          aria-label="Toggle navigation menu"
+        {/* LOGO - Premium Branding */}
+        <motion.a
+          href="#home"
+          initial={{ opacity: 0, x: -20 }}
+          animate={{ opacity: 1, x: 0 }}
+          className="flex items-center gap-3 no-underline group"
         >
-          <span className="relative block h-4 w-5">
-            <span
-              className={`absolute left-0 top-0 h-0.5 w-5 bg-[#8cc4ff] transition-all duration-300 ${menuOpen ? 'translate-y-[7px] rotate-45' : ''}`}
-            />
-            <span
-              className={`absolute left-0 top-[7px] h-0.5 w-5 bg-[#e2b8ff] transition-all duration-300 ${menuOpen ? 'opacity-0' : ''}`}
-            />
-            <span
-              className={`absolute left-0 top-[14px] h-0.5 w-5 bg-[#8cc4ff] transition-all duration-300 ${menuOpen ? '-translate-y-[7px] -rotate-45' : ''}`}
-            />
+          <div className="relative">
+            <div className={`w-10 h-10 rounded-2xl flex items-center justify-center shadow-xl transition-all duration-500 overflow-hidden ${
+              theme === "dark" ? "bg-slate-900 border-white/10" : "bg-white border-slate-200"
+            } border shadow-cyan-500/10`}>
+              <motion.div
+                animate={{ rotate: [0, 15, -15, 0] }}
+                transition={{ repeat: Infinity, duration: 4 }}
+              >
+                <Sparkles className="text-cyan-400 w-5 h-5" />
+              </motion.div>
+              {/* Shimmer effect */}
+              <div className="absolute inset-0 bg-gradient-to-r from-transparent via-cyan-400/10 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700" />
+            </div>
+            {/* Outer Glow */}
+            <div className="absolute inset-0 bg-cyan-400/20 blur-xl rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+          </div>
+          <span className={`text-xl font-black tracking-tighter ${theme === "dark" ? "text-white" : "text-slate-900"}`}>
+            SUMANTH<span className="text-cyan-500">.</span>
           </span>
-        </button>
-      </nav>
+        </motion.a>
 
-      <div
-        className={[
-          'sm:hidden overflow-hidden rounded-2xl border border-white/10 bg-[#08152b]/95 backdrop-blur-xl transition-all duration-300',
-          menuOpen ? 'mt-2 max-h-96 opacity-100' : 'pointer-events-none max-h-0 opacity-0',
-        ].join(' ')}
-      >
-        <div className="space-y-1 p-2">
+        {/* DESKTOP NAVIGATION - Floating Pill Design */}
+        <motion.div
+          initial={{ opacity: 0, y: -10 }}
+          animate={{ opacity: 1, y: 0 }}
+          className={`hidden md:flex items-center gap-1 p-1.5 rounded-full border transition-all duration-500 ${
+            scrolled
+              ? (theme === "dark" ? "bg-slate-950/40 border-white/10 backdrop-blur-3xl shadow-2xl" : "bg-white/40 border-slate-200 backdrop-blur-3xl shadow-xl")
+              : "bg-transparent border-transparent"
+          }`}
+        >
           {NAV_LINKS.map((link) => (
-            <button
-              key={link.href}
-              type="button"
-              onClick={() => onNavigate(link.href)}
-              className={[
-                'w-full rounded-xl px-4 py-3 text-left text-sm font-semibold transition-colors',
-                active === link.href
-                  ? 'bg-gradient-to-r from-[#3b9eff]/25 to-[#a855f7]/25 text-white'
-                  : 'text-[#94a3b8] hover:bg-white/5 hover:text-white',
-              ].join(' ')}
+            <a
+              key={link.name}
+              href={link.href}
+              onMouseEnter={() => setHoveredLink(link.name)}
+              onMouseLeave={() => setHoveredLink(null)}
+              className={`relative px-5 py-2 rounded-full text-[11px] font-black uppercase tracking-[0.15em] transition-all duration-300 no-underline flex items-center gap-2 group ${
+                activeTab === link.name
+                  ? (theme === "dark" ? "text-cyan-400" : "text-cyan-600")
+                  : (theme === "dark" ? "text-slate-400 hover:text-white" : "text-slate-500 hover:text-slate-900")
+              }`}
             >
-              {link.label}
-            </button>
+              {/* Hover Background */}
+              {hoveredLink === link.name && (
+                <motion.div
+                  layoutId="nav-hover"
+                  className={`absolute inset-0 rounded-full ${theme === "dark" ? "bg-white/5" : "bg-slate-100"}`}
+                  transition={{ type: "spring", bounce: 0.2, duration: 0.3 }}
+                />
+              )}
+              
+              {/* Active Indicator */}
+              {activeTab === link.name && (
+                <motion.div
+                  layoutId="nav-active"
+                  className={`absolute inset-0 rounded-full ${theme === "dark" ? "bg-cyan-500/10 border border-cyan-500/20" : "bg-cyan-50 border border-cyan-200"}`}
+                  transition={{ type: "spring", bounce: 0.2, duration: 0.6 }}
+                />
+              )}
+              
+              <span className="relative z-10">{link.name}</span>
+            </a>
           ))}
+        </motion.div>
+
+        {/* ACTION BUTTONS: Theme + Mobile Toggle */}
+        <div className="flex items-center gap-2">
+          {/* Theme Toggle Button */}
+          <motion.button
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+            onClick={toggleTheme}
+            className={`p-2.5 rounded-xl transition-all duration-300 border ${
+              theme === "dark"
+                ? "bg-slate-900/50 border-white/10 text-yellow-500 hover:border-yellow-500/40 shadow-lg shadow-black/20"
+                : "bg-white border-slate-200 text-slate-500 hover:border-cyan-200 shadow-sm"
+            }`}
+          >
+            {theme === "dark" ? <Sun size={18} /> : <Moon size={18} />}
+          </motion.button>
+
+          {/* Mobile Menu Toggle */}
+          <button
+            onClick={() => setIsOpen(!isOpen)}
+            className={`md:hidden p-2.5 rounded-xl border transition-all duration-300 ${
+              theme === "dark" ? "bg-slate-900/50 border-white/10 text-white" : "bg-white border-slate-200 text-slate-900"
+            }`}
+          >
+            {isOpen ? <X size={20} /> : <Menu size={20} />}
+          </button>
         </div>
       </div>
-    </header>
-  )
+
+      {/* MOBILE MENU */}
+      <AnimatePresence>
+        {isOpen && (
+          <motion.div
+            initial={{ opacity: 0, y: -20, scale: 0.95 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            exit={{ opacity: 0, y: -20, scale: 0.95 }}
+            className="md:hidden absolute top-full left-0 right-0 mx-6 mt-4 pointer-events-auto"
+          >
+            <div className={`p-4 rounded-[2rem] border shadow-2xl backdrop-blur-3xl overflow-hidden ${
+              theme === "dark" ? "bg-slate-900/90 border-white/10" : "bg-white/90 border-slate-200"
+            }`}>
+              <div className="flex flex-col gap-1">
+                {NAV_LINKS.map((link) => (
+                  <a
+                    key={link.name}
+                    href={link.href}
+                    onClick={() => setIsOpen(false)}
+                    className={`flex items-center justify-between p-4 rounded-2xl no-underline transition-all ${
+                      activeTab === link.name
+                        ? (theme === "dark" ? "bg-cyan-500/10 text-cyan-400" : "bg-cyan-50 text-cyan-600")
+                        : (theme === "dark" ? "text-slate-400 hover:bg-white/5" : "text-slate-500 hover:bg-slate-50")
+                    }`}
+                  >
+                    <div className="flex items-center gap-4">
+                       <link.icon size={18} className={activeTab === link.name ? "text-cyan-500" : "text-slate-500"} />
+                       <span className="font-black uppercase tracking-widest text-xs">{link.name}</span>
+                    </div>
+                    <ChevronRight size={16} className="opacity-30" />
+                  </a>
+                ))}
+              </div>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </nav>
+  );
 }

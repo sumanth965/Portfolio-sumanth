@@ -570,10 +570,10 @@ export default function Skills() {
                             whileInView="whileInView"
                             viewport={{ once: true, amount: 0.15 }}
                             style={{
-                            display: 'grid',
-                            gridTemplateColumns: 'repeat(auto-fill,minmax(160px,1fr))',
-                            gap: 14,
-                        }}>
+                                display: 'grid',
+                                gridTemplateColumns: 'repeat(auto-fill,minmax(160px,1fr))',
+                                gap: 14,
+                            }}>
                             {filtered.map((sk, i) => (
                                 <TiltCard
                                     key={sk.label}
