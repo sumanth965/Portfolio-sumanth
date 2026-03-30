@@ -160,142 +160,137 @@ export default function Hero() {
 
           {/* ── RIGHT PHOTO ── */}
           <Motion.div
-            initial={{ opacity: 0, y: 50 }}
-            whileInView={{ opacity: 1, y: 0 }}
+            initial={{ opacity: 0, scale: 0.95 }}
+            whileInView={{ opacity: 1, scale: 1 }}
             viewport={{ once: true, amount: 0.35 }}
-            transition={{ duration: 0.65, ease: [0.22, 1, 0.36, 1], delay: 0.1 }}
-            className="order-1 lg:order-2 flex-shrink-0"
+            transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1], delay: 0.1 }}
+            className="order-1 lg:order-2 flex-shrink-0 group"
           >
             <div
-              className="relative"
+              className="relative transition-transform duration-500 group-hover:scale-[1.02]"
               style={{ width: 'clamp(290px, 34vw, 390px)', margin: '40px' }}
             >
 
-              {/* ── Deep ambient glow ── */}
+              {/* ── Outer glow layer ── */}
               <div
                 className="absolute"
                 style={{
-                  inset: '-40px',
-                  background: 'radial-gradient(ellipse at 55% 45%, rgba(59,130,246,0.14) 0%, rgba(139,92,246,0.10) 45%, transparent 72%)',
+                  inset: '-30px',
+                  background: 'radial-gradient(circle at 60% 40%, rgba(59,130,246,0.1) 0%, rgba(139,92,246,0.05) 50%, transparent 80%)',
                   borderRadius: '50%',
-                  filter: 'blur(28px)',
+                  filter: 'blur(35px)',
                   zIndex: 0,
+                  opacity: 0.6,
                 }}
               />
 
-
-
               {/* ── Photo card with diagonal cut ── */}
               <div
-                className="relative overflow-hidden"
+                className="relative overflow-hidden z-[2]"
                 style={{
-                  clipPath: 'polygon(28% 0%, 100% 0%, 100% 100%, 0% 100%, 0% 22%)',
-                  height: 'clamp(460px, 34vw, 350px)',
-                  background: 'rgba(255, 255, 255, 0.09)',
-                  boxShadow: `
-    0 24px 64px rgba(0,0,0,0.75),
-    inset 0 10px 300px rgba(255, 255, 255, 0.12)
-
-  `,
-                  //   inset 0 -1px 30px rgba(255, 255, 255, 0.77),
-                  // inset 1px 0 30px rgba(255, 255, 255, 0.29),
-                  // inset -1px 0 30px rgba(255, 255, 255, 0.34)
-                  border: '1px solid rgba(255, 255, 255, 0.25)',
-                  backdropFilter: 'blur(12px)',
-                  WebkitBackdropFilter: 'blur(12px)',
-                  position: 'relative',
-                  zIndex: 2,
+                  clipPath: 'polygon(25% 0%, 100% 0%, 100% 100%, 0% 100%, 0% 20%)',
+                  height: 'clamp(460px, 34vw, 540px)',
+                  background: 'rgba(255, 255, 255, 0.05)',
+                  boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.7)',
+                  border: '1px solid rgba(255, 255, 255, 0.12)',
+                  backdropFilter: 'blur(8px)',
+                  WebkitBackdropFilter: 'blur(8px)',
                 }}
               >
+                {/* Subtle Scanline Effect */}
+                <div 
+                  className="absolute inset-0 pointer-events-none opacity-[0.03] z-[1]" 
+                  style={{ 
+                    backgroundImage: 'linear-gradient(rgba(255,255,255,1) 1px, transparent 1px)', 
+                    backgroundSize: '100% 4px' 
+                  }} 
+                />
+
                 <img
                   src={profile}
                   alt="Sumanth"
-                  className="w-full h-full object-cover object-top"
-
+                  className="w-full h-full object-cover grayscale-[30%] group-hover:grayscale-0 transition-all duration-700 ease-out"
                 />
-                {/* Bottom fade */}
-                <div
-                  className="absolute bottom-0 left-0 right-0"
+
+                {/* HUD Overlay - Top Left Status */}
+                <div className="absolute top-8 left-10 flex items-center gap-2 opacity-60 z-[2]">
+                  <div className="w-1.5 h-1.5 rounded-full bg-cyan-400 animate-pulse" />
+                  <span className="text-[9px] font-mono tracking-[0.2em] text-cyan-400 uppercase">System.Active</span>
+                </div>
+
+                {/* HUD Overlay - Bottom Left Binary */}
+                <div className="absolute bottom-10 left-6 font-mono text-[8px] text-sky-400/30 space-y-0.5 leading-none z-[2]">
+                  <div>110010101</div>
+                  <div>010110011</div>
+                </div>
+
+                {/* Reflection Sweep Animation */}
+                <Motion.div 
+                  className="absolute inset-0 z-[3] pointer-events-none"
+                  initial={{ x: '-100%' }}
+                  animate={{ x: '100%' }}
+                  transition={{ duration: 3, repeat: Infinity, ease: 'linear', repeatDelay: 5 }}
                   style={{
-                    height: '30%',
-                    background: 'linear-gradient(to top, rgba(4,8,22,0.80) 0%, transparent 100%)',
+                    background: 'linear-gradient(90deg, transparent, rgba(255,255,255,0.05), transparent)'
+                  }}
+                />
+
+                {/* Bottom dark vignette fade */}
+                <div
+                  className="absolute bottom-0 left-0 right-0 h-[40%] z-[2]"
+                  style={{
+                    background: 'linear-gradient(to top, rgba(6,13,26,0.9) 0%, transparent 100%)',
                   }}
                 />
               </div>
 
-
-
               {/* ══ CYAN brackets — TOP-RIGHT ══ */}
-              <div className="absolute" style={{ top: '-6px', right: '-6px', width: '100px', height: '100px', zIndex: 4 }}>
+              <div className="absolute" style={{ top: '-10px', right: '-10px', width: '90px', height: '90px', zIndex: 4 }}>
                 <div style={{
-                  position: 'absolute', top: -2, right: -2,
-                  width: '100%', height: '2.5px',
+                  position: 'absolute', top: 0, right: 0,
+                  width: '100%', height: '2px',
                   background: 'linear-gradient(90deg, transparent, #22d3ee)',
-                  borderRadius: '2px',
-                  boxShadow: '0 0 6px #22d3ee, 0 0 14px rgba(34,211,238,0.6)',
+                  boxShadow: '0 0 12px rgba(34,211,238,0.5)',
                 }} />
                 <div style={{
-                  position: 'absolute', top: 0, right: -2,
-                  width: '2.5px', height: '200%',
+                  position: 'absolute', top: 0, right: 0,
+                  width: '2px', height: '100%',
                   background: 'linear-gradient(180deg, #22d3ee, transparent)',
-                  borderRadius: '2px',
-                  boxShadow: '0 0 6px #22d3ee, 0 0 14px rgba(34,211,238,0.6)',
-                }} />
-              </div>
-
-              {/* ══ CYAN brackets — BOTTOM-RIGHT ══ */}
-              <div className="absolute" style={{ bottom: '-6px', right: '-6px', width: '32px', height: '32px', zIndex: 4 }}>
-                <div style={{
-                  position: 'absolute', bottom: 0, right: 0,
-                  width: '100%', height: '2.5px',
-                  background: 'linear-gradient(90deg, transparent, #22d3ee)',
-                  borderRadius: '2px',
-                  boxShadow: '0 0 6px #22d3ee, 0 0 14px rgba(34,211,238,0.6)',
-                }} />
-                <div style={{
-                  position: 'absolute', bottom: 0, right: 0,
-                  width: '2.5px', height: '100%',
-                  background: 'linear-gradient(180deg, transparent, #22d3ee)',
-                  borderRadius: '2px',
-                  boxShadow: '0 0 6px #22d3ee, 0 0 14px rgba(34,211,238,0.6)',
+                  boxShadow: '0 0 12px rgba(34,211,238,0.5)',
                 }} />
               </div>
 
               {/* ══ PURPLE brackets — BOTTOM-LEFT ══ */}
-              <div className="absolute" style={{ bottom: '-6px', left: '-6px', width: '100px', height: '100px', zIndex: 4 }}>
+              <div className="absolute" style={{ bottom: '-10px', left: '-10px', width: '90px', height: '90px', zIndex: 4 }}>
                 <div style={{
-                  position: 'absolute', bottom: -2, left: -2,
-                  width: '100%', height: '2.5px',
+                  position: 'absolute', bottom: 0, left: 0,
+                  width: '100%', height: '2px',
                   background: 'linear-gradient(90deg, #a855f7, transparent)',
-                  borderRadius: '2px',
-                  boxShadow: '0 0 6px #a855f7, 0 0 14px rgba(168,85,247,0.6)',
+                  boxShadow: '0 0 12px rgba(168,85,247,0.5)',
                 }} />
                 <div style={{
-                  position: 'absolute', bottom: -2, left: -2,
-                  width: '2.5px', height: '200%',
+                  position: 'absolute', bottom: 0, left: 0,
+                  width: '2px', height: '100%',
                   background: 'linear-gradient(180deg, transparent, #a855f7)',
-                  borderRadius: '2px',
-                  boxShadow: '0 0 6px #a855f7, 0 0 14px rgba(168,85,247,0.6)',
+                  boxShadow: '0 0 12px rgba(168,85,247,0.5)',
                 }} />
               </div>
 
-              {/* ══ PURPLE small tick — LEFT MIDDLE (as seen in image) ══ */}
-              <div className="absolute" style={{ left: '-8px', top: '42%', width: '14px', height: '32px', zIndex: 4 }}>
+              {/* Decorative Ticks - Relative Positioning */}
+              <div className="absolute" style={{ right: '-8px', top: '45%', width: '4px', height: '32px', zIndex: 4 }}>
                 <div style={{
-                  position: 'absolute', top: 0, left: 0,
-                  width: '2.5px', height: '100%',
-                  background: 'linear-gradient(180deg, transparent, #a855f7, transparent)',
-                  borderRadius: '2px',
-                  boxShadow: '0 0 6px #a855f7, 0 0 14px rgba(247, 85, 85, 0.5)',
+                  width: '100%', height: '100%',
+                  background: 'linear-gradient(180deg, transparent, #22d3ee, transparent)',
+                  boxShadow: '0 0 8px #22d3ee',
+                  opacity: 0.6,
                 }} />
               </div>
-              <div className="absolute" style={{ left: '395.5px', top: '48%', width: '14px', height: '32px', zIndex: 4 }}>
+              <div className="absolute" style={{ left: '-8px', top: '35%', width: '4px', height: '32px', zIndex: 4 }}>
                 <div style={{
-                  position: 'absolute', top: 0, left: 0,
-                  width: '2.5px', height: '100%',
-                  background: 'linear-gradient(180deg, transparent, #22d3ee, transparent)',
-                  borderRadius: '2px',
-                  boxShadow: '0 0 6px #a855f7, 0 0 14px rgba(247, 85, 85, 0.5)',
+                  width: '100%', height: '100%',
+                  background: 'linear-gradient(180deg, transparent, #a855f7, transparent)',
+                  boxShadow: '0 0 8px #a855f7',
+                  opacity: 0.6,
                 }} />
               </div>
 
