@@ -5,242 +5,103 @@ import { sectionFadeUp, staggerContainer, staggerItem } from '../utils/motion'
 /* ─────────────────── REAL PROJECT DATA + MOCKUPS ─────────────────── */
 const projects = [
   {
+    name: 'Employee Leave Management System',
+    desc: 'Full-stack leave management platform for employees and admins with request tracking, approval workflows, and role-based dashboards.',
+    link: 'https://github.com/sumanth965/Employee-Leave-Management-System',
+    demo: 'https://elms-management.onrender.com/',
+    category: 'Full Stack',
+    accent: '#0ea5e9',
+    accentB: '#0369a1',
+    emoji: '🏢',
+    tags: ['MERN', 'Authentication', 'Dashboard', 'CRUD'],
+  },
+  {
+    name: 'Smart Student Productivity System',
+    desc: 'Advanced productivity platform with task tracking, deadlines, and smart planning features designed for student workflow optimization.',
+    link: 'https://github.com/sumanth965/smart-student-productivity-system',
+    demo: 'https://smart-student-productivity-system.onrender.com/',
+    category: 'Full Stack',
+    accent: '#22c55e',
+    accentB: '#15803d',
+    emoji: '🎯',
+    tags: ['React', 'Node.js', 'MongoDB', 'Tailwind'],
+  },
+  {
+    name: 'Nexus Web Games',
+    desc: 'Collection of browser-based interactive games with engaging UI and smooth gameplay experience built using modern frontend tools.',
+    link: 'https://github.com/sumanth965/nexus-web-games',
+    demo: 'https://nexus-web-games.vercel.app/',
+    category: 'Frontend',
+    accent: '#f43f5e',
+    accentB: '#be123c',
+    emoji: '🎮',
+    tags: ['JavaScript', 'HTML', 'CSS', 'Games'],
+  },
+  {
+    name: 'Online Art Auction',
+    desc: 'Digital auction platform enabling users to bid on artworks with real-time updates and clean UI for listing and bidding.',
+    link: 'https://github.com/sumanth965/Online-Art-Auction',
+    demo: 'https://online-art-auction.vercel.app/',
+    category: 'Full Stack',
+    accent: '#a855f7',
+    accentB: '#6b21a8',
+    emoji: '🎨',
+    tags: ['MERN', 'Auction System', 'Realtime', 'UI/UX'],
+  },
+  {
     name: 'MERN Excel Analytics',
-    desc: 'Analytics dashboard for Excel-driven business data with secure authentication and clear visual reporting.',
-    link: 'https://github.com/sumanth965/MERN-Excel-Analytics-Project-',
+    desc: 'Analytics dashboard for processing Excel-based datasets and visualizing business insights through charts and reports.',
+    link: 'https://github.com/sumanth965/MERN-excel-analytics-',
     demo: '',
     category: 'Full Stack',
     accent: '#3b9eff',
-    accentB: '#1d6fd4',
+    accentB: '#1d4ed8',
     emoji: '📊',
-    tags: ['React', 'Node.js', 'Express', 'MongoDB', 'Charts'],
-    mockup: (accent) => (
-      <div style={{ width: '100%', height: '100%', padding: '12px', display: 'flex', flexDirection: 'column', gap: 6 }}>
-        <div style={{ fontSize: 9, fontWeight: 800, color: accent, marginBottom: 2, fontFamily: 'monospace', letterSpacing: '.1em' }}>
-          ANALYTICS · DASHBOARD
-        </div>
-        <div style={{ display: 'flex', gap: 6, flex: 1 }}>
-          {/* bar chart */}
-          <div style={{ flex: 1, display: 'flex', alignItems: 'flex-end', gap: 3, paddingBottom: 4 }}>
-            {[55, 80, 45, 90, 65, 75, 88].map((h, i) => (
-              <div key={i} style={{
-                flex: 1, borderRadius: '3px 3px 0 0',
-                height: `${h}%`,
-                background: `linear-gradient(to top, ${accent}, ${accent}55)`,
-                boxShadow: `0 0 6px ${accent}44`,
-              }} />
-            ))}
-          </div>
-          {/* mini stats */}
-          <div style={{ display: 'flex', flexDirection: 'column', gap: 4, justifyContent: 'center' }}>
-            {[['↑ 24%', '#22c55e'], ['3.4k', '#f7df1e']].map(([v, c], i) => (
-              <div key={i} style={{
-                fontSize: 9, fontWeight: 800, color: c, fontFamily: 'monospace',
-                padding: '2px 6px', borderRadius: 4, background: `${c}18`, border: `1px solid ${c}30`
-              }}>{v}</div>
-            ))}
-          </div>
-        </div>
-        <div style={{ height: 3, borderRadius: 3, background: `linear-gradient(90deg,${accent},${accent}33)`, width: '80%' }} />
-        <div style={{ fontSize: 8, color: 'rgba(255,255,255,0.25)', fontFamily: 'monospace' }}>Excel → Visual Reports</div>
-      </div>
-    ),
+    tags: ['React', 'Node.js', 'MongoDB', 'Charts'],
   },
   {
-    name: 'Foodify Ecosystem',
-    desc: 'Restaurant management workflow covering menu operations, order management, and internal admin views.',
-    link: 'https://github.com/sumanth965/Foodify',
-    demo: '',
-    category: 'Full Stack',
-    accent: '#f97316',
-    accentB: '#ea580c',
-    emoji: '🍕',
-    tags: ['MERN', 'Socket.io', 'Redux', 'Tailwind'],
-    mockup: (accent) => (
-      <div style={{ width: '100%', height: '100%', padding: '12px', display: 'flex', flexDirection: 'column', gap: 6 }}>
-        <div style={{ fontSize: 9, fontWeight: 800, color: accent, fontFamily: 'monospace', letterSpacing: '.1em' }}>FOODIFY · MENU</div>
-        <div style={{ display: 'flex', gap: 5, flex: 1 }}>
-          {['🍔', '🌮', '🍜'].map((em, i) => (
-            <div key={i} style={{
-              flex: 1, borderRadius: 8,
-              background: `${accent}18`, border: `1px solid ${accent}30`,
-              display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: 3,
-            }}>
-              <span style={{ fontSize: 14 }}>{em}</span>
-              <div style={{ width: '60%', height: 2, borderRadius: 2, background: `${accent}50` }} />
-              <div style={{ fontSize: 7, color: accent, fontWeight: 700, fontFamily: 'monospace' }}>
-                ${(6 + i * 3).toFixed(2)}
-              </div>
-            </div>
-          ))}
-        </div>
-        <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
-          <div style={{ width: 6, height: 6, borderRadius: '50%', background: '#22c55e', boxShadow: '0 0 6px #22c55e' }} />
-          <div style={{ fontSize: 8, color: 'rgba(255,255,255,0.3)', fontFamily: 'monospace' }}>3 orders live · Real-time</div>
-        </div>
-      </div>
-    ),
-  },
-  {
-    name: 'Precision Slider UI',
-    desc: 'Interactive image slider with smooth transitions, responsive motion, and a lightweight front-end setup.',
+    name: 'Image Slider',
+    desc: 'Responsive image slider with smooth transitions and user-friendly navigation controls for modern web interfaces.',
     link: 'https://github.com/sumanth965/Image_Slider',
-    demo: 'https://sumanth09-image-slider.netlify.app/',
+    demo: '',
     category: 'Frontend',
     accent: '#a855f7',
     accentB: '#7c3aed',
     emoji: '🎞',
-    tags: ['React', 'Framer Motion', 'Vite'],
-    mockup: (accent) => (
-      <div style={{ width: '100%', height: '100%', padding: '12px', display: 'flex', flexDirection: 'column', gap: 8, justifyContent: 'center', alignItems: 'center' }}>
-        <div style={{
-          width: '100%', height: 56, borderRadius: 10, overflow: 'hidden', position: 'relative',
-          background: `${accent}18`, border: `1px solid ${accent}30`
-        }}>
-          {/* slide panels */}
-          {[0, 1, 2].map(i => (
-            <div key={i} style={{
-              position: 'absolute', top: 0, bottom: 0,
-              left: `${i * 33.33}%`, width: '33.33%',
-              background: i === 1 ? `${accent}35` : `${accent}15`,
-              borderRight: `1px solid ${accent}22`,
-            }} />
-          ))}
-          <div style={{
-            position: 'absolute', inset: 0, display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '0 8px',
-          }}>
-            <div style={{ width: 16, height: 16, borderRadius: '50%', background: `${accent}40`, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 8, color: accent }}>‹</div>
-            <div style={{ width: 16, height: 16, borderRadius: '50%', background: `${accent}40`, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 8, color: accent }}>›</div>
-          </div>
-        </div>
-        <div style={{ display: 'flex', gap: 4 }}>
-          {[0, 1, 2].map(i => (
-            <div key={i} style={{
-              width: i === 1 ? 16 : 6, height: 6, borderRadius: 3,
-              background: i === 1 ? accent : `${accent}35`, transition: 'all .3s'
-            }} />
-          ))}
-        </div>
-        <div style={{ fontSize: 8, color: 'rgba(255,255,255,0.25)', fontFamily: 'monospace' }}>Smooth · Responsive</div>
-      </div>
-    ),
+    tags: ['JavaScript', 'CSS', 'UI'],
   },
   {
-    name: 'E-Commerce Core',
-    desc: 'Shopping cart interface with clean pricing logic, persistent state handling, and intuitive browsing flow.',
-    link: 'https://github.com/sumanth965/Cart_page',
-    demo: 'https://sumanth09-cartpage.netlify.app/#',
-    category: 'Frontend',
-    accent: '#22c55e',
-    accentB: '#16a34a',
-    emoji: '🛒',
-    tags: ['JavaScript', 'HTML', 'CSS', 'Local Storage'],
-    mockup: (accent) => (
-      <div style={{ width: '100%', height: '100%', padding: '12px', display: 'flex', flexDirection: 'column', gap: 6 }}>
-        <div style={{ fontSize: 9, fontWeight: 800, color: accent, fontFamily: 'monospace', letterSpacing: '.1em' }}>CART · 3 ITEMS</div>
-        <div style={{ display: 'flex', flexDirection: 'column', gap: 4, flex: 1 }}>
-          {[['👕 T-Shirt', '$29'], ['👟 Sneakers', '$89'], ['🎒 Bag', '$45']].map(([item, price], i) => (
-            <div key={i} style={{
-              display: 'flex', alignItems: 'center', justifyContent: 'space-between',
-              padding: '4px 8px', borderRadius: 6,
-              background: `${accent}12`, border: `1px solid ${accent}25`,
-            }}>
-              <span style={{ fontSize: 9, color: 'rgba(255,255,255,0.6)', fontFamily: 'monospace' }}>{item}</span>
-              <span style={{ fontSize: 9, color: accent, fontWeight: 800, fontFamily: 'monospace' }}>{price}</span>
-            </div>
-          ))}
-        </div>
-        <div style={{ height: 2, borderRadius: 2, background: `${accent}25` }} />
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-          <span style={{ fontSize: 8, color: 'rgba(255,255,255,0.3)', fontFamily: 'monospace' }}>Total</span>
-          <span style={{ fontSize: 10, color: accent, fontWeight: 900, fontFamily: 'monospace' }}>$163.00</span>
-        </div>
-      </div>
-    ),
+    name: 'Secure Auth System',
+    desc: 'Authentication system with sign-in and sign-up functionality including validation and secure user handling.',
+    link: 'https://github.com/sumanth965/signin-signup-page',
+    demo: '',
+    category: 'Full Stack',
+    accent: '#facc15',
+    accentB: '#ca8a04',
+    emoji: '🔐',
+    tags: ['React', 'Node.js', 'Auth'],
   },
   {
-    name: 'Bucket List Pro',
-    desc: 'Task-focused productivity app designed for quick entry, local persistence, and simple day-to-day use.',
-    link: 'https://github.com/sumanth965/Buket_List',
-    demo: 'https://sumanth09-bucketlist.netlify.app/',
+    name: 'Foodify',
+    desc: 'Food ordering and restaurant management system with menu handling, order tracking, and admin features.',
+    link: 'https://github.com/sumanth965/Foodify',
+    demo: '',
+    category: 'Full Stack',
+    accent: '#f97316',
+    accentB: '#c2410c',
+    emoji: '🍔',
+    tags: ['MERN', 'Food App', 'Dashboard'],
+  },
+  {
+    name: 'TST Electronic Gadgets',
+    desc: 'E-commerce style platform for browsing and managing electronic gadgets with structured UI and product listings.',
+    link: 'https://github.com/sumanth965/TST_Electronic_Gadgets-',
+    demo: '',
     category: 'Frontend',
     accent: '#06b6d4',
     accentB: '#0891b2',
-    emoji: '✅',
-    tags: ['React', 'Context API', 'Storage'],
-    mockup: (accent) => (
-      <div style={{ width: '100%', height: '100%', padding: '12px', display: 'flex', flexDirection: 'column', gap: 5 }}>
-        <div style={{ fontSize: 9, fontWeight: 800, color: accent, fontFamily: 'monospace', letterSpacing: '.1em' }}>BUCKET LIST</div>
-        {[
-          { text: 'Visit Iceland', done: true },
-          { text: 'Learn Rust', done: true },
-          { text: 'Build SaaS', done: false },
-          { text: 'Read 12 books', done: false },
-        ].map((item, i) => (
-          <div key={i} style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
-            <div style={{
-              width: 10, height: 10, borderRadius: 3, flexShrink: 0,
-              background: item.done ? accent : `${accent}15`,
-              border: `1px solid ${item.done ? accent : `${accent}40`}`,
-              display: 'flex', alignItems: 'center', justifyContent: 'center',
-            }}>
-              {item.done && <span style={{ fontSize: 7, color: '#000', fontWeight: 900 }}>✓</span>}
-            </div>
-            <span style={{
-              fontSize: 9, fontFamily: 'monospace',
-              color: item.done ? 'rgba(255,255,255,0.25)' : 'rgba(255,255,255,0.65)',
-              textDecoration: item.done ? 'line-through' : 'none',
-            }}>{item.text}</span>
-          </div>
-        ))}
-        <div style={{ marginTop: 'auto', fontSize: 8, color: 'rgba(255,255,255,0.2)', fontFamily: 'monospace' }}>2 / 4 complete</div>
-      </div>
-    ),
-  },
-  {
-    name: 'Secure Auth Portal',
-    desc: 'Authentication flow with sign-in, sign-up, and backend validation patterns for production-ready apps.',
-    link: 'https://github.com/sumanth965/signin-signup-page',
-    demo: 'https://su-manth09-signin-signup-page-frontend.onrender.com/',
-    category: 'Full Stack',
-    accent: '#f7df1e',
-    accentB: '#ca8a04',
-    emoji: '🔐',
-    tags: ['React', 'Node.js', 'JWT', 'Bcrypt'],
-    mockup: (accent) => (
-      <div style={{ width: '100%', height: '100%', padding: '12px', display: 'flex', flexDirection: 'column', gap: 6, justifyContent: 'center' }}>
-        <div style={{ fontSize: 9, fontWeight: 800, color: accent, fontFamily: 'monospace', letterSpacing: '.1em', marginBottom: 2 }}>SECURE · AUTH</div>
-        <div style={{ display: 'flex', flexDirection: 'column', gap: 5 }}>
-          {['Email address', 'Password'].map((label, i) => (
-            <div key={i}>
-              <div style={{ fontSize: 7, color: 'rgba(255,255,255,0.3)', fontFamily: 'monospace', marginBottom: 2 }}>{label}</div>
-              <div style={{
-                height: 18, borderRadius: 5,
-                background: `${accent}10`, border: `1px solid ${accent}30`,
-                display: 'flex', alignItems: 'center', padding: '0 6px',
-              }}>
-                {i === 1 && <div style={{ display: 'flex', gap: 2 }}>
-                  {[...Array(5)].map((_, k) => (
-                    <div key={k} style={{ width: 4, height: 4, borderRadius: '50%', background: `${accent}80` }} />
-                  ))}
-                </div>}
-              </div>
-            </div>
-          ))}
-          <div style={{
-            height: 20, borderRadius: 5, marginTop: 2,
-            background: `linear-gradient(90deg,${accent},${accent}99)`,
-            display: 'flex', alignItems: 'center', justifyContent: 'center',
-          }}>
-            <span style={{ fontSize: 8, fontWeight: 900, color: '#000', fontFamily: 'monospace', letterSpacing: '.1em' }}>SIGN IN →</span>
-          </div>
-        </div>
-        <div style={{ display: 'flex', alignItems: 'center', gap: 4, justifyContent: 'center', marginTop: 2 }}>
-          <div style={{ width: 5, height: 5, borderRadius: '50%', background: '#22c55e', boxShadow: '0 0 5px #22c55e' }} />
-          <span style={{ fontSize: 7, color: 'rgba(255,255,255,0.2)', fontFamily: 'monospace' }}>JWT · Bcrypt secured</span>
-        </div>
-      </div>
-    ),
+    emoji: '📱',
+    tags: ['HTML', 'CSS', 'JavaScript'],
   },
 ]
 
@@ -296,7 +157,18 @@ function ProjectCard({ project, index, onHover }) {
         position: 'relative',
         overflow: 'hidden',
       }}>
-        {project.mockup(project.accent)}
+        {project.mockup ? project.mockup(project.accent) : (
+          <div style={{
+            width: '100%', height: '100%', display: 'flex', flexDirection: 'column',
+            alignItems: 'center', justifyContent: 'center', gap: 8, padding: '12px',
+            color: project.accent, fontFamily: 'monospace',
+          }}>
+            <div style={{ fontSize: 28 }}>{project.emoji}</div>
+            <div style={{ fontSize: 9, letterSpacing: '0.08em', textAlign: 'center' }}>
+              {project.name}
+            </div>
+          </div>
+        )}
 
         {/* animated corner glow on hover */}
         <div style={{
