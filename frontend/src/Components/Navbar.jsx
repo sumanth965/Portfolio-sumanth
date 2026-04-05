@@ -10,6 +10,7 @@ import { Menu, X, Home, User, Briefcase, Mail, Sun, Moon, Sparkles, ChevronRight
 const NAV_LINKS = [
   { name: "Home", href: "#home", icon: Home },
   // { name: "About", href: "#about", icon: User },
+  { name: "Skills", href: "#skills", icon: User },
   { name: "Projects", href: "#projects", icon: Briefcase },
   { name: "Contact", href: "#contact", icon: Mail },
 ];
