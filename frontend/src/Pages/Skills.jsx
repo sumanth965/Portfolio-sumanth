@@ -8,7 +8,7 @@ const CATEGORIES = ['All', 'Frontend', 'Backend', 'Database', 'Cloud', 'Language
 const skills = [
     {
         label: 'React.js', category: 'Frontend', color: '#61dafb', proficiency: 95,
-        years: 4, projects: 30, desc: 'Building complex SPAs, custom hooks, performance optimization, and state management with Context & Redux.',
+        years: 4, projects: 15, desc: 'Building complex SPAs, custom hooks, performance optimization, and state management with Context & Redux.',
         tags: ['Hooks', 'Redux', 'Next.js', 'SSR'],
         icon: (
             <svg width="34" height="34" viewBox="0 0 128 128"><g fill="#61dafb"><circle cx="64" cy="64" r="11.4" /><path d="M107.3 45.2c-2.2-.8-4.5-1.6-6.9-2.3.6-2.4 1.1-4.8 1.5-7.1 2.1-13-1.2-21.2-7.7-21.2-6.2 0-13.5 7-19.6 19.3-2.3-.3-4.7-.5-7.1-.5s-4.8.2-7.1.5C54.3 21.7 46.9 14.7 40.8 14.7c-6.5 0-9.8 8.2-7.7 21.2.5 2.3 1 4.7 1.6 7.1-2.4.7-4.7 1.4-6.9 2.3C12.5 49.3 7 55.3 7 61.8c0 6.5 5.5 12.5 14.3 16.5 2.2.9 4.5 1.7 6.9 2.4-.6 2.4-1.1 4.8-1.5 7.1-2.1 13 1.2 21.2 7.7 21.2 6.2 0 13.5-7 19.6-19.3 2.3.3 4.7.5 7.1.5s4.8-.2 7.1-.5c6.1 12.3 13.5 19.3 19.6 19.3 6.5 0 9.8-8.2 7.7-21.2-.5-2.3-1-4.7-1.5-7.1 2.4-.7 4.7-1.5 6.9-2.4 8.7-4 14.2-10 14.2-16.5.1-6.5-5.4-12.5-14.2-16.6z" /></g></svg>
@@ -16,7 +16,7 @@ const skills = [
     },
     {
         label: 'TypeScript', category: 'Language', color: '#3178c6', proficiency: 75,
-        years: 2, projects: 18, desc: 'Type-safe development with generics, decorators, and advanced TypeScript patterns for large-scale apps.',
+        years: 2, projects: 2, desc: 'Type-safe development with generics, decorators, and advanced TypeScript patterns for large-scale apps.',
         tags: ['Generics', 'Types', 'Decorators'],
         icon: (
             <svg width="32" height="32" viewBox="0 0 128 128"><path fill="#3178c6" d="M2 63.91v62.5h125v-125H2zm100.73-5a15.56 15.56 0 0 1 7.82 4.5 20.58 20.58 0 0 1 3 4c0 .16-5.4 3.81-8.69 5.85-.12.08-.6-.44-1.13-1.23a7.09 7.09 0 0 0-5.87-3.53c-3.79-.26-6.23 1.73-6.21 5a4.58 4.58 0 0 0 .54 2.34c.83 1.73 2.38 2.76 7.24 4.86 8.95 3.85 12.78 6.39 15.16 10 2.66 4 3.25 10.46 1.45 15.24-2 5.2-6.9 8.73-13.83 9.9a38.32 38.32 0 0 1-9.52-.1 23 23 0 0 1-12.72-6.63c-1.15-1.27-3.39-4.58-3.25-4.82a9.16 9.16 0 0 1 1.15-.73l4.6-2.64 3.59-2.08.75 1.11a16.78 16.78 0 0 0 4.74 4.54c4 2.1 9.46 1.81 12.16-.62a5.43 5.43 0 0 0 .69-6.92c-1-1.39-3-2.56-8.59-5-6.45-2.78-9.23-4.5-11.77-7.24a16.48 16.48 0 0 1-3.43-6.25 25 25 0 0 1-.22-8c1.33-6.23 6-10.58 12.82-11.87a31.66 31.66 0 0 1 9.49.26zm-29.34 5.24v5.12H57.16v46.23H45.65V69.26H29.38v-5a49.19 49.19 0 0 1 .14-5.16c.06-.08 10-.12 22-.1l21.81.06z" /></svg>
@@ -24,7 +24,7 @@ const skills = [
     },
     {
         label: 'JavaScript', category: 'Language', color: '#f7df1e', proficiency: 90,
-        years: 5, projects: 40, desc: 'Deep JS expertise: closures, prototypes, async/await, event loop mastery, and ES2023+ features.',
+        years: 5, projects: 20, desc: 'Deep JS expertise: closures, prototypes, async/await, event loop mastery, and ES2023+ features.',
         tags: ['ES2023+', 'Async', 'DOM', 'Closures'],
         icon: (
             <svg width="32" height="32" viewBox="0 0 128 128"><path fill="#f7df1e" d="M1.408 1.408h125.184v125.185H1.408z" /><path d="M116.347 96.736c-.917-5.711-4.641-10.508-15.672-14.981-3.832-1.761-8.104-3.022-9.377-5.926-.452-1.69-.512-2.642-.226-3.665.821-3.32 4.784-4.355 7.925-3.403 2.023.678 3.938 2.237 5.093 4.724 5.402-3.498 5.391-3.475 9.163-5.879-1.381-2.141-2.118-3.129-3.022-4.045-3.249-3.629-7.676-5.498-14.756-5.355l-3.688.477c-3.534.893-6.902 2.748-8.877 5.235-5.926 6.724-4.236 18.492 2.975 23.335 7.104 5.332 17.54 6.545 18.873 11.531 1.297 6.104-4.486 8.08-10.234 7.378-4.236-.881-6.592-3.034-9.139-6.949-4.688 2.713-4.688 2.713-9.508 5.485 1.143 2.499 2.344 3.63 4.26 5.795 9.068 9.198 31.76 8.746 35.83-5.176.165-.478 1.261-3.666.38-8.581zm-46.885-37.793H57.766c0 7.43-.012 14.86-.012 22.285 0 4.73.245 9.06-.52 10.403-1.261 2.582-4.51 2.268-5.999 1.81-1.249-.953-1.857-2.25-2.535-4.04-.191-.567-.274-.994-.354-1.094-4.285 2.604-4.285 2.604-8.583 5.169 1.345 2.678 2.689 4.521 4.769 6.026 3.632 2.834 8.977 3.39 14.188 2.213 3.061-.799 5.759-2.439 7.736-5.073 3.69-4.64 3.668-10.7 3.644-17.507.027-6.999 0-13.974 0-21.192z" /></svg>
@@ -32,7 +32,7 @@ const skills = [
     },
     {
         label: 'Node.js', category: 'Backend', color: '#83cd29', proficiency: 88,
-        years: 4, projects: 25, desc: 'REST & GraphQL APIs, event-driven architecture, microservices, streams, and cluster management.',
+        years: 4, projects: 15, desc: 'REST & GraphQL APIs, event-driven architecture, microservices, streams, and cluster management.',
         tags: ['REST', 'GraphQL', 'Streams', 'Cluster'],
         icon: (
             <svg width="34" height="34" viewBox="0 0 128 128"><path fill="#83cd29" d="M112.77 30.334L68.196 4.729c-2.617-1.511-5.88-1.511-8.504 0L15.229 30.334C12.612 31.845 11 34.63 11 37.667v50.666c0 3.037 1.612 5.822 4.229 7.333l44.575 25.605c2.616 1.511 5.888 1.511 8.504 0l44.575-25.605c2.617-1.511 4.229-4.296 4.229-7.333V37.667c-.001-3.037-1.612-5.822-4.341-7.333z" /><path fill="#404137" d="M107.599 93.47L63.028 68.938 18.399 93.47 63 119.133z" /><path fill="#35480c" d="M18.399 34.53L63 59.125l44.599-24.595L63 9.933z" /><path fill="#fff" d="M75.302 64.687c0 1.135-.613 2.195-1.597 2.764L63.003 73.87c-.493.284-1.04.425-1.589.425-.549 0-1.097-.141-1.59-.425L49.122 67.451c-.984-.569-1.597-1.629-1.597-2.764V51.42c0-1.134.613-2.195 1.597-2.764l10.702-6.417c.493-.284 1.04-.425 1.59-.425.548 0 1.096.141 1.589.425l10.702 6.417c.984.568 1.597 1.629 1.597 2.764v13.267z" /></svg>
@@ -40,7 +40,7 @@ const skills = [
     },
     {
         label: 'Express.js', category: 'Backend', color: '#eeeeee', proficiency: 85,
-        years: 4, projects: 22, desc: 'Middleware architecture, routing, authentication flows, rate limiting, and production-hardened APIs.',
+        years: 4, projects: 15, desc: 'Middleware architecture, routing, authentication flows, rate limiting, and production-hardened APIs.',
         tags: ['Middleware', 'Auth', 'Rate Limit', 'JWT'],
         icon: (
             <svg width="34" height="22" viewBox="0 0 128 82"><path fill="#fff" d="M126.67 98.44c-4.56 1.16-7.38.05-9.91-3.75-5.68-8.51-11.95-16.63-18-24.9-.78-1.07-1.59-2.12-2.6-3.45-6.23 8.51-12.34 16.63-18.33 24.85-2.61 3.58-5.23 5-9.73 3.57l26.38-35.81L69.67 33.32c4.43-1.05 7.21-.38 9.87 3.5 5.77 8.23 12 16.1 18.38 24.05L116.25 33c4.55-1.13 7.36-.4 9.8 3.6L100.67 68.79zM1.33 61.74c.72-3.51 1.28-7.08 2.19-10.54C9.56 32.55 27.37 22.01 47.3 26.72c15.05 3.51 24.39 16.94 24.1 34.02H9.38c-.15 16.99 11.11 27.2 28 24.89 6.52-.9 11.85-4.08 15.23-10.06 1.71-3.01 3.97-4.38 7.43-3.71-1.06 5.92-4.48 10.24-8.94 13.68-10.43 8.01-26.84 8.15-37.56.6C6.53 80.24 2.81 71.74 1.48 62.54c-.06-.45-.24-.88-.36-1.32zm8.23-5.11h46.88c-.33-13.34-9.01-22.67-22-22.47-13.81.2-24.01 9.78-24.88 22.47z" /></svg>
@@ -48,7 +48,7 @@ const skills = [
     },
     {
         label: 'Python', category: 'Language', color: '#ffd43b', proficiency: 80,
-        years: 3, projects: 15, desc: 'Scripting, data processing, ML pipelines with scikit-learn, FastAPI backends, and automation workflows.',
+        years: 3, projects: 10, desc: 'Scripting, data processing, ML pipelines with scikit-learn, FastAPI backends, and automation workflows.',
         tags: ['FastAPI', 'ML', 'Pandas', 'Automation'],
         icon: (
             <svg width="32" height="32" viewBox="0 0 128 128"><path fill="#3572a5" d="M49.33 62h29.17c8.2 0 9.99-4.007 9.99-8v-10.013c0-7.993-6.76-7.987-9.99-7.987h-29.17c-8.2 0-9.33-4.007-9.33-8V18c0-7.993 4.83-8 10-8h46.67C105.5 10 108 14 108 18v46c0 3.993-4 8-9.99 8H49.33z" /><path fill="#ffd43b" d="M78.67 66H49.5C41.3 66 39.5 70.007 39.5 74v10.013c0 7.993 6.76 7.987 9.99 7.987h29.17c8.2 0 9.34 4.007 9.34 8V110c0 7.993-4.84 8-10 8H31.33C22.5 118 20 114 20 110V64c0-3.993 4-8 9.99-8h48.68z" /><circle cx="63.5" cy="22.5" r="4.5" fill="#ffd43b" /><circle cx="64.5" cy="105.5" r="4.5" fill="#3572a5" /></svg>
@@ -56,7 +56,7 @@ const skills = [
     },
     {
         label: 'MongoDB', category: 'Database', color: '#13aa52', proficiency: 83,
-        years: 3, projects: 20, desc: 'Schema design, aggregation pipelines, indexing strategies, transactions, and Mongoose ODM patterns.',
+        years: 3, projects: 15, desc: 'Schema design, aggregation pipelines, indexing strategies, transactions, and Mongoose ODM patterns.',
         tags: ['Aggregation', 'Indexes', 'Atlas', 'Mongoose'],
         icon: (
             <svg width="30" height="34" viewBox="0 0 128 128"><path fill="#589636" d="M89.58 22.673c-5.761-6.678-10.29-13.749-11.073-23.107-.078-.881-.169-1.763-.259-2.644L64 0l.015.003C50.856 17.156 44.3 36.29 48.038 57.89c2.063 11.799 7.638 21.738 15.647 30.158.985.998 2.049 1.881 3.11 2.871.519 2.356.921 4.693 1.094 6.958.099.894.169 1.788.228 2.682.007.078.023.214.023.214L69.3 101 64 128l14.157-10.079c.26-.099.26-.214.26-.338 1.222-14.19 6.659-26.888 12.861-38.876 7.44-14.472 10.23-29.838 7.15-45.833-1.173-6.142-3.61-11.75-8.843-17.171" /></svg>
@@ -72,7 +72,7 @@ const skills = [
     },
     {
         label: 'Java', category: 'Language', color: '#f58219', proficiency: 78,
-        years: 3, projects: 10, desc: 'OOP design patterns, Spring Boot microservices, JUnit testing, and multithreading with Java concurrency.',
+        years: 3, projects: 2, desc: 'OOP design patterns, Spring Boot microservices, JUnit testing, and multithreading with Java concurrency.',
         tags: ['Spring Boot', 'OOP', 'JUnit', 'Maven'],
         icon: (
             <svg width="30" height="30" viewBox="0 0 128 128"><path fill="#ea2d2e" d="M47.617 98.12s-4.767 2.774 3.397 3.71c9.892 1.13 14.947.968 25.845-1.092 0 0 2.871 1.795 6.873 3.351-24.439 10.47-55.308-.607-36.115-5.969" /><path fill="#ea2d2e" d="M44.629 84.455s-5.348 3.959 2.823 4.805c10.567 1.091 18.91 1.18 33.354-1.6 0 0 1.993 2.025 5.132 3.131-29.542 8.64-62.446.68-41.309-6.336" /><path fill="#ea2d2e" d="M69.802 61.271c6.025 6.935-1.58 13.17-1.58 13.17s15.289-7.891 8.269-17.777c-6.559-9.215-11.587-13.792 15.635-29.58 0 0-42.731 10.67-22.324 34.187" /><path fill="#f58219" d="M102.123 108.229s3.529 2.91-3.888 5.159c-14.102 4.272-58.706 5.56-71.094.171-4.451-1.938 3.899-4.625 6.526-5.192 2.739-.593 4.303-.485 4.303-.485-4.953-3.487-32.013 6.85-13.743 9.815 49.821 8.076 90.817-3.637 77.896-9.468" /><path fill="#f58219" d="M76.491 1.587S89.459 14.563 64.188 34.51c-20.266 16.006-4.621 25.13-.007 35.559-11.831-10.673-20.509-20.07-14.688-28.815C58.041 28.42 81.722 22.195 76.491 1.587" /><path fill="#ea2d2e" d="M52.214 126.021c22.476 1.437 57-.8 57.817-11.436 0 0-1.571 4.032-18.577 7.231-19.186 3.612-42.854 3.191-56.887.874 0 .001 2.875 2.381 17.647 3.331" /></svg>
@@ -80,7 +80,7 @@ const skills = [
     },
     {
         label: 'MERN Stack', category: 'Frontend', color: '#a855f7', proficiency: 92,
-        years: 4, projects: 28, desc: 'End-to-end full-stack development: MongoDB, Express, React, Node with JWT auth and deployment pipelines.',
+        years: 4, projects: 15, desc: 'End-to-end full-stack development: MongoDB, Express, React, Node with JWT auth and deployment pipelines.',
         tags: ['Full-Stack', 'JWT', 'REST', 'Deploy'],
         icon: (
             <span style={{ fontFamily: 'monospace', fontWeight: 800, fontSize: '0.85rem', lineHeight: 1.1, textAlign: 'center', display: 'block' }}>
