@@ -107,7 +107,7 @@ const projects = [
     name: 'TST Gadgets - Admin',
     desc: 'Architectural admin gateway for product orchestration, featuring inventory lifecycle management and secure data synchronization.',
     link: 'https://github.com/sumanth965/TST_Electronic_Gadgets-',
-    demo: 'https://tst-electronic-gadgets-su-manth09.onrender.com',
+    demo: 'https://tst-electronic-gadgets-su-manth09-admin.onrender.com',
     category: 'Full Stack',
     accent: '#0891b2',
     accentB: '#155e75',

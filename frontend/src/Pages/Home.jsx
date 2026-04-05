@@ -198,12 +198,12 @@ export default function Hero() {
                 }}
               >
                 {/* Subtle Scanline Effect */}
-                <div 
-                  className="absolute inset-0 pointer-events-none opacity-[0.03] z-[1]" 
-                  style={{ 
-                    backgroundImage: 'linear-gradient(rgba(255,255,255,1) 1px, transparent 1px)', 
-                    backgroundSize: '100% 4px' 
-                  }} 
+                <div
+                  className="absolute inset-0 pointer-events-none opacity-[0.03] z-[1]"
+                  style={{
+                    backgroundImage: 'linear-gradient(rgba(255,255,255,1) 1px, transparent 1px)',
+                    backgroundSize: '100% 4px'
+                  }}
                 />
 
                 <img
@@ -225,7 +225,7 @@ export default function Hero() {
                 </div>
 
                 {/* Reflection Sweep Animation */}
-                <Motion.div 
+                <Motion.div
                   className="absolute inset-0 z-[3] pointer-events-none"
                   initial={{ x: '-100%' }}
                   animate={{ x: '100%' }}
