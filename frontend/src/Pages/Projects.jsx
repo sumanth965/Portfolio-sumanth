@@ -150,9 +150,11 @@ function ProjectCard({ project, index, onHover }) {
         width: 240,
         borderRadius: 22,
         overflow: 'hidden',
-        background: 'rgba(255,255,255,0.03)',
-        border: `1px solid ${hovered ? project.accent + '50' : 'rgba(255,255,255,0.07)'}`,
-        boxShadow: hovered ? `0 20px 60px ${project.accent}18, 0 0 0 1px ${project.accent}25` : '0 4px 24px rgba(0,0,0,0.2)',
+        background: 'linear-gradient(155deg, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0.015) 65%)',
+        border: `1px solid ${hovered ? project.accent + '50' : 'rgba(255,255,255,0.09)'}`,
+        boxShadow: hovered
+          ? `0 30px 54px -16px ${project.accent}35, 0 10px 24px -8px rgba(0,0,0,0.55), 0 0 0 1px ${project.accent}25, inset 0 1px 0 rgba(255,255,255,0.12), inset 0 -1px 0 rgba(0,0,0,0.3)`
+          : `0 16px 32px -14px rgba(0,0,0,0.6), 0 4px 10px -4px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.08), inset 0 -1px 0 rgba(0,0,0,0.3)`,
         transform: hovered ? 'translateY(-8px) scale(1.01)' : 'translateY(0) scale(1)',
         transition: 'all 0.35s cubic-bezier(0.34,1.56,0.64,1)',
         cursor: 'pointer',
@@ -165,6 +167,7 @@ function ProjectCard({ project, index, onHover }) {
         height: 148,
         background: `linear-gradient(135deg, ${project.accent}1a 0%, ${project.accentB}10 100%)`,
         borderBottom: `1px solid ${project.accent}20`,
+        boxShadow: `inset 0 3px 12px rgba(0,0,0,0.35), inset 0 -1px 0 ${project.accent}25`,
         position: 'relative',
         overflow: 'hidden',
       }}>
@@ -193,9 +196,10 @@ function ProjectCard({ project, index, onHover }) {
         <div style={{
           position: 'absolute', top: 10, right: 10,
           width: 28, height: 28, borderRadius: 9,
-          background: `${project.accent}25`,
+          background: `linear-gradient(155deg, ${project.accent}40, ${project.accent}15)`,
           backdropFilter: 'blur(8px)',
-          border: `1px solid ${project.accent}35`,
+          border: `1px solid ${project.accent}45`,
+          boxShadow: `0 6px 14px -6px ${project.accent}50, inset 0 1px 0 rgba(255,255,255,0.3), inset 0 -1px 2px rgba(0,0,0,0.25)`,
           display: 'flex', alignItems: 'center', justifyContent: 'center',
           fontSize: 14,
         }}>
@@ -207,10 +211,11 @@ function ProjectCard({ project, index, onHover }) {
           position: 'absolute', top: 10, left: 10,
           fontSize: 8, fontWeight: 800, letterSpacing: '.12em',
           padding: '3px 8px', borderRadius: 20,
-          background: 'rgba(0,0,0,0.55)',
+          background: 'linear-gradient(155deg, rgba(0,0,0,0.6), rgba(0,0,0,0.45))',
           backdropFilter: 'blur(6px)',
           color: 'rgba(255,255,255,0.7)',
-          border: '1px solid rgba(255,255,255,0.1)',
+          border: '1px solid rgba(255,255,255,0.12)',
+          boxShadow: '0 4px 10px -4px rgba(0,0,0,0.6), inset 0 1px 0 rgba(255,255,255,0.08)',
           fontFamily: 'monospace',
         }}>
           {project.category.toUpperCase()}
@@ -239,14 +244,20 @@ function ProjectCard({ project, index, onHover }) {
           {project.tags.slice(0, 3).map(tag => (
             <span key={tag} style={{
               fontSize: 9, padding: '2px 7px', borderRadius: 20, fontWeight: 700,
-              background: `${project.accent}15`, color: project.accent,
-              border: `1px solid ${project.accent}30`, fontFamily: 'monospace',
+              background: `linear-gradient(155deg, ${project.accent}26, ${project.accent}0a)`,
+              color: project.accent,
+              border: `1px solid ${project.accent}38`,
+              boxShadow: `0 3px 8px -4px ${project.accent}40, inset 0 1px 0 ${project.accent}28`,
+              fontFamily: 'monospace',
             }}>{tag}</span>
           ))}
           {project.tags.length > 3 && (
             <span style={{
               fontSize: 9, padding: '2px 7px', borderRadius: 20, fontWeight: 700,
-              background: 'rgba(255,255,255,0.05)', color: '#475569', fontFamily: 'monospace'
+              background: 'linear-gradient(155deg, rgba(255,255,255,0.07), rgba(255,255,255,0.02))',
+              border: '1px solid rgba(255,255,255,0.08)',
+              boxShadow: '0 3px 8px -4px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.06)',
+              color: '#475569', fontFamily: 'monospace'
             }}>
               +{project.tags.length - 3}
             </span>
@@ -264,13 +275,14 @@ function ProjectCard({ project, index, onHover }) {
               flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 5,
               fontSize: 10, fontWeight: 800, padding: '7px 0', borderRadius: 10,
               color: project.accent,
-              background: `${project.accent}12`,
-              border: `1px solid ${project.accent}30`,
+              background: `linear-gradient(155deg, ${project.accent}20, ${project.accent}08)`,
+              border: `1px solid ${project.accent}35`,
+              boxShadow: `0 6px 14px -8px ${project.accent}40, inset 0 1px 0 ${project.accent}28`,
               textDecoration: 'none', fontFamily: 'monospace',
               transition: 'all .2s',
             }}
-            onMouseEnter={e => { e.currentTarget.style.background = `${project.accent}25` }}
-            onMouseLeave={e => { e.currentTarget.style.background = `${project.accent}12` }}
+            onMouseEnter={e => { e.currentTarget.style.background = `linear-gradient(155deg, ${project.accent}38, ${project.accent}15)` }}
+            onMouseLeave={e => { e.currentTarget.style.background = `linear-gradient(155deg, ${project.accent}20, ${project.accent}08)` }}
           >
             <GithubIcon /> Code
           </a>
@@ -286,7 +298,7 @@ function ProjectCard({ project, index, onHover }) {
                 color: '#fff',
                 background: `linear-gradient(135deg, ${project.accent}, ${project.accentB})`,
                 border: 'none', textDecoration: 'none', fontFamily: 'monospace',
-                boxShadow: `0 4px 14px ${project.accent}35`,
+                boxShadow: `0 10px 22px -8px ${project.accent}55, inset 0 1px 0 rgba(255,255,255,0.35), inset 0 -2px 4px rgba(0,0,0,0.2)`,
                 transition: 'all .2s',
               }}
               onMouseEnter={e => { e.currentTarget.style.transform = 'scale(1.03)' }}
@@ -299,8 +311,9 @@ function ProjectCard({ project, index, onHover }) {
               flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 5,
               fontSize: 10, fontWeight: 700, padding: '7px 0', borderRadius: 10,
               color: '#334155',
-              background: 'rgba(255,255,255,0.03)',
+              background: 'rgba(255,255,255,0.02)',
               border: '1px solid rgba(255,255,255,0.06)',
+              boxShadow: 'inset 0 2px 5px rgba(0,0,0,0.4)',
               fontFamily: 'monospace', cursor: 'not-allowed',
             }}>
               Soon…
@@ -344,30 +357,45 @@ export default function Projects() {
         @keyframes pj-fade-up{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:none}}
         @keyframes pj-glow{0%,100%{opacity:.04}50%{opacity:.08}}
         .pj-cat{
-          border:1px solid rgba(255,255,255,0.08);background:transparent;
+          border:1px solid rgba(255,255,255,0.08);
+          background:linear-gradient(155deg, rgba(255,255,255,0.045), rgba(255,255,255,0.01));
           color:#64748b;font-size:10px;font-weight:800;letter-spacing:.14em;
-          padding:6px 14px;border-radius:20px;cursor:pointer;transition:all .2s;
+          padding:6px 14px;border-radius:20px;cursor:pointer;
+          box-shadow:0 5px 12px -7px rgba(0,0,0,0.55), inset 0 1px 0 rgba(255,255,255,0.06);
+          transition:all .2s;
         }
-        .pj-cat.on{color:#fff;background:rgba(59,158,255,0.15);border-color:rgba(59,158,255,0.45);}
-        .pj-cat:hover:not(.on){color:#94a3b8;background:rgba(255,255,255,0.04);}
+        .pj-cat.on{
+          color:#fff;
+          background:linear-gradient(155deg, rgba(59,158,255,0.32), rgba(59,158,255,0.1));
+          border-color:rgba(59,158,255,0.45);
+          box-shadow:0 8px 18px -8px rgba(59,158,255,0.55), inset 0 1px 0 rgba(255,255,255,0.18);
+        }
+        .pj-cat:hover:not(.on){color:#94a3b8;background:linear-gradient(155deg, rgba(255,255,255,0.075), rgba(255,255,255,0.02));}
         .pj-search{
-          background:rgba(255,255,255,0.04);
+          background:rgba(255,255,255,0.03);
           border:1px solid rgba(255,255,255,0.08);
           color:#e2e8f0;font-size:12px;
           padding:9px 14px 9px 36px;border-radius:12px;outline:none;
-          width:210px;transition:border-color .2s;
+          width:210px;
+          box-shadow:inset 0 2px 6px rgba(0,0,0,0.45), inset 0 1px 0 rgba(0,0,0,0.2);
+          transition:border-color .2s, box-shadow .2s;
         }
-        .pj-search:focus{border-color:rgba(59,158,255,0.4);}
+        .pj-search:focus{border-color:rgba(59,158,255,0.4);box-shadow:inset 0 2px 6px rgba(0,0,0,0.45), 0 0 0 3px rgba(59,158,255,0.12);}
         .pj-search::placeholder{color:#2d3748;}
         .pj-arrow{
           width:36px;height:36px;border-radius:50%;
-          background:rgba(255,255,255,0.04);
-          border:1px solid rgba(255,255,255,0.1);
+          background:linear-gradient(155deg, rgba(255,255,255,0.07), rgba(255,255,255,0.015));
+          border:1px solid rgba(255,255,255,0.12);
           color:#64748b;font-size:16px;cursor:pointer;
+          box-shadow:0 8px 16px -8px rgba(0,0,0,0.6), inset 0 1px 0 rgba(255,255,255,0.1), inset 0 -1px 0 rgba(0,0,0,0.25);
           display:flex;align-items:center;justify-content:center;
           transition:all .2s;
         }
-        .pj-arrow:hover{color:#3b9eff;border-color:rgba(59,158,255,0.4);background:rgba(59,158,255,0.08);}
+        .pj-arrow:hover{
+          color:#3b9eff;border-color:rgba(59,158,255,0.4);
+          background:linear-gradient(155deg, rgba(59,158,255,0.2), rgba(59,158,255,0.05));
+          box-shadow:0 10px 20px -8px rgba(59,158,255,0.5), inset 0 1px 0 rgba(255,255,255,0.18);
+        }
         .hide-scroll::-webkit-scrollbar{display:none;}
         .hide-scroll{-ms-overflow-style:none;scrollbar-width:none;}
       `}</style>
@@ -434,9 +462,10 @@ export default function Projects() {
               { label: 'Frontend', value: `${projects.filter(p => p.category === 'Frontend').length}`, color: '#f97316' },
             ].map(s => (
               <div key={s.label} style={{
-                background: 'rgba(255,255,255,0.03)',
-                border: '1px solid rgba(255,255,255,0.06)',
+                background: 'linear-gradient(155deg, rgba(255,255,255,0.05), rgba(255,255,255,0.015))',
+                border: '1px solid rgba(255,255,255,0.08)',
                 borderRadius: 12, padding: '8px 16px',
+                boxShadow: '0 10px 20px -10px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.06), inset 0 -1px 0 rgba(0,0,0,0.3)',
                 display: 'flex', alignItems: 'center', gap: 8,
               }}>
                 <span style={{ fontSize: '1.1rem', fontWeight: 900, color: s.color, fontFamily: 'monospace' }}>{s.value}</span>
@@ -526,8 +555,10 @@ export default function Projects() {
                       border: 'none',
                       cursor: 'pointer',
                       background: activeIdx === i ? p.accent : 'rgba(255,255,255,0.12)',
+                      boxShadow: activeIdx === i
+                        ? `0 2px 8px ${p.accent}, inset 0 1px 0 rgba(255,255,255,0.35)`
+                        : 'inset 0 1px 2px rgba(0,0,0,0.4)',
                       transition: 'all .35s cubic-bezier(0.34,1.56,0.64,1)',
-                      boxShadow: activeIdx === i ? `0 0 8px ${p.accent}` : 'none',
                     }}
                   />
                 ))}
