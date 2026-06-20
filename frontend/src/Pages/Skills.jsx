@@ -251,6 +251,7 @@ function DetailPanel({ skill, onClose }) {
                     height: '100%',
                     background: 'linear-gradient(160deg, #0d1424 0%, #080e1c 100%)',
                     borderLeft: `1px solid ${skill.color}30`,
+                    boxShadow: `-32px 0 64px -24px rgba(0,0,0,0.75), -10px 0 28px -8px ${skill.color}22, inset 1px 0 0 rgba(255,255,255,0.05)`,
                     padding: '2rem',
                     overflowY: 'auto',
                     animation: 'slideIn 0.35s cubic-bezier(0.16,1,0.3,1)',
@@ -259,20 +260,21 @@ function DetailPanel({ skill, onClose }) {
             >
                 {/* Close */}
                 <button onClick={onClose} style={{
-                    alignSelf: 'flex-end', background: 'rgba(255,255,255,0.06)',
-                    border: 'none', color: '#64748b', borderRadius: '8px',
+                    alignSelf: 'flex-end', background: 'linear-gradient(155deg, rgba(255,255,255,0.1), rgba(255,255,255,0.03))',
+                    border: '1px solid rgba(255,255,255,0.08)', color: '#94a3b8', borderRadius: '8px',
                     padding: '6px 12px', cursor: 'pointer', fontSize: '12px', fontWeight: 700,
                     letterSpacing: '0.1em',
+                    boxShadow: '0 6px 14px -8px rgba(0,0,0,0.6), inset 0 1px 0 rgba(255,255,255,0.1)',
                 }}>ESC ✕</button>
 
                 {/* Icon + Label */}
                 <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
                     <div style={{
                         width: 72, height: 72, borderRadius: '20px',
-                        background: `${skill.color}15`,
-                        border: `1px solid ${skill.color}40`,
+                        background: `linear-gradient(155deg, ${skill.color}28, ${skill.color}0a)`,
+                        border: `1px solid ${skill.color}45`,
                         display: 'flex', alignItems: 'center', justifyContent: 'center',
-                        boxShadow: `0 0 30px ${skill.color}20`,
+                        boxShadow: `0 16px 28px -10px ${skill.color}45, 0 4px 10px rgba(0,0,0,0.45), inset 0 1px 0 ${skill.color}35, inset 0 -3px 6px rgba(0,0,0,0.3)`,
                     }}>
                         {skill.icon}
                     </div>
@@ -302,12 +304,12 @@ function DetailPanel({ skill, onClose }) {
                         <span style={{ fontSize: '11px', fontWeight: 700, color: '#64748b', letterSpacing: '0.15em' }}>PROFICIENCY</span>
                         <span style={{ fontSize: '11px', fontWeight: 800, color: skill.color }}>{skill.proficiency}%</span>
                     </div>
-                    <div style={{ height: '6px', background: 'rgba(255,255,255,0.06)', borderRadius: '6px', overflow: 'hidden' }}>
+                    <div style={{ height: '6px', background: 'rgba(255,255,255,0.06)', borderRadius: '6px', overflow: 'hidden', boxShadow: 'inset 0 2px 4px rgba(0,0,0,0.45), inset 0 1px 0 rgba(0,0,0,0.2)' }}>
                         <div style={{
                             height: '100%', borderRadius: '6px',
                             width: `${skill.proficiency}%`,
                             background: `linear-gradient(90deg, ${skill.color}, ${skill.color}88)`,
-                            boxShadow: `0 0 12px ${skill.color}88`,
+                            boxShadow: `0 0 12px ${skill.color}88, inset 0 1px 0 rgba(255,255,255,0.35)`,
                             transition: 'width 1s cubic-bezier(0.22,1,0.36,1)',
                         }} />
                     </div>
@@ -320,10 +322,11 @@ function DetailPanel({ skill, onClose }) {
                         { label: 'Projects', value: `${skill.projects}+` },
                     ].map(stat => (
                         <div key={stat.label} style={{
-                            background: 'rgba(255,255,255,0.03)',
-                            border: `1px solid rgba(255,255,255,0.06)`,
+                            background: 'linear-gradient(155deg, rgba(255,255,255,0.06), rgba(255,255,255,0.015))',
+                            border: `1px solid rgba(255,255,255,0.08)`,
                             borderRadius: '14px', padding: '1rem',
                             textAlign: 'center',
+                            boxShadow: '0 12px 24px -12px rgba(0,0,0,0.55), inset 0 1px 0 rgba(255,255,255,0.07), inset 0 -1px 0 rgba(0,0,0,0.3)',
                         }}>
                             <div style={{ fontSize: '1.8rem', fontWeight: 900, color: skill.color, fontFamily: 'monospace' }}>
                                 {stat.value}
@@ -337,9 +340,10 @@ function DetailPanel({ skill, onClose }) {
 
                 {/* Description */}
                 <div style={{
-                    background: 'rgba(255,255,255,0.02)',
-                    border: `1px solid ${skill.color}20`,
+                    background: 'linear-gradient(155deg, rgba(255,255,255,0.035), rgba(255,255,255,0.005))',
+                    border: `1px solid ${skill.color}25`,
                     borderRadius: '14px', padding: '1.2rem',
+                    boxShadow: `0 12px 26px -14px rgba(0,0,0,0.55), inset 0 1px 0 rgba(255,255,255,0.06), inset 0 -1px 0 rgba(0,0,0,0.25)`,
                 }}>
                     <div style={{ fontSize: '10px', fontWeight: 700, color: skill.color, letterSpacing: '0.15em', marginBottom: '8px' }}>
                         ABOUT
@@ -359,9 +363,10 @@ function DetailPanel({ skill, onClose }) {
                             <span key={tag} style={{
                                 fontSize: '11px', fontWeight: 700,
                                 padding: '5px 12px', borderRadius: '20px',
-                                background: `${skill.color}15`,
-                                border: `1px solid ${skill.color}35`,
+                                background: `linear-gradient(155deg, ${skill.color}26, ${skill.color}0c)`,
+                                border: `1px solid ${skill.color}40`,
                                 color: skill.color,
+                                boxShadow: `0 6px 12px -6px ${skill.color}40, inset 0 1px 0 ${skill.color}30`,
                             }}>{tag}</span>
                         ))}
                     </div>
@@ -408,44 +413,72 @@ export default function Skills() {
         @keyframes pulse-ring{0%,100%{opacity:0.15;transform:scale(1)}50%{opacity:0.3;transform:scale(1.06)}}
         @keyframes marquee{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
         .sk-card{
-          background:rgba(255,255,255,0.03);
-          border:1px solid rgba(255,255,255,0.07);
+          background:linear-gradient(155deg, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0.015) 60%);
+          border:1px solid rgba(255,255,255,0.09);
+          border-top-color:rgba(255,255,255,0.17);
+          box-shadow:
+            0 16px 32px -14px rgba(0,0,0,0.6),
+            0 4px 10px -4px rgba(0,0,0,0.4),
+            inset 0 1px 0 rgba(255,255,255,0.08),
+            inset 0 -1px 0 rgba(0,0,0,0.35);
+          transform-style:preserve-3d;
           transition:border-color .25s,box-shadow .25s;
         }
-        .sk-card:hover{border-color:rgba(255,255,255,0.15);}
+        .sk-card:hover{
+          border-color:rgba(255,255,255,0.18);
+          box-shadow:
+            0 26px 46px -16px rgba(0,0,0,0.7),
+            0 6px 16px -4px rgba(0,0,0,0.45),
+            inset 0 1px 0 rgba(255,255,255,0.13),
+            inset 0 -1px 0 rgba(0,0,0,0.4);
+        }
         .cat-btn{
           border:1px solid rgba(255,255,255,0.08);
-          background:transparent;
+          background:linear-gradient(155deg, rgba(255,255,255,0.045), rgba(255,255,255,0.01));
           color:#64748b;
           font-size:11px;font-weight:700;letter-spacing:.12em;
           padding:7px 16px;border-radius:20px;cursor:pointer;
+          box-shadow:0 5px 12px -7px rgba(0,0,0,0.55), inset 0 1px 0 rgba(255,255,255,0.06);
           transition:all .2s;
         }
-        .cat-btn.active{color:#fff;background:rgba(59,158,255,0.15);border-color:rgba(59,158,255,0.4);}
-        .cat-btn:hover:not(.active){color:#94a3b8;background:rgba(255,255,255,0.04);}
+        .cat-btn.active{
+          color:#fff;
+          background:linear-gradient(155deg, rgba(59,158,255,0.3), rgba(59,158,255,0.1));
+          border-color:rgba(59,158,255,0.45);
+          box-shadow:0 8px 18px -8px rgba(59,158,255,0.55), inset 0 1px 0 rgba(255,255,255,0.18);
+        }
+        .cat-btn:hover:not(.active){color:#94a3b8;background:linear-gradient(155deg, rgba(255,255,255,0.075), rgba(255,255,255,0.02));}
         .view-btn{
-          background:rgba(255,255,255,0.04);
-          border:1px solid rgba(255,255,255,0.08);
+          background:linear-gradient(155deg, rgba(255,255,255,0.065), rgba(255,255,255,0.015));
+          border:1px solid rgba(255,255,255,0.09);
           color:#64748b;font-size:15px;
           width:36px;height:36px;border-radius:10px;cursor:pointer;
+          box-shadow:0 5px 12px -7px rgba(0,0,0,0.55), inset 0 1px 0 rgba(255,255,255,0.07);
           transition:all .2s;display:flex;align-items:center;justify-content:center;
         }
-        .view-btn.active{background:rgba(59,158,255,0.12);border-color:rgba(59,158,255,0.4);color:#3b9eff;}
+        .view-btn.active{
+          background:linear-gradient(155deg, rgba(59,158,255,0.28), rgba(59,158,255,0.08));
+          border-color:rgba(59,158,255,0.45);color:#3b9eff;
+          box-shadow:0 8px 16px -8px rgba(59,158,255,0.55), inset 0 1px 0 rgba(255,255,255,0.18);
+        }
         .sort-select{
-          background:rgba(255,255,255,0.04);
+          background:linear-gradient(155deg, rgba(255,255,255,0.055), rgba(255,255,255,0.015));
           border:1px solid rgba(255,255,255,0.08);
           color:#94a3b8;font-size:11px;font-weight:700;
           padding:7px 12px;border-radius:10px;cursor:pointer;outline:none;
           letter-spacing:.08em;
+          box-shadow:0 5px 12px -7px rgba(0,0,0,0.55), inset 0 1px 0 rgba(255,255,255,0.06);
         }
         .search-input{
-          background:rgba(255,255,255,0.04);
+          background:rgba(255,255,255,0.03);
           border:1px solid rgba(255,255,255,0.08);
           color:#e2e8f0;font-size:13px;font-weight:500;
           padding:9px 14px 9px 36px;border-radius:12px;outline:none;
-          width:100%;transition:border-color .2s;
+          width:100%;
+          box-shadow:inset 0 2px 6px rgba(0,0,0,0.45), inset 0 1px 0 rgba(0,0,0,0.2);
+          transition:border-color .2s, box-shadow .2s;
         }
-        .search-input:focus{border-color:rgba(59,158,255,0.4);}
+        .search-input:focus{border-color:rgba(59,158,255,0.4);box-shadow:inset 0 2px 6px rgba(0,0,0,0.45), 0 0 0 3px rgba(59,158,255,0.12);}
         .search-input::placeholder{color:#334155;}
         .marquee-track{display:flex;width:max-content;animation:marquee 28s linear infinite;}
         .prog-ring{transition:stroke-dashoffset 1s cubic-bezier(0.22,1,0.36,1);}
@@ -600,9 +633,10 @@ export default function Skills() {
                                     {/* icon */}
                                     <div style={{
                                         width: 64, height: 64, borderRadius: 18,
-                                        background: `${sk.color}12`, border: `1px solid ${sk.color}30`,
+                                        background: `linear-gradient(155deg, ${sk.color}24, ${sk.color}08)`,
+                                        border: `1px solid ${sk.color}38`,
                                         display: 'flex', alignItems: 'center', justifyContent: 'center',
-                                        boxShadow: `0 0 24px ${sk.color}18`,
+                                        boxShadow: `0 12px 22px -8px ${sk.color}40, 0 3px 8px rgba(0,0,0,0.4), inset 0 1px 0 ${sk.color}30, inset 0 -3px 5px rgba(0,0,0,0.25)`,
                                         transition: 'box-shadow .3s',
                                     }}>
                                         {sk.icon}
@@ -618,12 +652,12 @@ export default function Skills() {
 
 
                                     {/* proficiency bar */}
-                                    <div style={{ width: '100%', height: 3, background: 'rgba(255,255,255,0.06)', borderRadius: 3, overflow: 'hidden' }}>
+                                    <div style={{ width: '100%', height: 3, background: 'rgba(255,255,255,0.06)', borderRadius: 3, overflow: 'hidden', boxShadow: 'inset 0 1px 2px rgba(0,0,0,0.4)' }}>
                                         <div style={{
                                             height: '100%', borderRadius: 3,
                                             width: `${sk.proficiency}%`,
                                             background: `linear-gradient(90deg,${sk.color},${sk.color}88)`,
-                                            boxShadow: `0 0 8px ${sk.color}88`,
+                                            boxShadow: `0 0 8px ${sk.color}88, inset 0 1px 0 rgba(255,255,255,0.3)`,
                                         }} />
                                     </div>
 
@@ -669,8 +703,10 @@ export default function Skills() {
                                 >
                                     <div style={{
                                         width: 48, height: 48, borderRadius: 14, flexShrink: 0,
-                                        background: `${sk.color}12`, border: `1px solid ${sk.color}30`,
+                                        background: `linear-gradient(155deg, ${sk.color}24, ${sk.color}08)`,
+                                        border: `1px solid ${sk.color}38`,
                                         display: 'flex', alignItems: 'center', justifyContent: 'center',
+                                        boxShadow: `0 10px 18px -8px ${sk.color}38, 0 2px 6px rgba(0,0,0,0.35), inset 0 1px 0 ${sk.color}30, inset 0 -2px 4px rgba(0,0,0,0.22)`,
                                     }}>
                                         {sk.icon}
                                     </div>
@@ -683,12 +719,12 @@ export default function Skills() {
                                                 letterSpacing: '.08em',
                                             }}>{sk.category}</span>
                                         </div>
-                                        <div style={{ height: 5, background: 'rgba(255,255,255,0.05)', borderRadius: 5, overflow: 'hidden' }}>
+                                        <div style={{ height: 5, background: 'rgba(255,255,255,0.05)', borderRadius: 5, overflow: 'hidden', boxShadow: 'inset 0 1px 3px rgba(0,0,0,0.4)' }}>
                                             <div style={{
                                                 height: '100%', borderRadius: 5,
                                                 width: `${sk.proficiency}%`,
                                                 background: `linear-gradient(90deg,${sk.color},${sk.color}80)`,
-                                                boxShadow: `0 0 8px ${sk.color}60`,
+                                                boxShadow: `0 0 8px ${sk.color}60, inset 0 1px 0 rgba(255,255,255,0.3)`,
                                             }} />
                                         </div>
                                     </div>
@@ -726,8 +762,9 @@ export default function Skills() {
                                         style={{
                                             display: 'flex', alignItems: 'center', gap: 12,
                                             padding: '10px 14px', borderRadius: 12,
-                                            background: 'rgba(255,255,255,0.02)',
-                                            border: '1px solid rgba(255,255,255,0.06)',
+                                            background: 'linear-gradient(155deg, rgba(255,255,255,0.035), rgba(255,255,255,0.008))',
+                                            border: '1px solid rgba(255,255,255,0.07)',
+                                            boxShadow: '0 8px 18px -10px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.05)',
                                             cursor: 'pointer', transition: 'all .2s',
                                             animation: `fade-up .4s ease ${i * 0.04}s both`,
                                         }}
@@ -736,7 +773,7 @@ export default function Skills() {
                                     >
                                         <div style={{ width: 8, height: 8, borderRadius: '50%', background: sk.color, flexShrink: 0 }} />
                                         <span style={{ color: '#94a3b8', fontSize: 12, fontWeight: 700, fontFamily: 'monospace', minWidth: 100 }}>{sk.label}</span>
-                                        <div style={{ flex: 1, height: 4, background: 'rgba(255,255,255,0.05)', borderRadius: 4, overflow: 'hidden' }}>
+                                        <div style={{ flex: 1, height: 4, background: 'rgba(255,255,255,0.05)', borderRadius: 4, overflow: 'hidden', boxShadow: 'inset 0 1px 2px rgba(0,0,0,0.4)' }}>
                                             <div style={{
                                                 height: '100%', borderRadius: 4, width: `${sk.proficiency}%`,
                                                 background: sk.color, transition: 'width 1s ease',
