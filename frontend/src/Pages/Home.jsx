@@ -2,17 +2,7 @@ import { useEffect, useRef } from 'react'
 import { motion as Motion } from 'framer-motion'
 import { sectionFadeUp } from '../utils/motion'
 import profile from '../assets/p2.png';
-
-const particles = [
-  { size: 5, top: '12%', left: '6%', delay: '0s', dur: '6s' },
-  { size: 3, top: '28%', left: '14%', delay: '1.2s', dur: '7s' },
-  { size: 4, top: '62%', left: '4%', delay: '2.4s', dur: '5.5s' },
-  { size: 6, top: '18%', right: '10%', delay: '0.6s', dur: '6.5s' },
-  { size: 3, top: '48%', right: '18%', delay: '1.8s', dur: '8s' },
-  { size: 5, top: '76%', right: '7%', delay: '3s', dur: '6s' },
-  { size: 4, top: '40%', left: '50%', delay: '1.5s', dur: '7.5s' },
-  { size: 2, top: '85%', left: '30%', delay: '0.9s', dur: '5s' },
-]
+import ParticlesContainer from '../Components/ParticlesContainer'
 
 export default function Hero() {
   const cursorRef = useRef(null)
@@ -55,26 +45,12 @@ export default function Hero() {
         }}
       />
 
-      {/* Particles */}
-      {particles.map((p, i) => (
-        <div
-          key={i}
-          className="particle-dot absolute"
-          style={{
-            width: p.size, height: p.size,
-            top: p.top, left: p.left, right: p.right,
-            background: i % 2 === 0
-              ? 'rgba(59,158,255,0.7)'
-              : 'rgba(168,85,247,0.6)',
-            boxShadow: `0 0 ${p.size * 3}px currentColor`,
-            animation: `float ${p.dur} ease-in-out infinite`,
-            animationDelay: p.delay,
-          }}
-        />
-      ))}
+      <div className="absolute inset-0 z-0">
+        <ParticlesContainer />
+      </div>
 
       {/* Main hero content */}
-      <div className="flex-1 flex items-center pt-24 pb-20 px-4 sm:px-6 lg:px-8">
+      <div className="relative z-10 flex-1 flex items-center pt-24 pb-20 px-4 sm:px-6 lg:px-8">
         <div className="max-w-6xl mx-auto w-full flex flex-col lg:flex-row items-center gap-10 lg:gap-16">
 
           {/* ── LEFT TEXT ── */}
