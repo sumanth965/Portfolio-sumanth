@@ -1,7 +1,7 @@
 import { useEffect, useRef } from "react";
 
-const PARTICLE_COLOR = "#e68e2e";
-const LINK_COLOR = "245, 211, 147";
+const PARTICLE_COLOR = "#3d2ee6ff";
+const LINK_COLOR = "61, 46, 230";
 const INTERACTION_RADIUS = 220;
 
 const ParticlesContainer = () => {
