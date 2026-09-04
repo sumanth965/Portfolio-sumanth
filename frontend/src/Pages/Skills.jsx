@@ -510,13 +510,13 @@ export default function Skills() {
                                 Expertise
                             </span>
                         </h2>
-                        <p style={{ color: '#475569', fontSize: 14, marginTop: 8, maxWidth: 480 }}>
+                        {/* <p style={{ color: '#475569', fontSize: 14, marginTop: 8, maxWidth: 480 }}>
                             Technologies I use to build performant, scalable full-stack applications.
-                        </p>
+                        </p> */}
                     </div>
 
                     {/* ── STATS STRIP ── */}
-                    <div style={{
+                    {/* <div style={{
                         display: 'grid', gridTemplateColumns: 'repeat(auto-fit,minmax(140px,1fr))',
                         gap: 12, marginBottom: '2rem',
                         animation: 'fade-up .7s ease .1s both',
@@ -532,7 +532,7 @@ export default function Skills() {
                                 <div style={{ fontSize: 10, color: '#475569', fontWeight: 700, letterSpacing: '.12em', marginTop: 2 }}>{stat.label.toUpperCase()}</div>
                             </div>
                         ))}
-                    </div>
+                    </div> */}
 
                     {/* ── CONTROLS ── */}
                     {/* ── CONTROLS ── */}
