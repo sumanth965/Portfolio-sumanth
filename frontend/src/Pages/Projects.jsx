@@ -13,6 +13,7 @@ const projects = [
     accent: '#0ea5e9',
     accentB: '#0369a1',
     emoji: '🏢',
+    img: 'https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=600&q=80',
     tags: ['MERN Stack', 'JWT Auth', 'Approval Workflow', 'Admin Panel'],
   },
   {
@@ -24,6 +25,7 @@ const projects = [
     accent: '#22c55e',
     accentB: '#15803d',
     emoji: '🎯',
+    img: 'https://images.unsplash.com/photo-1434030216411-0b793f4b4173?auto=format&fit=crop&w=600&q=80',
     tags: ['React', 'Node.js', 'Workflow Optimization', 'Task Tracking'],
   },
   {
@@ -35,6 +37,7 @@ const projects = [
     accent: '#f43f5e',
     accentB: '#be123c',
     emoji: '🎮',
+    img: 'https://images.unsplash.com/photo-1552820728-8b83bb6b773f?auto=format&fit=crop&w=600&q=80',
     tags: ['JavaScript ES6+', 'Canvas API', 'Game Logic', 'UI/UX'],
   },
   {
@@ -46,6 +49,7 @@ const projects = [
     accent: '#a855f7',
     accentB: '#6b21a8',
     emoji: '🎨',
+    img: 'https://images.unsplash.com/photo-1547826039-bfc35e0f1ea8?auto=format&fit=crop&w=600&q=80',
     tags: ['MERN', 'WebSocket', 'Real-time Bidding', 'Digital Commerce'],
   },
   {
@@ -57,6 +61,7 @@ const projects = [
     accent: '#3b9eff',
     accentB: '#1d4ed8',
     emoji: '📊',
+    img: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=600&q=80',
     tags: ['Data Visualization', 'Excel Parser', 'Chart.js', 'Express.js'],
   },
   {
@@ -68,6 +73,7 @@ const projects = [
     accent: '#a855f7',
     accentB: '#7c3aed',
     emoji: '🎞',
+    img: 'https://images.unsplash.com/photo-1611162617474-5b21e879e113?auto=format&fit=crop&w=600&q=80',
     tags: ['Frontend Architecture', 'CSS Animations', 'Performance', 'Vite'],
   },
   {
@@ -79,6 +85,7 @@ const projects = [
     accent: '#facc15',
     accentB: '#ca8a04',
     emoji: '🔐',
+    img: 'https://images.unsplash.com/photo-1555949963-aa79dcee57d5?auto=format&fit=crop&w=600&q=80',
     tags: ['Cybersecurity', 'Session Management', 'Hashing', 'Auth Flow'],
   },
   {
@@ -90,6 +97,7 @@ const projects = [
     accent: '#f97316',
     accentB: '#c2410c',
     emoji: '🍔',
+    img: 'https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?auto=format&fit=crop&w=600&q=80',
     tags: ['Food Tech', 'Real-time Tracking', 'Admin Control', 'Redux'],
   },
   {
@@ -101,6 +109,7 @@ const projects = [
     accent: '#06b6d4',
     accentB: '#0891b2',
     emoji: '📱',
+    img: 'https://images.unsplash.com/photo-1498049794561-7780e7231661?auto=format&fit=crop&w=600&q=80',
     tags: ['E-commerce UI', 'Responsive Design', 'Modular CSS', 'HTML5'],
   },
   {
@@ -112,6 +121,7 @@ const projects = [
     accent: '#0891b2',
     accentB: '#155e75',
     emoji: '⚙️',
+    img: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=600&q=80',
     tags: ['Inventory Control', 'Data Sync', 'Admin UX', 'Resource Management'],
   },
 ]
@@ -146,8 +156,7 @@ function ProjectCard({ project, index, onHover }) {
       onMouseEnter={enter}
       onMouseLeave={leave}
       style={{
-        flexShrink: 0,
-        width: 240,
+        width: '100%',
         borderRadius: 22,
         overflow: 'hidden',
         background: 'linear-gradient(155deg, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0.015) 65%)',
@@ -171,7 +180,13 @@ function ProjectCard({ project, index, onHover }) {
         position: 'relative',
         overflow: 'hidden',
       }}>
-        {project.mockup ? project.mockup(project.accent) : (
+        {project.img ? (
+          <img 
+            src={project.img} 
+            alt={project.name} 
+            style={{ width: '100%', height: '100%', objectFit: 'cover' }} 
+          />
+        ) : project.mockup ? project.mockup(project.accent) : (
           <div style={{
             width: '100%', height: '100%', display: 'flex', flexDirection: 'column',
             alignItems: 'center', justifyContent: 'center', gap: 8, padding: '12px',
@@ -525,11 +540,10 @@ export default function Projects() {
                 ref={scrollRef}
                 className="hide-scroll"
                 style={{
-                  display: 'flex', gap: 14,
-                  overflowX: 'auto',
+                  display: 'grid',
+                  gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))',
+                  gap: '24px',
                   paddingBottom: 12,
-                  /* on larger screens show as wrap grid */
-                  flexWrap: 'nowrap',
                 }}
               >
                 {filtered.map((p, i) => (
@@ -542,27 +556,7 @@ export default function Projects() {
                 ))}
               </Motion.div>
 
-              {/* dot indicators */}
-              <div style={{ display: 'flex', gap: 6, justifyContent: 'center', marginTop: 16 }}>
-                {filtered.map((p, i) => (
-                  <button
-                    key={i}
-                    onClick={() => setActiveIdx(i)}
-                    style={{
-                      width: activeIdx === i ? 20 : 6,
-                      height: 6,
-                      borderRadius: 3,
-                      border: 'none',
-                      cursor: 'pointer',
-                      background: activeIdx === i ? p.accent : 'rgba(255,255,255,0.12)',
-                      boxShadow: activeIdx === i
-                        ? `0 2px 8px ${p.accent}, inset 0 1px 0 rgba(255,255,255,0.35)`
-                        : 'inset 0 1px 2px rgba(0,0,0,0.4)',
-                      transition: 'all .35s cubic-bezier(0.34,1.56,0.64,1)',
-                    }}
-                  />
-                ))}
-              </div>
+              {/* dot indicators removed as layout is now a grid */}
             </>
           ) : (
             <div style={{ textAlign: 'center', padding: '4rem', color: '#334155' }}>
