@@ -167,7 +167,6 @@ function ProjectCard({ project, index, onHover }) {
         transform: hovered ? 'translateY(-8px) scale(1.01)' : 'translateY(0) scale(1)',
         transition: 'all 0.35s cubic-bezier(0.34,1.56,0.64,1)',
         cursor: 'pointer',
-        animation: `pj-fade-up 0.55s ease ${index * 0.08}s both`,
         position: 'relative',
       }}
     >
@@ -430,12 +429,17 @@ export default function Projects() {
         <div style={{ maxWidth: 1100, margin: '0 auto', position: 'relative', zIndex: 10 }}>
 
           {/* ── HEADER ROW ── */}
-          <div style={{
-            display: 'flex', flexWrap: 'wrap', alignItems: 'flex-end',
-            justifyContent: 'space-between', gap: '1.5rem',
-            marginBottom: '2rem',
-            animation: 'pj-fade-up .7s ease both',
-          }}>
+          <Motion.div 
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.2 }}
+            transition={{ duration: 0.6 }}
+            style={{
+              display: 'flex', flexWrap: 'wrap', alignItems: 'flex-end',
+              justifyContent: 'space-between', gap: '1.5rem',
+              marginBottom: '2rem',
+            }}
+          >
             <div>
               <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 8 }}>
                 <div style={{ width: 32, height: 2, background: 'linear-gradient(90deg,#a855f7,transparent)' }} />
@@ -453,23 +457,28 @@ export default function Projects() {
                   Projects
                 </span>
               </h2>
-              <p style={{ color: '#475569', fontSize: 13, marginTop: 8, maxWidth: 420 }}>
+              {/* <p style={{ color: '#475569', fontSize: 13, marginTop: 8, maxWidth: 420 }}>
                 Real-world builds showcasing full-stack capabilities, clean UI, and production-ready patterns.
-              </p>
+              </p> */}
             </div>
 
             {/* scroll arrows */}
-            <div style={{ display: 'flex', gap: 8 }}>
+            {/* <div style={{ display: 'flex', gap: 8 }}>
               <button className="pj-arrow" onClick={() => scroll(-1)}>←</button>
               <button className="pj-arrow" onClick={() => scroll(1)}>→</button>
-            </div>
-          </div>
+            </div> */}
+          </Motion.div>
 
           {/* ── STAT STRIP ── */}
-          <div style={{
-            display: 'flex', flexWrap: 'wrap', gap: 10, marginBottom: '1.8rem',
-            animation: 'pj-fade-up .7s ease .08s both',
-          }}>
+          <Motion.div 
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.2 }}
+            transition={{ duration: 0.6, delay: 0.08 }}
+            style={{
+              display: 'flex', flexWrap: 'wrap', gap: 10, marginBottom: '1.8rem',
+            }}
+          >
             {[
               { label: 'Total Projects', value: `${projects.length}`, color: '#3b9eff' },
               { label: 'Live Demos', value: `${liveCount}`, color: '#22c55e' },
@@ -489,14 +498,19 @@ export default function Projects() {
                 </span>
               </div>
             ))}
-          </div>
+          </Motion.div>
 
           {/* ── FILTERS ── */}
-          <div style={{
-            display: 'flex', flexWrap: 'wrap', alignItems: 'center', gap: 10,
-            marginBottom: '2rem',
-            animation: 'pj-fade-up .7s ease .12s both',
-          }}>
+          <Motion.div 
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.2 }}
+            transition={{ duration: 0.6, delay: 0.12 }}
+            style={{
+              display: 'flex', flexWrap: 'wrap', alignItems: 'center', gap: 10,
+              marginBottom: '2rem',
+            }}
+          >
             {/* search */}
             <div style={{ position: 'relative' }}>
               <span style={{
@@ -527,7 +541,7 @@ export default function Projects() {
             <span style={{ fontSize: 11, color: '#334155', fontWeight: 600, marginLeft: 'auto', fontFamily: 'monospace' }}>
               {filtered.length} result{filtered.length !== 1 ? 's' : ''}
             </span>
-          </div>
+          </Motion.div>
 
           {/* ── CARDS SCROLL ── */}
           {filtered.length > 0 ? (
@@ -569,44 +583,6 @@ export default function Projects() {
 
         </div>
       </Motion.section>
-      {/* Glow line */}
-      <div className="relative w-full overflow-hidden" style={{ height: '60px' }}>
-        <svg
-          viewBox="0 0 1200 60"
-          preserveAspectRatio="none"
-          xmlns="http://www.w3.org/2000/svg"
-          style={{ width: '100%', height: '100%' }}
-        >
-          <defs>
-            <linearGradient id="lineGrad" x1="0%" y1="0%" x2="100%" y2="0%">
-              <stop offset="0%" stopColor="#818cf8" stopOpacity="0.9" />
-              <stop offset="35%" stopColor="#38bdf8" stopOpacity="0.8" />
-              <stop offset="100%" stopColor="#22d3ee" stopOpacity="1" />
-            </linearGradient>
-            <filter id="glow">
-              <feGaussianBlur stdDeviation="2.5" result="blur" />
-              <feMerge><feMergeNode in="blur" /><feMergeNode in="SourceGraphic" /></feMerge>
-            </filter>
-          </defs>
-
-          {/* Glow blur layer */}
-          <path
-            d="M0,14 L350,14 L420,46 L1200,46" fill="none"
-            stroke="url(#lineGrad)"
-            strokeWidth="4"
-            strokeLinecap="round"
-            filter="url(#glow)"
-            opacity="0.5"
-          />
-          {/* Sharp line on top */}
-          <path
-            d="M0,14 L350,14 L420,46 L1200,46" fill="none"
-            stroke="url(#lineGrad)"
-            strokeWidth="1.2"
-            strokeLinecap="round"
-          />
-        </svg>
-      </div>
     </>
 
   )

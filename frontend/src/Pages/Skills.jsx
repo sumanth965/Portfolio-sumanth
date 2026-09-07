@@ -499,7 +499,13 @@ export default function Skills() {
                 <div style={{ maxWidth: 1100, margin: '0 auto', position: 'relative', zIndex: 10 }}>
 
                     {/* ── HEADER ── */}
-                    <div style={{ marginBottom: '2.5rem', animation: 'fade-up .7s ease both' }}>
+                    <Motion.div 
+                        initial={{ opacity: 0, y: 30 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        viewport={{ once: true, amount: 0.2 }}
+                        transition={{ duration: 0.6 }}
+                        style={{ marginBottom: '2.5rem' }}
+                    >
                         <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 8 }}>
                             <div style={{ width: 32, height: 2, background: 'linear-gradient(90deg,#3b9eff,transparent)' }} />
                             <span style={{ fontSize: 11, fontWeight: 800, color: '#3b9eff', letterSpacing: '.2em' }}>TECH STACK</span>
@@ -513,7 +519,7 @@ export default function Skills() {
                         {/* <p style={{ color: '#475569', fontSize: 14, marginTop: 8, maxWidth: 480 }}>
                             Technologies I use to build performant, scalable full-stack applications.
                         </p> */}
-                    </div>
+                    </Motion.div>
 
                     {/* ── STATS STRIP ── */}
                     {/* <div style={{
@@ -536,13 +542,18 @@ export default function Skills() {
 
                     {/* ── CONTROLS ── */}
                     {/* ── CONTROLS ── */}
-                    <div style={{
-                        display: 'flex',
-                        flexDirection: 'column',
-                        gap: 12,
-                        marginBottom: '2rem',
-                        animation: 'fade-up .7s ease .15s both',
-                    }}>
+                    <Motion.div 
+                        initial={{ opacity: 0, y: 30 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        viewport={{ once: true, amount: 0.2 }}
+                        transition={{ duration: 0.6, delay: 0.1 }}
+                        style={{
+                            display: 'flex',
+                            flexDirection: 'column',
+                            gap: 12,
+                            marginBottom: '2rem',
+                        }}
+                    >
                         {/* Top row: Search and View toggle */}
                         <div style={{ display: 'flex', flexWrap: 'wrap', gap: 12, alignItems: 'center', justifyContent: 'space-between' }}>
 
@@ -593,7 +604,7 @@ export default function Skills() {
                                 <option value="years">SORT: EXPERIENCE</option>
                             </select>
                         </div>
-                    </div>
+                    </Motion.div>
 
                     {/* ── GRID VIEW ── */}
                     {view === 'grid' && (
@@ -615,8 +626,8 @@ export default function Skills() {
                                     style={{
                                         borderRadius: 20, padding: '1.2rem 1rem',
                                         display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 12,
-                                        animation: `fade-up .5s ease ${i * 0.05}s both`,
                                     }}
+                                    variants={staggerItem}
                                 >
                                     {/* shimmer glare from tilt */}
                                     <div style={{
@@ -689,7 +700,6 @@ export default function Skills() {
                                         borderRadius: 16, padding: '1rem 1.4rem',
                                         display: 'flex', alignItems: 'center', gap: '1.2rem',
                                         cursor: 'pointer',
-                                        animation: `fade-up .4s ease ${i * 0.04}s both`,
                                         transition: 'all .25s',
                                     }}
                                     onMouseEnter={e => {
@@ -740,11 +750,12 @@ export default function Skills() {
 
                     {/* ── RADAR VIEW ── */}
                     {view === 'radar' && (
-                        <div style={{
-                            display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '2rem',
-                            alignItems: 'start',
-                            animation: 'fade-up .5s ease both',
-                        }}>
+                        <Motion.div
+                            variants={staggerItem}
+                            style={{
+                                display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '2rem',
+                                alignItems: 'start',
+                            }}>
                             <div className="sk-card" style={{ borderRadius: 24, padding: '2rem' }}>
                                 <div style={{ fontSize: 10, fontWeight: 700, color: '#64748b', letterSpacing: '.15em', marginBottom: '1.5rem' }}>
                                     PROFICIENCY RADAR
@@ -765,8 +776,7 @@ export default function Skills() {
                                             background: 'linear-gradient(155deg, rgba(255,255,255,0.035), rgba(255,255,255,0.008))',
                                             border: '1px solid rgba(255,255,255,0.07)',
                                             boxShadow: '0 8px 18px -10px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.05)',
-                                            cursor: 'pointer', transition: 'all .2s',
-                                            animation: `fade-up .4s ease ${i * 0.04}s both`,
+                                            cursor: 'pointer', transition: 'all .25s'
                                         }}
                                         onMouseEnter={e => { e.currentTarget.style.background = `${sk.color}08`; e.currentTarget.style.borderColor = `${sk.color}30` }}
                                         onMouseLeave={e => { e.currentTarget.style.background = 'rgba(255,255,255,0.02)'; e.currentTarget.style.borderColor = 'rgba(255,255,255,0.06)' }}
@@ -785,7 +795,7 @@ export default function Skills() {
                                     </Motion.div>
                                 ))}
                             </Motion.div>
-                        </div>
+                        </Motion.div>
                     )}
 
                     {/* ── EMPTY STATE ── */}
@@ -824,44 +834,6 @@ export default function Skills() {
                 {selected && <DetailPanel skill={selected} onClose={() => setSelected(null)} />}
 
             </Motion.section>
-            {/* Glow line */}
-            <div className="relative w-full overflow-hidden" style={{ height: '60px' }}>
-                <svg
-                    viewBox="0 0 1200 60"
-                    preserveAspectRatio="none"
-                    xmlns="http://www.w3.org/2000/svg"
-                    style={{ width: '100%', height: '100%' }}
-                >
-                    <defs>
-                        <linearGradient id="lineGrad" x1="0%" y1="0%" x2="100%" y2="0%">
-                            <stop offset="0%" stopColor="#818cf8" stopOpacity="0.9" />
-                            <stop offset="35%" stopColor="#38bdf8" stopOpacity="0.8" />
-                            <stop offset="100%" stopColor="#22d3ee" stopOpacity="1" />
-                        </linearGradient>
-                        <filter id="glow">
-                            <feGaussianBlur stdDeviation="2.5" result="blur" />
-                            <feMerge><feMergeNode in="blur" /><feMergeNode in="SourceGraphic" /></feMerge>
-                        </filter>
-                    </defs>
-
-                    {/* Glow blur layer */}
-                    <path
-                        d="M0,14 L350,14 L420,46 L1200,46" fill="none"
-                        stroke="url(#lineGrad)"
-                        strokeWidth="4"
-                        strokeLinecap="round"
-                        filter="url(#glow)"
-                        opacity="0.5"
-                    />
-                    {/* Sharp line on top */}
-                    <path
-                        d="M0,14 L350,14 L420,46 L1200,46" fill="none"
-                        stroke="url(#lineGrad)"
-                        strokeWidth="1.2"
-                        strokeLinecap="round"
-                    />
-                </svg>
-            </div>
         </>
     )
 }

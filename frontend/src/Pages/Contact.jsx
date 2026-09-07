@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { motion as Motion } from 'framer-motion';
 
 const contactCards = [
   {
@@ -23,52 +24,54 @@ const contactCards = [
 function ContactItem({ icon, label, value, href }) {
   const content = (
     <div style={{
-      background: 'rgba(255, 255, 255, 0.03)',
-      border: '1px solid rgba(255, 255, 255, 0.08)',
-      borderRadius: '24px',
-      padding: 'clamp(1rem, 3vw, 1.5rem)',
-      transition: 'all 0.3s ease',
+      background: 'rgba(255, 255, 255, 0.02)',
+      border: '1px solid rgba(255, 255, 255, 0.05)',
+      borderRadius: '16px',
+      padding: '1.25rem',
+      display: 'flex',
+      alignItems: 'center',
+      gap: '1.25rem',
+      transition: 'all 0.2s',
       cursor: href ? 'pointer' : 'default',
     }}
       onMouseEnter={(e) => {
-        e.currentTarget.style.background = 'rgba(59, 158, 255, 0.08)';
-        e.currentTarget.style.borderColor = 'rgba(59, 158, 255, 0.3)';
+        if (href) e.currentTarget.style.background = 'rgba(255, 255, 255, 0.05)';
       }}
       onMouseLeave={(e) => {
-        e.currentTarget.style.background = 'rgba(255, 255, 255, 0.03)';
-        e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.08)';
+        if (href) e.currentTarget.style.background = 'rgba(255, 255, 255, 0.02)';
       }}>
       <div style={{
-        width: '48px',
-        height: '48px',
-        borderRadius: '16px',
-        background: 'rgba(59, 158, 255, 0.12)',
+        width: '44px',
+        height: '44px',
+        borderRadius: '12px',
+        background: 'rgba(255, 255, 255, 0.08)',
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
-        fontSize: '24px',
-        marginBottom: '1rem',
+        fontSize: '20px',
+        flexShrink: 0,
       }}>
         {icon}
       </div>
-      <p style={{
-        fontSize: '10px',
-        fontWeight: 700,
-        letterSpacing: '0.15em',
-        color: '#64748b',
-        textTransform: 'uppercase',
-        marginBottom: '8px',
-      }}>
-        {label}
-      </p>
-      <p style={{
-        fontSize: 'clamp(13px, 2vw, 15px)',
-        fontWeight: 600,
-        color: '#e2e8f0',
-        wordBreak: 'break-word',
-      }}>
-        {value}
-      </p>
+      <div>
+        <p style={{
+          fontSize: '11px',
+          fontWeight: 600,
+          letterSpacing: '0.1em',
+          color: '#64748b',
+          textTransform: 'uppercase',
+          marginBottom: '4px',
+        }}>
+          {label}
+        </p>
+        <p style={{
+          fontSize: '15px',
+          fontWeight: 500,
+          color: '#e2e8f0',
+        }}>
+          {value}
+        </p>
+      </div>
     </div>
   );
 
@@ -173,33 +176,7 @@ export default function Contact() {
         }
       `}</style>
 
-        {/* Ambient blobs */}
-        <div style={{
-          position: 'absolute',
-          top: '10%',
-          left: '5%',
-          width: '400px',
-          height: '400px',
-          borderRadius: '50%',
-          background: 'radial-gradient(circle, #3b9eff, transparent)',
-          opacity: 0.04,
-          filter: 'blur(60px)',
-          animation: 'pulse-ring 6s ease-in-out infinite',
-          pointerEvents: 'none',
-        }} />
-        <div style={{
-          position: 'absolute',
-          bottom: '15%',
-          right: '8%',
-          width: '350px',
-          height: '350px',
-          borderRadius: '50%',
-          background: 'radial-gradient(circle, #a855f7, transparent)',
-          opacity: 0.04,
-          filter: 'blur(60px)',
-          animation: 'pulse-ring 8s ease-in-out infinite',
-          pointerEvents: 'none',
-        }} />
+        {/* Ambient blobs removed for simplicity */}
 
         <div style={{
           maxWidth: '1200px',
@@ -214,7 +191,12 @@ export default function Contact() {
             alignItems: 'start',
           }}>
             {/* Left side */}
-            <div style={{ animation: 'fade-up 0.7s ease both' }}>
+            <Motion.div
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, amount: 0.2 }}
+              transition={{ duration: 0.6 }}
+            >
               <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '12px' }}>
                 <div style={{ width: '32px', height: '2px', background: 'linear-gradient(90deg, #3b9eff, transparent)' }} />
                 <span style={{ fontSize: '11px', fontWeight: 800, color: '#3b9eff', letterSpacing: '0.2em' }}>
@@ -240,16 +222,7 @@ export default function Contact() {
                 </span>
               </h2>
 
-              <p style={{
-                color: '#94a3b8',
-                fontSize: 'clamp(14px, 2vw, 16px)',
-                lineHeight: 1.7,
-                marginBottom: '2rem',
-                maxWidth: '500px',
-              }}>
-                I'm open to internships, freelance projects, and collaborative work.
-                Share your ideas, and I'll get back to you soon.
-              </p>
+              {/* Paragraph removed for a simpler structure */}
 
               <div style={{
                 display: 'grid',
@@ -259,17 +232,20 @@ export default function Contact() {
                   <ContactItem key={item.label} {...item} />
                 ))}
               </div>
-            </div>
+            </Motion.div>
 
             {/* Right side - Form */}
-            <form
+            <Motion.form
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, amount: 0.2 }}
+              transition={{ duration: 0.6, delay: 0.2 }}
               onSubmit={handleSubmit}
               style={{
                 background: 'rgba(255, 255, 255, 0.03)',
                 border: '1px solid rgba(255, 255, 255, 0.08)',
                 borderRadius: '28px',
                 padding: 'clamp(1.5rem, 4vw, 2.5rem)',
-                animation: 'fade-up 0.7s ease 0.2s both',
               }}
             >
               {status && (
@@ -346,34 +322,25 @@ export default function Contact() {
                 style={{
                   width: '100%',
                   padding: '14px 24px',
-                  borderRadius: '16px',
+                  borderRadius: '12px',
                   border: 'none',
-                  background: loading
-                    ? 'rgba(100, 116, 139, 0.5)'
-                    : 'linear-gradient(135deg, #3b9eff, #06b6d4)',
+                  background: loading ? '#334155' : '#3b9eff',
                   color: '#fff',
-                  fontSize: '14px',
-                  fontWeight: 700,
+                  fontSize: '15px',
+                  fontWeight: 600,
                   cursor: loading ? 'not-allowed' : 'pointer',
-                  transition: 'all 0.3s',
-                  boxShadow: loading ? 'none' : '0 8px 24px rgba(59, 158, 255, 0.3)',
+                  transition: 'background 0.2s',
                 }}
                 onMouseEnter={(e) => {
-                  if (!loading) {
-                    e.currentTarget.style.transform = 'translateY(-2px)';
-                    e.currentTarget.style.boxShadow = '0 12px 32px rgba(59, 158, 255, 0.4)';
-                  }
+                  if (!loading) e.currentTarget.style.background = '#2563eb';
                 }}
                 onMouseLeave={(e) => {
-                  if (!loading) {
-                    e.currentTarget.style.transform = 'translateY(0)';
-                    e.currentTarget.style.boxShadow = '0 8px 24px rgba(59, 158, 255, 0.3)';
-                  }
+                  if (!loading) e.currentTarget.style.background = '#3b9eff';
                 }}
               >
                 {loading ? 'Sending...' : 'Send Message →'}
               </button>
-            </form>
+            </Motion.form>
           </div>
         </div>
       </section>

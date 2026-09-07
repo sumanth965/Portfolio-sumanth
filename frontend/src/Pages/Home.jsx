@@ -55,45 +55,51 @@ export default function Hero() {
 
           {/* ── LEFT TEXT ── */}
           <Motion.div
-            variants={{ hidden: { opacity: 0, y: 50 }, visible: { opacity: 1, y: 0 } }}
+            variants={{
+              hidden: { opacity: 0 },
+              visible: { 
+                opacity: 1,
+                transition: { staggerChildren: 0.1, delayChildren: 0.1 }
+              }
+            }}
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true, amount: 0.35 }}
-            transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
             className="flex-1 text-center lg:text-left order-2 lg:order-1"
           >
             {/* Badge */}
-            <div className="inline-flex items-center gap-2 glass-nav rounded-full px-4 py-1.5 mb-5">
+            <Motion.div variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0 } }} className="inline-flex items-center gap-2 glass-nav rounded-full px-4 py-1.5 mb-5">
               <span className="w-2 h-2 rounded-full bg-[#22c55e] shadow-[0_0_8px_#22c55e] animate-pulse" />
               <span className="text-xs font-semibold text-[#94a3b8] tracking-wider uppercase">
                 Available for work
               </span>
-            </div>
+            </Motion.div>
 
-            <p
+            <Motion.p
+              variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0, transition: { duration: 0.6 } } }}
               className="text-[#94a3b8] text-base sm:text-lg font-medium mb-2 tracking-wide"
-              style={{ fontFamily: 'var(--font-display)', animation: 'fade-up 0.7s ease 0.1s both' }}
+              style={{ fontFamily: 'var(--font-display)' }}
             >
               Hello. I'm Sumanth
-            </p>
+            </Motion.p>
 
-            <h1
+            <Motion.h1
+              variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0, transition: { duration: 0.6 } } }}
               className="font-extrabold leading-[1.05] mb-2"
               style={{
                 fontFamily: 'var(--font-display)',
                 fontSize: 'clamp(2.2rem, 4vw, 3.2rem)',
-                animation: 'fade-up 0.7s ease 0.2s both'
               }}
             >
               <span className="text-white">Full Stack</span>
-            </h1>
+            </Motion.h1>
 
-            <h1
+            <Motion.h1
+              variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0, transition: { duration: 0.6 } } }}
               className="font-extrabold leading-[1.05] mb-6"
               style={{
                 fontFamily: 'var(--font-display)',
                 fontSize: 'clamp(2.2rem, 4vw, 3.2rem)',
-                animation: 'fade-up 0.7s ease 0.3s both'
               }}
             >
               <span className="block bg-gradient-to-r from-sky-400 via-cyan-300 to-violet-400 bg-clip-text text-transparent">
@@ -101,11 +107,11 @@ export default function Hero() {
               </span>
               <span className="shimmer-text">Specialist</span>
 
-            </h1>
+            </Motion.h1>
 
-            <p
+            <Motion.p
+              variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0, transition: { duration: 0.6 } } }}
               className="text-[#64748b] text-sm sm:text-base leading-relaxed mb-8 max-w-md mx-auto lg:mx-0"
-              style={{ animation: 'fade-up 0.7s ease 0.4s both' }}
             >
               I have a passion for building scalable web applications using{' '}
               <span className="text-[#3b9eff] font-medium">MongoDB</span>,{' '}
@@ -113,10 +119,10 @@ export default function Hero() {
               <span className="text-[#06b6d4] font-medium">React.js</span>, and{' '}
               <span className="text-[#22c55e] font-medium">Node.js</span> — crafting
               robust, elegant solutions from front to back.
-            </p>
+            </Motion.p>
 
             {/* CTAs */}
-            <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
+            <Motion.div variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0, transition: { duration: 0.6 } } }} className="mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
               <a
                 href="#projects"
                 className="inline-flex items-center justify-center rounded-2xl bg-gradient-to-r from-sky-500 to-blue-600 px-6 py-3.5 text-sm font-semibold text-white shadow-[0_14px_40px_rgba(37,99,235,0.35)] transition duration-300 hover:-translate-y-0.5 hover:shadow-[0_18px_45px_rgba(37,99,235,0.45)]"
@@ -129,7 +135,7 @@ export default function Hero() {
               >
                 Contact Me
               </a>
-            </div>
+            </Motion.div>
 
 
           </Motion.div>
@@ -276,44 +282,6 @@ export default function Hero() {
         </div>
       </div>
 
-      {/* Glow line */}
-      <div className="relative w-full overflow-hidden" style={{ height: '60px' }}>
-        <svg
-          viewBox="0 0 1200 60"
-          preserveAspectRatio="none"
-          xmlns="http://www.w3.org/2000/svg"
-          style={{ width: '100%', height: '100%' }}
-        >
-          <defs>
-            <linearGradient id="lineGrad" x1="0%" y1="0%" x2="100%" y2="0%">
-              <stop offset="0%" stopColor="#818cf8" stopOpacity="0.9" />
-              <stop offset="35%" stopColor="#38bdf8" stopOpacity="0.8" />
-              <stop offset="100%" stopColor="#22d3ee" stopOpacity="1" />
-            </linearGradient>
-            <filter id="glow">
-              <feGaussianBlur stdDeviation="2.5" result="blur" />
-              <feMerge><feMergeNode in="blur" /><feMergeNode in="SourceGraphic" /></feMerge>
-            </filter>
-          </defs>
-
-          {/* Glow blur layer */}
-          <path
-            d="M0,14 L350,14 L420,46 L1200,46" fill="none"
-            stroke="url(#lineGrad)"
-            strokeWidth="4"
-            strokeLinecap="round"
-            filter="url(#glow)"
-            opacity="0.5"
-          />
-          {/* Sharp line on top */}
-          <path
-            d="M0,14 L350,14 L420,46 L1200,46" fill="none"
-            stroke="url(#lineGrad)"
-            strokeWidth="1.2"
-            strokeLinecap="round"
-          />
-        </svg>
-      </div>
     </Motion.section>
   )
 }
