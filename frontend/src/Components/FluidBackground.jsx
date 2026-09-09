@@ -53,12 +53,12 @@ resizeCanvas();
 const config = {
     SIM_RESOLUTION: 128,
     DYE_RESOLUTION: 1024,
-    DENSITY_DISSIPATION: 1.0,
-    VELOCITY_DISSIPATION: 0.2,
+    DENSITY_DISSIPATION: 0.85,
+    VELOCITY_DISSIPATION: 0.15,
     PRESSURE: 0.8,
     PRESSURE_ITERATIONS: 20,
     CURL: 30,
-    SPLAT_RADIUS: 0.25,
+    SPLAT_RADIUS: 0.5,
     SPLAT_FORCE: 6000,
     COLORFUL: true,
     COLOR_UPDATE_SPEED: 8,
@@ -436,21 +436,13 @@ function HSVtoRGB (h, s, v) {
 
 
 function generateColor () {
-    const palette = [
-        { r: 0.1, g: 0.8, b: 1.0 }, // Cyan
-        { r: 0.5, g: 0.1, b: 1.0 }, // Violet
-        { r: 1.0, g: 0.1, b: 0.7 }, // Magenta
-        { r: 0.1, g: 0.3, b: 1.0 }, // Blue
-        { r: 1.0, g: 0.4, b: 0.6 }  // Pink
-    ];
-    const c = palette[Math.floor(Math.random() * palette.length)];
-    // Add subtle variation
-    const mix = HSVtoRGB(Math.random(), 1.0, 1.0);
-    return {
-        r: c.r * 0.15 + mix.r * 0.03,
-        g: c.g * 0.15 + mix.g * 0.03,
-        b: c.b * 0.15 + mix.b * 0.03
-    };
+    let h = colorCycleT % 1.0;
+    if (h < 0) h += 1.0;
+    // Add small random hue variation for texture
+    h = (h + Math.random() * 0.15) % 1.0;
+    const c = HSVtoRGB(h, 1.0, 1.0);
+    c.r *= 0.15; c.g *= 0.15; c.b *= 0.15;
+    return c;
 }
 
 
@@ -568,18 +560,34 @@ function multipleSplats (amount) {
     for (let i = 0; i < amount; i++) {
         const color = generateColor();
         color.r *= 6; color.g *= 6; color.b *= 6;
-        const x = Math.random();
-        const y = Math.random();
-        const dx = 800 * (Math.random() - 0.5);
-        const dy = 800 * (Math.random() - 0.5);
+        
+        // Spawn exclusively in the bottom-left corner
+        const x = Math.random() * 0.1; // 0.0 to 0.1
+        const y = Math.random() * 0.1; // 0.0 to 0.1 (bottom)
+        
+        // Pick a direction: upwards or rightwards
+        const goUp = Math.random() > 0.5;
+        let dx, dy;
+        
+        if (goUp) {
+            // Shoot straight UP the left edge
+            dx = -20; // Slight outward push to keep it glued to the wall and away from the center
+            dy = 2500 + Math.random() * 1000; // Strong upward push
+        } else {
+            // Shoot straight RIGHT along the bottom edge
+            dx = 2500 + Math.random() * 1000; // Strong rightward push
+            dy = -20; // Slight outward push to keep it glued to the floor and away from the center
+        }
+        
         splat(x, y, dx, dy, color);
     }
 }
 
-let colorCycleT = 0;
+let colorCycleT = Math.random();
 function updatePointerColors (dt) {
     if (!config.COLORFUL) return;
     colorCycleT += dt * config.COLOR_UPDATE_SPEED / 100;
+    // Also increment it here so generateColor() shifts even if no pointers are down
     for (const p of pointers) {
         if (!p.down) continue;
         let h = (colorCycleT + p.id * 0.13) % 1.0;
@@ -729,20 +737,24 @@ function updateFrame () {
     }
     render(null);
 
-    // ambient idle motion when nothing has happened for a while
     if (config.AUTOPLAY && !config.PAUSED) {
-        const idleFor = (now - lastInteractionTime) / 1000;
+        // Also update color cycle if there are no active pointers
+        const hasActivePointers = pointers.some(p => p.down);
+        if (!hasActivePointers) {
+            colorCycleT += dt * config.COLOR_UPDATE_SPEED / 100;
+        }
+
         idleSplatTimer -= dt;
-        if (idleFor > 1.2 && idleSplatTimer <= 0) {
-            multipleSplats(1);
-            idleSplatTimer = 1.6 + Math.random() * 1.4;
+        if (idleSplatTimer <= 0) {
+            multipleSplats(Math.floor(Math.random() * 2) + 2);
+            idleSplatTimer = 0.3 + Math.random() * 0.3;
         }
     }
 
     rafId = requestAnimationFrame(updateFrame);
 }
 
-multipleSplats(Math.floor(Math.random() * 4) + 5);
+multipleSplats(Math.floor(Math.random() * 10) + 15);
 rafId = requestAnimationFrame(updateFrame);
 
 
