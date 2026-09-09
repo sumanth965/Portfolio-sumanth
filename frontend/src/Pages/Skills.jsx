@@ -401,7 +401,6 @@ export default function Skills() {
 
             <Motion.section id="skills" {...sectionFadeUp} style={{
                 minHeight: '100vh',
-                background: 'linear-gradient(180deg,#060c19 0%,#070d1b 100%)',
                 padding: '4rem 1.5rem',
                 position: 'relative',
                 overflow: 'hidden',

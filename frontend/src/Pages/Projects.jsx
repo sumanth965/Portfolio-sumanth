@@ -363,7 +363,6 @@ export default function Projects() {
       <Motion.section id="projects" {...sectionFadeUp} style={{
         position: 'relative',
         padding: '4rem 1.5rem',
-        background: 'linear-gradient(180deg, #080f1e 0%, #060d1a 100%)',
         overflow: 'hidden',
         fontFamily: 'system-ui, sans-serif',
       }}>

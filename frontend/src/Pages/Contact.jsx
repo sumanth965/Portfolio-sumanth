@@ -143,7 +143,6 @@ export default function Contact() {
     <>
       <section id="contact" style={{
         minHeight: '100vh',
-        background: 'linear-gradient(180deg, #070d1b 0%, #060c19 100%)',
         padding: 'clamp(3rem, 8vw, 6rem) clamp(1rem, 3vw, 1.5rem)',
         position: 'relative',
         overflow: 'hidden',

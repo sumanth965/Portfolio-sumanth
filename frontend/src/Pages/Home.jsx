@@ -2,7 +2,7 @@ import { useEffect, useRef } from 'react'
 import { motion as Motion } from 'framer-motion'
 import { sectionFadeUp } from '../utils/motion'
 import profile from '../assets/p2.png';
-import ParticlesContainer from '../Components/ParticlesContainer'
+
 
 export default function Hero() {
   const cursorRef = useRef(null)
@@ -28,8 +28,7 @@ export default function Hero() {
         background: `
           radial-gradient(ellipse 75% 55% at 68% 38%, rgba(59,158,255,0.13) 0%, transparent 62%),
           radial-gradient(ellipse 55% 45% at 18% 78%, rgba(168,85,247,0.11) 0%, transparent 58%),
-          radial-gradient(ellipse 40% 40% at 50% 10%, rgba(6,182,212,0.06) 0%, transparent 55%),
-          linear-gradient(180deg, #060d1a 0%, #0a1628 55%, #060d1a 100%)
+          radial-gradient(ellipse 40% 40% at 50% 10%, rgba(6,182,212,0.06) 0%, transparent 55%)
         `
       }}
     >
@@ -45,9 +44,7 @@ export default function Hero() {
         }}
       />
 
-      <div className="absolute inset-0 z-0">
-        <ParticlesContainer />
-      </div>
+
 
       {/* Main hero content */}
       <div className="relative z-10 flex-1 flex items-center pt-24 pb-20 px-4 sm:px-6 lg:px-8">
