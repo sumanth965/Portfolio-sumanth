@@ -24,7 +24,9 @@ const contactCards = [
 function ContactItem({ icon, label, value, href }) {
   const content = (
     <div style={{
-      background: 'rgba(255, 255, 255, 0.02)',
+      background: 'rgba(15, 23, 42, 0.5)',
+      backdropFilter: 'blur(8px)',
+      WebkitBackdropFilter: 'blur(8px)',
       border: '1px solid rgba(255, 255, 255, 0.05)',
       borderRadius: '16px',
       padding: '1.25rem',
@@ -35,10 +37,10 @@ function ContactItem({ icon, label, value, href }) {
       cursor: href ? 'pointer' : 'default',
     }}
       onMouseEnter={(e) => {
-        if (href) e.currentTarget.style.background = 'rgba(255, 255, 255, 0.05)';
+        if (href) e.currentTarget.style.background = 'rgba(15, 23, 42, 0.7)';
       }}
       onMouseLeave={(e) => {
-        if (href) e.currentTarget.style.background = 'rgba(255, 255, 255, 0.02)';
+        if (href) e.currentTarget.style.background = 'rgba(15, 23, 42, 0.5)';
       }}>
       <div style={{
         width: '44px',
@@ -58,7 +60,7 @@ function ContactItem({ icon, label, value, href }) {
           fontSize: '11px',
           fontWeight: 600,
           letterSpacing: '0.1em',
-          color: '#64748b',
+          color: '#cbd5e1',
           textTransform: 'uppercase',
           marginBottom: '4px',
         }}>
@@ -67,7 +69,7 @@ function ContactItem({ icon, label, value, href }) {
         <p style={{
           fontSize: '15px',
           fontWeight: 500,
-          color: '#e2e8f0',
+          color: '#f8fafc',
         }}>
           {value}
         </p>
@@ -154,9 +156,11 @@ export default function Contact() {
           width: 100%;
           border-radius: 16px;
           border: 1px solid rgba(255, 255, 255, 0.08);
-          background: rgba(255, 255, 255, 0.04);
+          background: rgba(15, 23, 42, 0.5);
+          backdrop-filter: blur(8px);
+          -webkit-backdrop-filter: blur(8px);
           padding: 12px 16px;
-          color: #e2e8f0;
+          color: #f8fafc;
           font-size: 14px;
           outline: none;
           transition: all 0.2s;
@@ -241,7 +245,9 @@ export default function Contact() {
               transition={{ duration: 0.6, delay: 0.2 }}
               onSubmit={handleSubmit}
               style={{
-                background: 'rgba(255, 255, 255, 0.03)',
+                background: 'rgba(15, 23, 42, 0.4)',
+                backdropFilter: 'blur(12px)',
+                WebkitBackdropFilter: 'blur(12px)',
                 border: '1px solid rgba(255, 255, 255, 0.08)',
                 borderRadius: '28px',
                 padding: 'clamp(1.5rem, 4vw, 2.5rem)',

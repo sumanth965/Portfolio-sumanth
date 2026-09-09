@@ -412,16 +412,18 @@ export default function Skills() {
         @keyframes pulse-ring{0%,100%{opacity:0.15;transform:scale(1)}50%{opacity:0.3;transform:scale(1.06)}}
         @keyframes marquee{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
         .sk-card{
-          background:linear-gradient(155deg, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0.015) 60%);
+          background:linear-gradient(155deg, rgba(15,23,42,0.6) 0%, rgba(15,23,42,0.4) 60%);
           border:1px solid rgba(255,255,255,0.09);
           border-top-color:rgba(255,255,255,0.17);
+          backdrop-filter: blur(12px);
+          -webkit-backdrop-filter: blur(12px);
           box-shadow:
             0 16px 32px -14px rgba(0,0,0,0.6),
             0 4px 10px -4px rgba(0,0,0,0.4),
             inset 0 1px 0 rgba(255,255,255,0.08),
             inset 0 -1px 0 rgba(0,0,0,0.35);
           transform-style:preserve-3d;
-          transition:border-color .25s,box-shadow .25s;
+          transition:border-color .25s,box-shadow .25s,background .25s;
         }
         .sk-card:hover{
           border-color:rgba(255,255,255,0.18);
@@ -433,8 +435,10 @@ export default function Skills() {
         }
         .cat-btn{
           border:1px solid rgba(255,255,255,0.08);
-          background:linear-gradient(155deg, rgba(255,255,255,0.045), rgba(255,255,255,0.01));
-          color:#64748b;
+          background:linear-gradient(155deg, rgba(15,23,42,0.6), rgba(15,23,42,0.3));
+          backdrop-filter: blur(8px);
+          -webkit-backdrop-filter: blur(8px);
+          color:#94a3b8;
           font-size:11px;font-weight:700;letter-spacing:.12em;
           padding:7px 16px;border-radius:20px;cursor:pointer;
           box-shadow:0 5px 12px -7px rgba(0,0,0,0.55), inset 0 1px 0 rgba(255,255,255,0.06);
@@ -448,9 +452,11 @@ export default function Skills() {
         }
         .cat-btn:hover:not(.active){color:#94a3b8;background:linear-gradient(155deg, rgba(255,255,255,0.075), rgba(255,255,255,0.02));}
         .view-btn{
-          background:linear-gradient(155deg, rgba(255,255,255,0.065), rgba(255,255,255,0.015));
+          background:linear-gradient(155deg, rgba(15,23,42,0.6), rgba(15,23,42,0.3));
+          backdrop-filter: blur(8px);
+          -webkit-backdrop-filter: blur(8px);
           border:1px solid rgba(255,255,255,0.09);
-          color:#64748b;font-size:15px;
+          color:#94a3b8;font-size:15px;
           width:36px;height:36px;border-radius:10px;cursor:pointer;
           box-shadow:0 5px 12px -7px rgba(0,0,0,0.55), inset 0 1px 0 rgba(255,255,255,0.07);
           transition:all .2s;display:flex;align-items:center;justify-content:center;
@@ -461,17 +467,21 @@ export default function Skills() {
           box-shadow:0 8px 16px -8px rgba(59,158,255,0.55), inset 0 1px 0 rgba(255,255,255,0.18);
         }
         .sort-select{
-          background:linear-gradient(155deg, rgba(255,255,255,0.055), rgba(255,255,255,0.015));
+          background:linear-gradient(155deg, rgba(15,23,42,0.6), rgba(15,23,42,0.3));
+          backdrop-filter: blur(8px);
+          -webkit-backdrop-filter: blur(8px);
           border:1px solid rgba(255,255,255,0.08);
-          color:#94a3b8;font-size:11px;font-weight:700;
+          color:#f1f5f9;font-size:11px;font-weight:700;
           padding:7px 12px;border-radius:10px;cursor:pointer;outline:none;
           letter-spacing:.08em;
           box-shadow:0 5px 12px -7px rgba(0,0,0,0.55), inset 0 1px 0 rgba(255,255,255,0.06);
         }
         .search-input{
-          background:rgba(255,255,255,0.03);
+          background:rgba(15,23,42,0.5);
+          backdrop-filter: blur(8px);
+          -webkit-backdrop-filter: blur(8px);
           border:1px solid rgba(255,255,255,0.08);
-          color:#e2e8f0;font-size:13px;font-weight:500;
+          color:#f8fafc;font-size:13px;font-weight:500;
           padding:9px 14px 9px 36px;border-radius:12px;outline:none;
           width:100%;
           box-shadow:inset 0 2px 6px rgba(0,0,0,0.45), inset 0 1px 0 rgba(0,0,0,0.2);
@@ -638,6 +648,7 @@ export default function Skills() {
                                     <div style={{
                                         alignSelf: 'flex-end', width: 6, height: 6, borderRadius: '50%',
                                         background: sk.color, boxShadow: `0 0 8px ${sk.color}`, marginBottom: -6,
+                                        transform: 'translateZ(40px)',
                                     }} />
 
                                     {/* icon */}
@@ -648,21 +659,24 @@ export default function Skills() {
                                         display: 'flex', alignItems: 'center', justifyContent: 'center',
                                         boxShadow: `0 12px 22px -8px ${sk.color}40, 0 3px 8px rgba(0,0,0,0.4), inset 0 1px 0 ${sk.color}30, inset 0 -3px 5px rgba(0,0,0,0.25)`,
                                         transition: 'box-shadow .3s',
+                                        transform: 'translateZ(50px)',
                                     }}>
-                                        {sk.icon}
+                                        <div style={{ transform: 'translateZ(20px)' }}>
+                                            {sk.icon}
+                                        </div>
                                     </div>
 
 
 
                                     {/* label */}
-                                    <span style={{ fontSize: 12, fontWeight: 800, color: '#94a3b8', textAlign: 'center', fontFamily: 'monospace' }}>
+                                    <span style={{ fontSize: 13, fontWeight: 800, color: '#f8fafc', textAlign: 'center', fontFamily: 'monospace', transform: 'translateZ(30px)' }}>
                                         {sk.label}
                                     </span>
 
 
 
                                     {/* proficiency bar */}
-                                    <div style={{ width: '100%', height: 3, background: 'rgba(255,255,255,0.06)', borderRadius: 3, overflow: 'hidden', boxShadow: 'inset 0 1px 2px rgba(0,0,0,0.4)' }}>
+                                    <div style={{ width: '100%', height: 3, background: 'rgba(255,255,255,0.06)', borderRadius: 3, overflow: 'hidden', boxShadow: 'inset 0 1px 2px rgba(0,0,0,0.4)', transform: 'translateZ(25px)' }}>
                                         <div style={{
                                             height: '100%', borderRadius: 3,
                                             width: `${sk.proficiency}%`,
@@ -671,7 +685,7 @@ export default function Skills() {
                                         }} />
                                     </div>
 
-                                    <span style={{ fontSize: 10, color: '#475569', fontWeight: 700 }}>
+                                    <span style={{ fontSize: 10, color: '#cbd5e1', fontWeight: 700, transform: 'translateZ(20px)' }}>
                                         {sk.proficiency}% · {sk.years}yr
                                     </span>
                                 </TiltCard>

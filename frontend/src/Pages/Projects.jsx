@@ -159,7 +159,9 @@ function ProjectCard({ project, index, onHover }) {
         width: '100%',
         borderRadius: 22,
         overflow: 'hidden',
-        background: 'linear-gradient(155deg, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0.015) 65%)',
+        background: 'linear-gradient(155deg, rgba(15,23,42,0.6) 0%, rgba(15,23,42,0.4) 65%)',
+        backdropFilter: 'blur(12px)',
+        WebkitBackdropFilter: 'blur(12px)',
         border: `1px solid ${hovered ? project.accent + '50' : 'rgba(255,255,255,0.09)'}`,
         boxShadow: hovered
           ? `0 30px 54px -16px ${project.accent}35, 0 10px 24px -8px rgba(0,0,0,0.55), 0 0 0 1px ${project.accent}25, inset 0 1px 0 rgba(255,255,255,0.12), inset 0 -1px 0 rgba(0,0,0,0.3)`
@@ -247,7 +249,7 @@ function ProjectCard({ project, index, onHover }) {
           {project.name}
         </h3>
         <p style={{
-          color: '#475569', fontSize: 11, lineHeight: 1.65, margin: '0 0 10px',
+          color: '#cbd5e1', fontSize: 11, lineHeight: 1.65, margin: '0 0 10px',
           display: '-webkit-box', WebkitLineClamp: 3, WebkitBoxOrient: 'vertical', overflow: 'hidden',
         }}>
           {project.desc}
@@ -371,8 +373,10 @@ export default function Projects() {
         @keyframes pj-glow{0%,100%{opacity:.04}50%{opacity:.08}}
         .pj-cat{
           border:1px solid rgba(255,255,255,0.08);
-          background:linear-gradient(155deg, rgba(255,255,255,0.045), rgba(255,255,255,0.01));
-          color:#64748b;font-size:10px;font-weight:800;letter-spacing:.14em;
+          background:linear-gradient(155deg, rgba(15,23,42,0.6), rgba(15,23,42,0.3));
+          backdrop-filter: blur(8px);
+          -webkit-backdrop-filter: blur(8px);
+          color:#94a3b8;font-size:10px;font-weight:800;letter-spacing:.14em;
           padding:6px 14px;border-radius:20px;cursor:pointer;
           box-shadow:0 5px 12px -7px rgba(0,0,0,0.55), inset 0 1px 0 rgba(255,255,255,0.06);
           transition:all .2s;
@@ -385,9 +389,11 @@ export default function Projects() {
         }
         .pj-cat:hover:not(.on){color:#94a3b8;background:linear-gradient(155deg, rgba(255,255,255,0.075), rgba(255,255,255,0.02));}
         .pj-search{
-          background:rgba(255,255,255,0.03);
+          background:rgba(15,23,42,0.5);
+          backdrop-filter: blur(8px);
+          -webkit-backdrop-filter: blur(8px);
           border:1px solid rgba(255,255,255,0.08);
-          color:#e2e8f0;font-size:12px;
+          color:#f8fafc;font-size:12px;
           padding:9px 14px 9px 36px;border-radius:12px;outline:none;
           width:210px;
           box-shadow:inset 0 2px 6px rgba(0,0,0,0.45), inset 0 1px 0 rgba(0,0,0,0.2);
@@ -397,9 +403,11 @@ export default function Projects() {
         .pj-search::placeholder{color:#2d3748;}
         .pj-arrow{
           width:36px;height:36px;border-radius:50%;
-          background:linear-gradient(155deg, rgba(255,255,255,0.07), rgba(255,255,255,0.015));
+          background:linear-gradient(155deg, rgba(15,23,42,0.6), rgba(15,23,42,0.3));
+          backdrop-filter: blur(8px);
+          -webkit-backdrop-filter: blur(8px);
           border:1px solid rgba(255,255,255,0.12);
-          color:#64748b;font-size:16px;cursor:pointer;
+          color:#94a3b8;font-size:16px;cursor:pointer;
           box-shadow:0 8px 16px -8px rgba(0,0,0,0.6), inset 0 1px 0 rgba(255,255,255,0.1), inset 0 -1px 0 rgba(0,0,0,0.25);
           display:flex;align-items:center;justify-content:center;
           transition:all .2s;

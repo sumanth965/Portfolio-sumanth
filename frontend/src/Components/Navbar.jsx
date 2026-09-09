@@ -52,7 +52,9 @@ export default function Navbar({ theme, setTheme }) {
   return (
     <nav
       className={`fixed top-0 left-0 right-0 z-[1000] transition-all duration-700 ${
-        scrolled ? "py-3" : "py-6"
+        scrolled 
+          ? (theme === "dark" ? "py-3 bg-slate-950/70 backdrop-blur-md border-b border-white/10 shadow-lg" : "py-3 bg-white/70 backdrop-blur-md border-b border-slate-200 shadow-lg") 
+          : "py-6 bg-transparent border-b border-transparent"
       }`}
     >
       {/* Top Scroll Indicator Bar */}
