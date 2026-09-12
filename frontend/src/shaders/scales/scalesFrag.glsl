@@ -4,6 +4,7 @@ uniform vec2 u_mousePos;
 uniform vec3 u_colorDark;
 uniform vec3 u_colorLight;
 uniform vec3 u_colorHighlight;
+uniform float u_time;
 
 // NEW FLUID UNIFORMS
 uniform sampler2D u_fluidTexture;
@@ -65,6 +66,11 @@ void main() {
     vec3 specular = u_colorHighlight * spec * 1.5;
     vec3 rimLight = u_colorHighlight * pow(1.0 - max(dot(viewDir, normal), 0.0), 3.0) * 0.6;
     
+    // IRIDESCENT SHEEN: Subtle biological color shift based on angle and time
+    float iridPhase = dot(viewDir, normal) * 3.0 + u_time * 0.8 + vWorldPos.x * 0.2;
+    vec3 iridColor = vec3(0.5 + 0.5 * sin(iridPhase), 0.5 + 0.5 * cos(iridPhase + 1.05), 0.5 + 0.5 * sin(iridPhase + 2.09));
+    vec3 iridSheen = iridColor * pow(1.0 - max(dot(viewDir, normal), 0.0), 2.5) * 0.25;
+
     // THE HOVER LIGHT: Highlight the area near the mouse
     vec2 distVecHover = vWorldPos.xy - u_mousePos;
     float mouseDist = length(distVecHover);
@@ -76,9 +82,9 @@ void main() {
     vec4 fluidData = texture2D(u_fluidTexture, screenUV);
     vec3 fluidColor = fluidData.rgb;
     
-    // Calculate gap mask. vLocalPos.xy is 0,0 at center of scale, ~0.45 at edges
+    // Calculate gap mask: vLocalPos.xy is 0,0 at center of scale, ~0.45 at edges
     float distFromCenter = length(vLocalPos.xy);
-    float gapMask = smoothstep(0.35, 0.48, distFromCenter); // Harder edge mask
+    float gapMask = smoothstep(0.28, 0.46, distFromCenter); // Sharper edge gap mask
     
     // Also use the depth Z value (the bevel slopes down to Z ~ -0.05)
     float depthMask = smoothstep(0.01, -0.05, vLocalPos.z);
@@ -86,12 +92,18 @@ void main() {
     // Combine masks: Gaps are either radially far out OR physically deep
     float combinedMask = clamp(max(gapMask, depthMask), 0.0, 1.0);
     
-    // Fluid Emission: Glowing fluid emerges from the gaps
-    vec3 fluidEmission = fluidColor * combinedMask * 1.5;
+    // Fluid Emission: Glowing neon green, purple & cyan fluid emerges & leaks from scale gaps
+    vec3 fluidEmission = fluidColor * combinedMask * 3.2;
     
-    // Fluid Reflection: Fluid reflects against the metallic rim
-    // If the fluid is bright, it throws color onto the rim. We use the rimLight mask.
-    vec3 fluidReflection = fluidColor * rimLight * 3.0;
+    // Fluid Reflection: Fluid reflects against the metallic scale rims
+    vec3 fluidReflection = fluidColor * rimLight * 3.5;
 
-    gl_FragColor = vec4(color * diffuse + specular + rimLight + interactiveLight + fluidEmission + fluidReflection, 1.0);
+    // FIERY BOTTOM SCALE FLAME EMISSION: Heat flicker emanating from bottom scale crevices
+    float bottomScaleEdge = smoothstep(-0.1, -0.45, vLocalPos.y) * gapMask;
+    float fireNoise = octaveNoise(vWorldPos.xy * 6.0 + vec2(0.0, -u_time * 2.5), 2);
+    float firePulse = max(0.0, fireNoise * 1.4 + 0.3);
+    vec3 fireBaseColor = mix(vec3(1.0, 0.2, 0.0), vec3(1.0, 0.75, 0.05), fireNoise * 0.5 + 0.5);
+    vec3 fireFlameGlow = fireBaseColor * bottomScaleEdge * firePulse * (0.8 + mouseLight * 2.8);
+
+    gl_FragColor = vec4(color * diffuse + specular + rimLight + iridSheen + interactiveLight + fluidEmission + fluidReflection + fireFlameGlow, 1.0);
 }

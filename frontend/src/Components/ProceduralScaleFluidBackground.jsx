@@ -44,7 +44,8 @@ export default function ProceduralScaleFluidBackground() {
             u_colorLight: { value: new THREE.Color(0x151515) },
             u_colorHighlight: { value: new THREE.Color(0xaaaaaa) },
             u_fluidTexture: { value: null },
-            u_resolution: { value: new THREE.Vector2(width * dpr, height * dpr) }
+            u_resolution: { value: new THREE.Vector2(width * dpr, height * dpr) },
+            u_time: { value: 0 }
         };
 
         const material = new THREE.ShaderMaterial({ 
@@ -59,7 +60,7 @@ export default function ProceduralScaleFluidBackground() {
         for (let i = 0; i < instanceCount; i++) mesh.setMatrixAt(i, new THREE.Matrix4());
         scene.add(mesh);
 
-        // 4. Mouse Interaction Setup
+        // 4. Mouse & Click Interaction Setup
         const raycaster = new THREE.Raycaster();
         const groundPlane = new THREE.Plane(new THREE.Vector3(0, 0, 1), 0);
         const mouseXY = new THREE.Vector2(-1000, -1000);
@@ -69,6 +70,7 @@ export default function ProceduralScaleFluidBackground() {
         // Fluid Mouse State
         let pointerDown = false;
         let pointerInitialized = false;
+        let lastInteractionTime = performance.now();
         const pointerPos = { x: 0, y: 0 };
         const prevPointerPos = { x: 0, y: 0 };
 
@@ -77,6 +79,8 @@ export default function ProceduralScaleFluidBackground() {
             const clientY = e.clientY || (e.touches && e.touches.length > 0 ? e.touches[0].clientY : pointerPos.y);
             
             pointerDown = true;
+            lastInteractionTime = performance.now();
+
             if (!pointerInitialized) {
                 prevPointerPos.x = clientX;
                 prevPointerPos.y = clientY;
@@ -88,9 +92,28 @@ export default function ProceduralScaleFluidBackground() {
             mouseXY.x = (clientX / window.innerWidth) * 2 - 1; 
             mouseXY.y = -(clientY / window.innerHeight) * 2 + 1; 
         };
+
+        // Click Shockwave Burst
+        const onClick = (e) => {
+            const clientX = e.clientX;
+            const clientY = e.clientY;
+            const u = clientX / window.innerWidth;
+            const v = 1.0 - (clientY / window.innerHeight);
+
+            // Fire 6 radial burst splats outward
+            for (let i = 0; i < 6; i++) {
+                const angle = (i / 6) * Math.PI * 2;
+                const dx = Math.cos(angle) * fluid.config.SPLAT_FORCE * 0.4;
+                const dy = Math.sin(angle) * fluid.config.SPLAT_FORCE * 0.4;
+                const burstColor = colors[i % colors.length];
+                fluid.splat(u, v, dx, dy, burstColor);
+            }
+        };
+
         window.addEventListener('mousemove', onMouseMove);
         window.addEventListener('touchmove', onMouseMove, { passive: true });
         window.addEventListener('touchstart', onMouseMove, { passive: true });
+        window.addEventListener('click', onClick);
 
         const onResize = () => {
             camera.aspect = window.innerWidth / window.innerHeight; 
@@ -101,13 +124,14 @@ export default function ProceduralScaleFluidBackground() {
         };
         window.addEventListener('resize', onResize);
 
-        // Colors for Fluid
+        // Colors for Fluid: Neon Green, Electric Purple, and Cyan as requested
         const colors = [
             new THREE.Color(0x00FF88), // Neon Green
             new THREE.Color(0x8A2BE2), // Electric Purple
-            new THREE.Color(0x00DFFF)  // Soft Cyan
+            new THREE.Color(0x00DFFF)  // Vibrant Cyan
         ];
         let colorCycleT = Math.random();
+        let lastIdleSplatTime = 0;
 
         // 5. Animation Loop
         let frameId;
@@ -119,21 +143,24 @@ export default function ProceduralScaleFluidBackground() {
             dt = Math.min(dt, 0.016667 * 2);
             lastTime = now;
 
+            // Update Time Uniform for Breathing & Iridescence
+            uniforms.u_time.value = now * 0.001;
+
             // Update 3D Raycast for Scales
             raycaster.setFromCamera(mouseXY, camera);
             raycaster.ray.intersectPlane(groundPlane, mouseTarget);
             smoothMouse.lerp(mouseTarget, 0.1);
             uniforms.u_mousePos.value.set(smoothMouse.x, smoothMouse.y);
 
-            // Cycle colors smoothly over time
-            colorCycleT += dt * 0.2;
+            // Cycle through Neon Green, Electric Purple, and Cyan
+            colorCycleT += dt * 0.25;
             const h = colorCycleT % 1.0;
             const colorIdx = Math.floor(h * colors.length);
             const nextColorIdx = (colorIdx + 1) % colors.length;
             const lerpFactor = (h * colors.length) - colorIdx;
             const splatColor = new THREE.Color().lerpColors(colors[colorIdx], colors[nextColorIdx], lerpFactor);
 
-            // Update Fluid Simulation
+            // Update Fluid Simulation on Mouse Move
             if (pointerDown) {
                 let rawDx = pointerPos.x - prevPointerPos.x;
                 let rawDy = prevPointerPos.y - pointerPos.y; // WebGL Y is flipped
@@ -142,19 +169,32 @@ export default function ProceduralScaleFluidBackground() {
                 let safeDx = Math.sign(rawDx) * Math.min(Math.abs(rawDx), 60);
                 let safeDy = Math.sign(rawDy) * Math.min(Math.abs(rawDy), 60);
                 
-                const dx = safeDx * fluid.config.SPLAT_FORCE * 0.1; 
-                const dy = safeDy * fluid.config.SPLAT_FORCE * 0.1;
+                const dx = safeDx * fluid.config.SPLAT_FORCE * 0.12; 
+                const dy = safeDy * fluid.config.SPLAT_FORCE * 0.12;
                 
                 if (Math.abs(dx) > 0 || Math.abs(dy) > 0) {
                     const u = pointerPos.x / window.innerWidth;
                     const v = 1.0 - (pointerPos.y / window.innerHeight);
                     
+                    // Inject Neon Green / Purple / Cyan fluid that leaks from gaps
                     fluid.splat(u, v, dx, dy, splatColor);
                     
                     // Reset prev so it doesn't continuously splat if stopped moving
                     prevPointerPos.x = pointerPos.x;
                     prevPointerPos.y = pointerPos.y;
                 }
+            }
+
+            // AMBIENT IDLE EFFECT: Emit gentle fluid pulses when stationary for >2.5 sec
+            if (now - lastInteractionTime > 2500 && now - lastIdleSplatTime > 1200) {
+                lastIdleSplatTime = now;
+                const randomU = 0.1 + Math.random() * 0.8;
+                const randomV = 0.1 + Math.random() * 0.8;
+                const randomAngle = Math.random() * Math.PI * 2;
+                const dx = Math.cos(randomAngle) * fluid.config.SPLAT_FORCE * 0.15;
+                const dy = Math.sin(randomAngle) * fluid.config.SPLAT_FORCE * 0.15;
+                const idleColor = colors[Math.floor(Math.random() * colors.length)];
+                fluid.splat(randomU, randomV, dx, dy, idleColor);
             }
 
             // Step fluid
@@ -175,6 +215,7 @@ export default function ProceduralScaleFluidBackground() {
             window.removeEventListener('mousemove', onMouseMove); 
             window.removeEventListener('touchmove', onMouseMove); 
             window.removeEventListener('touchstart', onMouseMove); 
+            window.removeEventListener('click', onClick);
             window.removeEventListener('resize', onResize);
             cancelAnimationFrame(frameId); 
             geometry.dispose(); 

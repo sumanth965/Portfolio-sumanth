@@ -1,4 +1,5 @@
 uniform vec2 u_mousePos;
+uniform float u_time;
 attribute vec3 instancePosition;
 attribute vec4 instanceRandomness;
 
@@ -21,6 +22,12 @@ void main() {
     vec3 worldBasePos = instancePosition;
     worldBasePos.z += instanceRandomness.z * 0.05;
 
+    // SNAKE BREATHING EFFECT: Organic rhythmic undulation across grid
+    float breathWave = sin(u_time * 1.5 + worldBasePos.x * 0.5 + worldBasePos.y * 0.35) * 0.04;
+    float breathTilt = cos(u_time * 1.2 + worldBasePos.y * 0.4) * 0.02;
+    localPos.z += breathWave;
+    localPos.x += breathTilt * (position.z + 0.1);
+
     // THE HOVER MATH: Calculate distance to mouse and displace
     vec2 distVec = worldBasePos.xy - u_mousePos;
     float dist = length(distVec);
@@ -36,6 +43,8 @@ void main() {
     vec3 worldPos = worldBasePos + localPos;
     
     vec3 localNormal = rotationZ(rotAngle) * normal;
+    // Add breathing tilt to normal
+    localNormal.z += breathWave * 0.3;
     if (hoverEffect > 0.01) {
         vec3 tiltAxis = normalize(vec3(-distVec.y, distVec.x, 0.0));
         localNormal += cross(tiltAxis, localNormal) * (hoverEffect * 0.1);
