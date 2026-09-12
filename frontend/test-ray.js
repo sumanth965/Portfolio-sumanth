@@ -1,0 +1,12 @@
+const THREE = require('three');
+const raycaster = new THREE.Raycaster();
+const camera = new THREE.PerspectiveCamera(35, 1, 0.1, 200);
+camera.position.set(0, -3, 12);
+camera.lookAt(0, 0, 0);
+camera.updateMatrixWorld();
+raycaster.setFromCamera(new THREE.Vector2(0, 0), camera);
+const plane = new THREE.Plane(new THREE.Vector3(0, 0, 1), 0);
+const target = new THREE.Vector3(-1000, -1000, 0);
+const result = raycaster.ray.intersectPlane(plane, target);
+console.log(result);
+console.log(target);

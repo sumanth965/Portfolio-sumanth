@@ -5,7 +5,7 @@ import Skills from './Pages/Skills'
 import Projects from './Pages/Projects'
 import Contact from './Pages/Contact'
 import Footer from './Components/Footer'
-import FluidBackground from './Components/FluidBackground'
+import ProceduralScaleFluidBackground from './Components/ProceduralScaleFluidBackground'
 import './index.css'
 
 export default function App() {
@@ -26,11 +26,9 @@ export default function App() {
   }, [theme]);
 
   return (
-    <div className={`relative min-h-screen transition-colors duration-500 ${theme === 'dark' ? 'bg-[#060d1a] text-slate-100' : 'bg-white/80 text-slate-900'}`}>
+    <div className={`relative min-h-screen transition-colors duration-500 ${theme === 'dark' ? 'bg-[#060d1a]/20 text-slate-100' : 'bg-white/80 text-slate-900'}`}>
       {theme === 'dark' && (
-        <div style={{ position: 'fixed', inset: 0, zIndex: 0, pointerEvents: 'none' }}>
-          <FluidBackground />
-        </div>
+        <ProceduralScaleFluidBackground />
       )}
       <Navbar theme={theme} setTheme={setTheme} />
       <main>
