@@ -32,12 +32,12 @@ export default function Footer({ theme }) {
     };
 
     return (
-        <footer id="footer" className={`relative pt-24 pb-12 overflow-hidden border-t ${isDark ? 'bg-[#080f1e] border-white/5 text-slate-400' : 'bg-slate-50 border-slate-200 text-slate-600'}`}>
+        <footer id="footer" className="relative pt-24 pb-12 overflow-hidden border-t border-white/10 bg-[#060d1a]/30 text-slate-400">
 
             {/* ── ADVANCED BACKGROUND EFFECTS ── */}
             <div className="absolute inset-0 pointer-events-none opacity-20">
-                <div className={`absolute inset-0 bg-[radial-gradient(#3b82f6_1px,transparent_1px)] [background-size:40px_40px] ${isDark ? 'opacity-10' : 'opacity-20'}`} />
-                <div className={`absolute top-0 left-0 w-full h-full bg-gradient-to-b ${isDark ? 'from-[#080f1e] via-transparent to-[#080f1e]' : 'from-slate-50 via-transparent to-slate-50'}`} />
+                <div className="absolute inset-0 bg-[radial-gradient(#3b82f6_1px,transparent_1px)] [background-size:40px_40px] opacity-10" />
+                <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-b from-[#060d1a]/20 via-transparent to-[#060d1a]/40" />
             </div>
 
             <div className="max-w-7xl mx-auto px-6 relative z-10">

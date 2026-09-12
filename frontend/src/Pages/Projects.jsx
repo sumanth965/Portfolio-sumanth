@@ -240,13 +240,14 @@ function ProjectCard({ project, index, onHover }) {
 
       {/* ── CONTENT ── */}
       <div style={{ padding: '1rem' }}>
+        {/* title */}
         <h3 style={{
-          fontSize: 13, fontWeight: 800, color: '#e2e8f0', margin: '0 0 6px',
-          fontFamily: 'monospace',
-          transition: 'color .2s',
-          ...(hovered && { color: '#fff' }),
+          fontSize: 14, fontWeight: 900, color: '#f8fafc',
+          margin: '0 0 6px', lineHeight: 1.3, fontFamily: 'monospace',
+          display: 'flex', alignItems: 'center', justifyContent: 'space-between',
         }}>
-          {project.name}
+          <span>{project.name}</span>
+          <span style={{ fontSize: 10, color: project.accent, opacity: 0.8 }}>↗</span>
         </h3>
         <p style={{
           color: '#cbd5e1', fontSize: 11, lineHeight: 1.65, margin: '0 0 10px',
@@ -346,6 +347,7 @@ export default function Projects() {
   const [activeCategory, setActiveCategory] = useState('All')
   const [query, setQuery] = useState('')
   const [activeIdx, setActiveIdx] = useState(0)
+  const [selectedProject, setSelectedProject] = useState(null)
   const scrollRef = useRef(null)
 
   const filtered = useMemo(() =>
@@ -373,9 +375,9 @@ export default function Projects() {
         @keyframes pj-glow{0%,100%{opacity:.04}50%{opacity:.08}}
         .pj-cat{
           border:1px solid rgba(255,255,255,0.08);
-          background:linear-gradient(155deg, rgba(15,23,42,0.6), rgba(15,23,42,0.3));
-          backdrop-filter: blur(8px);
-          -webkit-backdrop-filter: blur(8px);
+          background:rgba(6,13,26,0.45);
+          backdrop-filter: blur(12px);
+          -webkit-backdrop-filter: blur(12px);
           color:#94a3b8;font-size:10px;font-weight:800;letter-spacing:.14em;
           padding:6px 14px;border-radius:20px;cursor:pointer;
           box-shadow:0 5px 12px -7px rgba(0,0,0,0.55), inset 0 1px 0 rgba(255,255,255,0.06);
@@ -383,29 +385,29 @@ export default function Projects() {
         }
         .pj-cat.on{
           color:#fff;
-          background:linear-gradient(155deg, rgba(59,158,255,0.32), rgba(59,158,255,0.1));
-          border-color:rgba(59,158,255,0.45);
-          box-shadow:0 8px 18px -8px rgba(59,158,255,0.55), inset 0 1px 0 rgba(255,255,255,0.18);
+          background:linear-gradient(155deg, rgba(34,211,238,0.32), rgba(168,85,247,0.12));
+          border-color:rgba(34,211,238,0.45);
+          box-shadow:0 8px 18px -8px rgba(34,211,238,0.55), inset 0 1px 0 rgba(255,255,255,0.18);
         }
-        .pj-cat:hover:not(.on){color:#94a3b8;background:linear-gradient(155deg, rgba(255,255,255,0.075), rgba(255,255,255,0.02));}
+        .pj-cat:hover:not(.on){color:#f1f5f9;background:rgba(255,255,255,0.08);}
         .pj-search{
-          background:rgba(15,23,42,0.5);
-          backdrop-filter: blur(8px);
-          -webkit-backdrop-filter: blur(8px);
-          border:1px solid rgba(255,255,255,0.08);
+          background:rgba(6,13,26,0.45);
+          backdrop-filter: blur(12px);
+          -webkit-backdrop-filter: blur(12px);
+          border:1px solid rgba(255,255,255,0.09);
           color:#f8fafc;font-size:12px;
           padding:9px 14px 9px 36px;border-radius:12px;outline:none;
           width:210px;
           box-shadow:inset 0 2px 6px rgba(0,0,0,0.45), inset 0 1px 0 rgba(0,0,0,0.2);
           transition:border-color .2s, box-shadow .2s;
         }
-        .pj-search:focus{border-color:rgba(59,158,255,0.4);box-shadow:inset 0 2px 6px rgba(0,0,0,0.45), 0 0 0 3px rgba(59,158,255,0.12);}
-        .pj-search::placeholder{color:#2d3748;}
+        .pj-search:focus{border-color:rgba(34,211,238,0.4);box-shadow:inset 0 2px 6px rgba(0,0,0,0.45), 0 0 0 3px rgba(34,211,238,0.12);}
+        .pj-search::placeholder{color:#64748b;}
         .pj-arrow{
           width:36px;height:36px;border-radius:50%;
-          background:linear-gradient(155deg, rgba(15,23,42,0.6), rgba(15,23,42,0.3));
-          backdrop-filter: blur(8px);
-          -webkit-backdrop-filter: blur(8px);
+          background:rgba(6,13,26,0.45);
+          backdrop-filter: blur(12px);
+          -webkit-backdrop-filter: blur(12px);
           border:1px solid rgba(255,255,255,0.12);
           color:#94a3b8;font-size:16px;cursor:pointer;
           box-shadow:0 8px 16px -8px rgba(0,0,0,0.6), inset 0 1px 0 rgba(255,255,255,0.1), inset 0 -1px 0 rgba(0,0,0,0.25);
@@ -413,9 +415,9 @@ export default function Projects() {
           transition:all .2s;
         }
         .pj-arrow:hover{
-          color:#3b9eff;border-color:rgba(59,158,255,0.4);
-          background:linear-gradient(155deg, rgba(59,158,255,0.2), rgba(59,158,255,0.05));
-          box-shadow:0 10px 20px -8px rgba(59,158,255,0.5), inset 0 1px 0 rgba(255,255,255,0.18);
+          color:#22d3ee;border-color:rgba(34,211,238,0.4);
+          background:linear-gradient(155deg, rgba(34,211,238,0.2), rgba(34,211,238,0.05));
+          box-shadow:0 10px 20px -8px rgba(34,211,238,0.5), inset 0 1px 0 rgba(255,255,255,0.18);
         }
         .hide-scroll::-webkit-scrollbar{display:none;}
         .hide-scroll{-ms-overflow-style:none;scrollbar-width:none;}
@@ -448,32 +450,25 @@ export default function Projects() {
             }}
           >
             <div>
-              <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 8 }}>
-                <div style={{ width: 32, height: 2, background: 'linear-gradient(90deg,#a855f7,transparent)' }} />
-                <span style={{ fontSize: 10, fontWeight: 800, color: '#a855f7', letterSpacing: '.2em' }}>PORTFOLIO</span>
+              <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 8 }}>
+                <span className="w-2 h-2 rounded-full bg-cyan-400 shadow-[0_0_8px_#22d3ee] animate-pulse" />
+                <span style={{ fontSize: 11, fontWeight: 800, color: '#22d3ee', letterSpacing: '.2em', fontFamily: 'monospace' }}>
+                  02 // FEATURED PROJECTS
+                </span>
               </div>
               <h2 style={{
                 fontSize: 'clamp(1.8rem,4vw,2.8rem)', fontWeight: 900, color: '#f1f5f9',
                 margin: 0, lineHeight: 1.1, fontFamily: 'monospace'
               }}>
-                Featured{' '}
+                Engineering &{' '}
                 <span style={{
-                  background: 'linear-gradient(135deg,#a855f7,#3b9eff)',
+                  background: 'linear-gradient(135deg,#22d3ee,#a855f7)',
                   WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent'
                 }}>
-                  Projects
+                  Architectures
                 </span>
               </h2>
-              {/* <p style={{ color: '#475569', fontSize: 13, marginTop: 8, maxWidth: 420 }}>
-                Real-world builds showcasing full-stack capabilities, clean UI, and production-ready patterns.
-              </p> */}
             </div>
-
-            {/* scroll arrows */}
-            {/* <div style={{ display: 'flex', gap: 8 }}>
-              <button className="pj-arrow" onClick={() => scroll(-1)}>←</button>
-              <button className="pj-arrow" onClick={() => scroll(1)}>→</button>
-            </div> */}
           </Motion.div>
 
           {/* ── STAT STRIP ── */}
@@ -487,20 +482,21 @@ export default function Projects() {
             }}
           >
             {[
-              { label: 'Total Projects', value: `${projects.length}`, color: '#3b9eff' },
+              { label: 'Total Projects', value: `${projects.length}`, color: '#22d3ee' },
               { label: 'Live Demos', value: `${liveCount}`, color: '#22c55e' },
               { label: 'Full Stack', value: `${projects.filter(p => p.category === 'Full Stack').length}`, color: '#a855f7' },
               { label: 'Frontend', value: `${projects.filter(p => p.category === 'Frontend').length}`, color: '#f97316' },
             ].map(s => (
               <div key={s.label} style={{
-                background: 'linear-gradient(155deg, rgba(255,255,255,0.05), rgba(255,255,255,0.015))',
+                background: 'rgba(6, 13, 26, 0.45)',
+                backdropFilter: 'blur(12px)',
                 border: '1px solid rgba(255,255,255,0.08)',
                 borderRadius: 12, padding: '8px 16px',
-                boxShadow: '0 10px 20px -10px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.06), inset 0 -1px 0 rgba(0,0,0,0.3)',
+                boxShadow: '0 10px 20px -10px rgba(0,0,0,0.5)',
                 display: 'flex', alignItems: 'center', gap: 8,
               }}>
                 <span style={{ fontSize: '1.1rem', fontWeight: 900, color: s.color, fontFamily: 'monospace' }}>{s.value}</span>
-                <span style={{ fontSize: 10, color: '#475569', fontWeight: 700, letterSpacing: '.1em' }}>
+                <span style={{ fontSize: 10, color: '#94a3b8', fontWeight: 700, letterSpacing: '.1em' }}>
                   {s.label.toUpperCase()}
                 </span>
               </div>
@@ -522,7 +518,7 @@ export default function Projects() {
             <div style={{ position: 'relative' }}>
               <span style={{
                 position: 'absolute', left: 12, top: '50%', transform: 'translateY(-50%)',
-                color: '#334155', fontSize: 14, pointerEvents: 'none'
+                color: '#64748b', fontSize: 14, pointerEvents: 'none'
               }}>⌕</span>
               <input
                 className="pj-search"
@@ -545,42 +541,39 @@ export default function Projects() {
               ))}
             </div>
 
-            <span style={{ fontSize: 11, color: '#334155', fontWeight: 600, marginLeft: 'auto', fontFamily: 'monospace' }}>
+            <span style={{ fontSize: 11, color: '#64748b', fontWeight: 600, marginLeft: 'auto', fontFamily: 'monospace' }}>
               {filtered.length} result{filtered.length !== 1 ? 's' : ''}
             </span>
           </Motion.div>
 
           {/* ── CARDS SCROLL ── */}
           {filtered.length > 0 ? (
-            <>
-              <Motion.div
-                variants={staggerContainer(0.1)}
-                initial="initial"
-                whileInView="whileInView"
-                viewport={{ once: true, amount: 0.15 }}
-                ref={scrollRef}
-                className="hide-scroll"
-                style={{
-                  display: 'grid',
-                  gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))',
-                  gap: '24px',
-                  paddingBottom: 12,
-                }}
-              >
-                {filtered.map((p, i) => (
+            <Motion.div
+              variants={staggerContainer(0.1)}
+              initial="initial"
+              whileInView="whileInView"
+              viewport={{ once: true, amount: 0.15 }}
+              ref={scrollRef}
+              className="hide-scroll"
+              style={{
+                display: 'grid',
+                gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))',
+                gap: '24px',
+                paddingBottom: 12,
+              }}
+            >
+              {filtered.map((p, i) => (
+                <div key={p.name} onClick={() => setSelectedProject(p)} style={{ cursor: 'pointer' }}>
                   <ProjectCard
-                    key={p.name}
                     project={p}
                     index={i}
                     onHover={setActiveIdx}
                   />
-                ))}
-              </Motion.div>
-
-              {/* dot indicators removed as layout is now a grid */}
-            </>
+                </div>
+              ))}
+            </Motion.div>
           ) : (
-            <div style={{ textAlign: 'center', padding: '4rem', color: '#334155' }}>
+            <div style={{ textAlign: 'center', padding: '4rem', color: '#64748b' }}>
               <div style={{ fontSize: '2.5rem', marginBottom: '1rem' }}>⌀</div>
               <div style={{ fontWeight: 700, fontFamily: 'monospace', fontSize: 14 }}>
                 No projects match "{query}"
@@ -590,6 +583,176 @@ export default function Projects() {
 
         </div>
       </Motion.section>
+
+      {/* ── PROJECT DETAIL MODAL ── */}
+      {selectedProject && (
+        <div
+          onClick={() => setSelectedProject(null)}
+          style={{
+            position: 'fixed', inset: 0, zIndex: 1100,
+            display: 'flex', alignItems: 'center', justifyContent: 'center',
+            padding: '1.5rem',
+            background: 'rgba(3, 7, 18, 0.75)',
+            backdropFilter: 'blur(16px)',
+            WebkitBackdropFilter: 'blur(16px)',
+            animation: 'pj-fade-up 0.25s cubic-bezier(0.16, 1, 0.3, 1)',
+          }}
+        >
+          <div
+            onClick={e => e.stopPropagation()}
+            style={{
+              width: '100%', maxWidth: 640,
+              maxHeight: '90vh', overflowY: 'auto',
+              background: 'linear-gradient(160deg, rgba(15,23,42,0.95) 0%, rgba(10,15,30,0.98) 100%)',
+              border: `1px solid ${selectedProject.accent}45`,
+              borderRadius: 24,
+              boxShadow: `0 32px 80px -16px ${selectedProject.accent}35, 0 0 0 1px rgba(255,255,255,0.1), inset 0 1px 0 rgba(255,255,255,0.2)`,
+              position: 'relative',
+              display: 'flex', flexDirection: 'column',
+            }}
+          >
+            {/* Modal Header Image */}
+            <div style={{
+              height: 220, position: 'relative', overflow: 'hidden',
+              borderRadius: '24px 24px 0 0',
+              borderBottom: `1px solid ${selectedProject.accent}30`,
+            }}>
+              <img
+                src={selectedProject.img}
+                alt={selectedProject.name}
+                style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+              />
+              <div style={{
+                position: 'absolute', inset: 0,
+                background: `linear-gradient(to top, rgba(15,23,42,0.98) 0%, transparent 60%)`,
+              }} />
+
+              {/* Close Button */}
+              <button
+                onClick={() => setSelectedProject(null)}
+                style={{
+                  position: 'absolute', top: 16, right: 16,
+                  width: 36, height: 36, borderRadius: '50%',
+                  background: 'rgba(6, 13, 26, 0.7)',
+                  backdropFilter: 'blur(8px)',
+                  border: '1px solid rgba(255,255,255,0.15)',
+                  color: '#fff', fontSize: 16, fontWeight: 700,
+                  cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center',
+                  boxShadow: '0 4px 12px rgba(0,0,0,0.5)',
+                  transition: 'transform 0.2s',
+                }}
+                onMouseEnter={e => e.currentTarget.style.transform = 'scale(1.1)'}
+                onMouseLeave={e => e.currentTarget.style.transform = 'scale(1)'}
+              >
+                ✕
+              </button>
+
+              {/* Category Badge */}
+              <div style={{
+                position: 'absolute', bottom: 16, left: 24,
+                display: 'flex', alignItems: 'center', gap: 10,
+              }}>
+                <span style={{ fontSize: 24 }}>{selectedProject.emoji}</span>
+                <span style={{
+                  fontSize: 10, fontWeight: 800, letterSpacing: '.14em',
+                  padding: '4px 12px', borderRadius: 20,
+                  background: `linear-gradient(155deg, ${selectedProject.accent}40, ${selectedProject.accent}15)`,
+                  color: '#fff', border: `1px solid ${selectedProject.accent}50`,
+                  fontFamily: 'monospace',
+                }}>
+                  {selectedProject.category.toUpperCase()}
+                </span>
+              </div>
+            </div>
+
+            {/* Modal Body Content */}
+            <div style={{ padding: '1.8rem', display: 'flex', flexDirection: 'column', gap: 18 }}>
+              <div>
+                <h3 style={{
+                  fontSize: '1.5rem', fontWeight: 900, color: '#f8fafc',
+                  margin: '0 0 8px', fontFamily: 'monospace', lineHeight: 1.2
+                }}>
+                  {selectedProject.name}
+                </h3>
+                <p style={{ color: '#94a3b8', fontSize: 13, lineHeight: 1.7, margin: 0 }}>
+                  {selectedProject.desc}
+                </p>
+              </div>
+
+              {/* Tech Stack Badges */}
+              <div>
+                <div style={{ fontSize: 10, fontWeight: 800, color: '#64748b', letterSpacing: '.15em', marginBottom: 10, fontFamily: 'monospace' }}>
+                  ARCHITECTURE & TECH STACK
+                </div>
+                <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8 }}>
+                  {selectedProject.tags.map(tag => (
+                    <span key={tag} style={{
+                      fontSize: 11, padding: '5px 12px', borderRadius: 20, fontWeight: 700,
+                      background: `linear-gradient(155deg, ${selectedProject.accent}25, ${selectedProject.accent}0a)`,
+                      color: selectedProject.accent,
+                      border: `1px solid ${selectedProject.accent}40`,
+                      boxShadow: `0 4px 12px -4px ${selectedProject.accent}40`,
+                      fontFamily: 'monospace',
+                    }}>
+                      {tag}
+                    </span>
+                  ))}
+                </div>
+              </div>
+
+              {/* Action Link Buttons */}
+              <div style={{ display: 'flex', gap: 12, marginTop: 8 }}>
+                <a
+                  href={selectedProject.link}
+                  target="_blank"
+                  rel="noreferrer"
+                  style={{
+                    flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8,
+                    fontSize: 12, fontWeight: 800, padding: '12px 0', borderRadius: 12,
+                    color: selectedProject.accent,
+                    background: `linear-gradient(155deg, ${selectedProject.accent}20, ${selectedProject.accent}08)`,
+                    border: `1px solid ${selectedProject.accent}45`,
+                    boxShadow: `0 8px 20px -8px ${selectedProject.accent}50`,
+                    textDecoration: 'none', fontFamily: 'monospace',
+                    transition: 'all .2s',
+                  }}
+                >
+                  <GithubIcon /> View Source Code
+                </a>
+                {selectedProject.demo ? (
+                  <a
+                    href={selectedProject.demo}
+                    target="_blank"
+                    rel="noreferrer"
+                    style={{
+                      flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8,
+                      fontSize: 12, fontWeight: 800, padding: '12px 0', borderRadius: 12,
+                      color: '#fff',
+                      background: `linear-gradient(135deg, ${selectedProject.accent}, ${selectedProject.accentB})`,
+                      border: 'none', textDecoration: 'none', fontFamily: 'monospace',
+                      boxShadow: `0 12px 26px -8px ${selectedProject.accent}65`,
+                      transition: 'transform .2s',
+                    }}
+                    onMouseEnter={e => e.currentTarget.style.transform = 'scale(1.02)'}
+                    onMouseLeave={e => e.currentTarget.style.transform = 'scale(1)'}
+                  >
+                    <ExternalIcon /> Launch Live Demo
+                  </a>
+                ) : (
+                  <div style={{
+                    flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center',
+                    fontSize: 12, fontWeight: 700, padding: '12px 0', borderRadius: 12,
+                    color: '#64748b', background: 'rgba(255,255,255,0.03)',
+                    border: '1px solid rgba(255,255,255,0.06)', fontFamily: 'monospace',
+                  }}>
+                    Demo Coming Soon
+                  </div>
+                )}
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </>
 
   )

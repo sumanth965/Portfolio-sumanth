@@ -155,10 +155,10 @@ export default function Contact() {
         .contact-input, .contact-textarea {
           width: 100%;
           border-radius: 16px;
-          border: 1px solid rgba(255, 255, 255, 0.08);
-          background: rgba(15, 23, 42, 0.5);
-          backdrop-filter: blur(8px);
-          -webkit-backdrop-filter: blur(8px);
+          border: 1px solid rgba(255, 255, 255, 0.09);
+          background: rgba(6, 13, 26, 0.45);
+          backdrop-filter: blur(12px);
+          -webkit-backdrop-filter: blur(12px);
           padding: 12px 16px;
           color: #f8fafc;
           font-size: 14px;
@@ -166,11 +166,12 @@ export default function Contact() {
           transition: all 0.2s;
         }
         .contact-input:focus, .contact-textarea:focus {
-          border-color: rgba(59, 158, 255, 0.4);
-          background: rgba(59, 158, 255, 0.05);
+          border-color: rgba(34, 211, 238, 0.45);
+          background: rgba(34, 211, 238, 0.06);
+          box-shadow: 0 0 15px rgba(34, 211, 238, 0.15);
         }
         .contact-input::placeholder, .contact-textarea::placeholder {
-          color: #475569;
+          color: #64748b;
         }
         .contact-textarea {
           resize: vertical;
@@ -200,10 +201,10 @@ export default function Contact() {
               viewport={{ once: true, amount: 0.2 }}
               transition={{ duration: 0.6 }}
             >
-              <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '12px' }}>
-                <div style={{ width: '32px', height: '2px', background: 'linear-gradient(90deg, #3b9eff, transparent)' }} />
-                <span style={{ fontSize: '11px', fontWeight: 800, color: '#3b9eff', letterSpacing: '0.2em' }}>
-                  GET IN TOUCH
+              <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '12px' }}>
+                <span className="w-2 h-2 rounded-full bg-cyan-400 shadow-[0_0_8px_#22d3ee] animate-pulse" />
+                <span style={{ fontSize: '11px', fontWeight: 800, color: '#22d3ee', letterSpacing: '0.2em', fontFamily: 'monospace' }}>
+                  03 // GET IN TOUCH
                 </span>
               </div>
 

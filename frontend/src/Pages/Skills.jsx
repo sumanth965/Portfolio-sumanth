@@ -412,32 +412,32 @@ export default function Skills() {
         @keyframes pulse-ring{0%,100%{opacity:0.15;transform:scale(1)}50%{opacity:0.3;transform:scale(1.06)}}
         @keyframes marquee{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
         .sk-card{
-          background:linear-gradient(155deg, rgba(15,23,42,0.6) 0%, rgba(15,23,42,0.4) 60%);
-          border:1px solid rgba(255,255,255,0.09);
-          border-top-color:rgba(255,255,255,0.17);
-          backdrop-filter: blur(12px);
-          -webkit-backdrop-filter: blur(12px);
+          background:linear-gradient(155deg, rgba(6,13,26,0.55) 0%, rgba(6,13,26,0.3) 100%);
+          border:1px solid rgba(255,255,255,0.08);
+          border-top-color:rgba(255,255,255,0.15);
+          backdrop-filter: blur(16px);
+          -webkit-backdrop-filter: blur(16px);
           box-shadow:
-            0 16px 32px -14px rgba(0,0,0,0.6),
-            0 4px 10px -4px rgba(0,0,0,0.4),
+            0 16px 36px -14px rgba(0,0,0,0.7),
+            0 4px 10px -4px rgba(0,0,0,0.5),
             inset 0 1px 0 rgba(255,255,255,0.08),
-            inset 0 -1px 0 rgba(0,0,0,0.35);
+            inset 0 -1px 0 rgba(0,0,0,0.4);
           transform-style:preserve-3d;
           transition:border-color .25s,box-shadow .25s,background .25s;
         }
         .sk-card:hover{
-          border-color:rgba(255,255,255,0.18);
+          border-color:rgba(34,211,238,0.35);
+          background:linear-gradient(155deg, rgba(6,13,26,0.65) 0%, rgba(14,165,233,0.08) 100%);
           box-shadow:
-            0 26px 46px -16px rgba(0,0,0,0.7),
-            0 6px 16px -4px rgba(0,0,0,0.45),
-            inset 0 1px 0 rgba(255,255,255,0.13),
-            inset 0 -1px 0 rgba(0,0,0,0.4);
+            0 26px 46px -16px rgba(0,0,0,0.8),
+            0 0 25px rgba(34,211,238,0.15),
+            inset 0 1px 0 rgba(255,255,255,0.15);
         }
         .cat-btn{
           border:1px solid rgba(255,255,255,0.08);
-          background:linear-gradient(155deg, rgba(15,23,42,0.6), rgba(15,23,42,0.3));
-          backdrop-filter: blur(8px);
-          -webkit-backdrop-filter: blur(8px);
+          background:rgba(6,13,26,0.45);
+          backdrop-filter: blur(12px);
+          -webkit-backdrop-filter: blur(12px);
           color:#94a3b8;
           font-size:11px;font-weight:700;letter-spacing:.12em;
           padding:7px 16px;border-radius:20px;cursor:pointer;
@@ -446,15 +446,15 @@ export default function Skills() {
         }
         .cat-btn.active{
           color:#fff;
-          background:linear-gradient(155deg, rgba(59,158,255,0.3), rgba(59,158,255,0.1));
-          border-color:rgba(59,158,255,0.45);
-          box-shadow:0 8px 18px -8px rgba(59,158,255,0.55), inset 0 1px 0 rgba(255,255,255,0.18);
+          background:linear-gradient(155deg, rgba(34,211,238,0.25), rgba(168,85,247,0.15));
+          border-color:rgba(34,211,238,0.45);
+          box-shadow:0 8px 18px -8px rgba(34,211,238,0.55), inset 0 1px 0 rgba(255,255,255,0.18);
         }
-        .cat-btn:hover:not(.active){color:#94a3b8;background:linear-gradient(155deg, rgba(255,255,255,0.075), rgba(255,255,255,0.02));}
+        .cat-btn:hover:not(.active){color:#f1f5f9;background:rgba(255,255,255,0.08);}
         .view-btn{
-          background:linear-gradient(155deg, rgba(15,23,42,0.6), rgba(15,23,42,0.3));
-          backdrop-filter: blur(8px);
-          -webkit-backdrop-filter: blur(8px);
+          background:rgba(6,13,26,0.45);
+          backdrop-filter: blur(12px);
+          -webkit-backdrop-filter: blur(12px);
           border:1px solid rgba(255,255,255,0.09);
           color:#94a3b8;font-size:15px;
           width:36px;height:36px;border-radius:10px;cursor:pointer;
@@ -462,14 +462,14 @@ export default function Skills() {
           transition:all .2s;display:flex;align-items:center;justify-content:center;
         }
         .view-btn.active{
-          background:linear-gradient(155deg, rgba(59,158,255,0.28), rgba(59,158,255,0.08));
-          border-color:rgba(59,158,255,0.45);color:#3b9eff;
-          box-shadow:0 8px 16px -8px rgba(59,158,255,0.55), inset 0 1px 0 rgba(255,255,255,0.18);
+          background:linear-gradient(155deg, rgba(34,211,238,0.28), rgba(34,211,238,0.08));
+          border-color:rgba(34,211,238,0.45);color:#22d3ee;
+          box-shadow:0 8px 16px -8px rgba(34,211,238,0.55), inset 0 1px 0 rgba(255,255,255,0.18);
         }
         .sort-select{
-          background:linear-gradient(155deg, rgba(15,23,42,0.6), rgba(15,23,42,0.3));
-          backdrop-filter: blur(8px);
-          -webkit-backdrop-filter: blur(8px);
+          background:rgba(6,13,26,0.45);
+          backdrop-filter: blur(12px);
+          -webkit-backdrop-filter: blur(12px);
           border:1px solid rgba(255,255,255,0.08);
           color:#f1f5f9;font-size:11px;font-weight:700;
           padding:7px 12px;border-radius:10px;cursor:pointer;outline:none;
@@ -477,18 +477,18 @@ export default function Skills() {
           box-shadow:0 5px 12px -7px rgba(0,0,0,0.55), inset 0 1px 0 rgba(255,255,255,0.06);
         }
         .search-input{
-          background:rgba(15,23,42,0.5);
-          backdrop-filter: blur(8px);
-          -webkit-backdrop-filter: blur(8px);
-          border:1px solid rgba(255,255,255,0.08);
+          background:rgba(6,13,26,0.45);
+          backdrop-filter: blur(12px);
+          -webkit-backdrop-filter: blur(12px);
+          border:1px solid rgba(255,255,255,0.09);
           color:#f8fafc;font-size:13px;font-weight:500;
           padding:9px 14px 9px 36px;border-radius:12px;outline:none;
           width:100%;
           box-shadow:inset 0 2px 6px rgba(0,0,0,0.45), inset 0 1px 0 rgba(0,0,0,0.2);
           transition:border-color .2s, box-shadow .2s;
         }
-        .search-input:focus{border-color:rgba(59,158,255,0.4);box-shadow:inset 0 2px 6px rgba(0,0,0,0.45), 0 0 0 3px rgba(59,158,255,0.12);}
-        .search-input::placeholder{color:#334155;}
+        .search-input:focus{border-color:rgba(34,211,238,0.4);box-shadow:inset 0 2px 6px rgba(0,0,0,0.45), 0 0 0 3px rgba(34,211,238,0.12);}
+        .search-input::placeholder{color:#64748b;}
         .marquee-track{display:flex;width:max-content;animation:marquee 28s linear infinite;}
         .prog-ring{transition:stroke-dashoffset 1s cubic-bezier(0.22,1,0.36,1);}
       `}</style>
@@ -515,9 +515,11 @@ export default function Skills() {
                         transition={{ duration: 0.6 }}
                         style={{ marginBottom: '2.5rem' }}
                     >
-                        <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 8 }}>
-                            <div style={{ width: 32, height: 2, background: 'linear-gradient(90deg,#3b9eff,transparent)' }} />
-                            <span style={{ fontSize: 11, fontWeight: 800, color: '#3b9eff', letterSpacing: '.2em' }}>TECH STACK</span>
+                        <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 8 }}>
+                            <span className="w-2 h-2 rounded-full bg-cyan-400 shadow-[0_0_8px_#22d3ee] animate-pulse" />
+                            <span style={{ fontSize: 11, fontWeight: 800, color: '#22d3ee', letterSpacing: '.2em', fontFamily: 'monospace' }}>
+                                01 // SKILLS & EXPERTISE
+                            </span>
                         </div>
                         <h2 style={{ fontSize: 'clamp(2rem,4vw,3rem)', fontWeight: 900, color: '#f1f5f9', margin: 0, lineHeight: 1.1, fontFamily: 'monospace' }}>
                             Skills &{' '}
