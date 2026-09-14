@@ -5,44 +5,21 @@ import { sectionFadeUp, staggerContainer, staggerItem } from '../utils/motion'
 /* ─────────────────── REAL PROJECT DATA + MOCKUPS ─────────────────── */
 const projects = [
   {
-    name: 'Employee Leave Management System',
-    desc: 'Full-stack enterprise leave tracking system featuring multi-role authentication, automated approval workflows, and real-time dashboard analytics.',
-    link: 'https://github.com/sumanth965/Employee-Leave-Management-System',
-    demo: 'https://elms-management.onrender.com/',
-    category: 'Full Stack',
-    accent: '#0ea5e9',
-    accentB: '#0369a1',
-    emoji: '🏢',
-    img: 'https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=600&q=80',
-    tags: ['MERN Stack', 'JWT Auth', 'Approval Workflow', 'Admin Panel'],
+    name: 'AI Hand Rehabilitation System',
+    desc: 'AI-powered hand rehabilitation system using computer vision to track hand movements, evaluate exercises, provide feedback, and monitor rehabilitation progress.',
+    link: 'https://github.com/sumanth965/AI-Hand-Rehabilitation-System',
+    demo: '',
+    category: 'AI / Computer Vision',
+    accent: '#14b8a6',
+    accentB: '#0f766e',
+    emoji: '🖐️',
+    img: 'https://images.unsplash.com/photo-1559757175-0eb30cd8c063?auto=format&fit=crop&w=600&q=80',
+    tags: ['Python', 'MediaPipe', 'OpenCV', 'Computer Vision'],
   },
-  {
-    name: 'Smart Student Productivity System',
-    desc: 'High-performance productivity suite for students, integrating task management, deadline tracking, and smart schedule optimization algorithms.',
-    link: 'https://github.com/sumanth965/smart-student-productivity-system',
-    demo: 'https://smart-student-productivity-system.onrender.com/',
-    category: 'Full Stack',
-    accent: '#22c55e',
-    accentB: '#15803d',
-    emoji: '🎯',
-    img: 'https://images.unsplash.com/photo-1434030216411-0b793f4b4173?auto=format&fit=crop&w=600&q=80',
-    tags: ['React', 'Node.js', 'Workflow Optimization', 'Task Tracking'],
-  },
-  {
-    name: 'Nexus Web Games',
-    desc: 'A decentralized collection of high-interaction browser games, prioritizing smooth gameplay performance and responsive UI architecture.',
-    link: 'https://github.com/sumanth965/nexus-web-games',
-    demo: 'https://nexus-web-games.vercel.app/',
-    category: 'Frontend',
-    accent: '#f43f5e',
-    accentB: '#be123c',
-    emoji: '🎮',
-    img: 'https://images.unsplash.com/photo-1552820728-8b83bb6b773f?auto=format&fit=crop&w=600&q=80',
-    tags: ['JavaScript ES6+', 'Canvas API', 'Game Logic', 'UI/UX'],
-  },
+
   {
     name: 'Online Art Auction',
-    desc: 'E-commerce auction platform for digital art, featuring real-time bidding updates, secure payment simulations, and curated artist galleries.',
+    desc: 'Full-stack art auction platform for managing artworks, artists, buyers, bids, and auction workflows with a React frontend and Node.js backend.',
     link: 'https://github.com/sumanth965/Online-Art-Auction',
     demo: 'https://online-art-auction.vercel.app/',
     category: 'Full Stack',
@@ -50,11 +27,38 @@ const projects = [
     accentB: '#6b21a8',
     emoji: '🎨',
     img: 'https://images.unsplash.com/photo-1547826039-bfc35e0f1ea8?auto=format&fit=crop&w=600&q=80',
-    tags: ['MERN', 'WebSocket', 'Real-time Bidding', 'Digital Commerce'],
+    tags: ['MERN', 'MongoDB', 'Auction System', 'React'],
   },
+
+  {
+    name: 'Smart Student Productivity System',
+    desc: 'Student productivity platform for managing tasks, deadlines, schedules, and academic activities through a full-stack web application.',
+    link: 'https://github.com/sumanth965/smart-student-productivity-system',
+    demo: 'https://smart-student-productivity-system.onrender.com/',
+    category: 'Full Stack',
+    accent: '#22c55e',
+    accentB: '#15803d',
+    emoji: '🎯',
+    img: 'https://images.unsplash.com/photo-1434030216411-0b793f4b4173?auto=format&fit=crop&w=600&q=80',
+    tags: ['React', 'Node.js', 'MongoDB', 'Task Management'],
+  },
+
+  {
+    name: 'Employee Leave Management System',
+    desc: 'Role-based employee leave management application with leave requests, approval workflows, session handling, pagination, and MySQL database integration.',
+    link: 'https://github.com/sumanth965/Employee-Leave-Management-System',
+    demo: 'https://elms-management.onrender.com/',
+    category: 'Full Stack',
+    accent: '#0ea5e9',
+    accentB: '#0369a1',
+    emoji: '🏢',
+    img: 'https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=600&q=80',
+    tags: ['Java', 'Servlets/JSP', 'MySQL', 'MVC'],
+  },
+
   {
     name: 'MERN Excel Analytics',
-    desc: 'Advanced data orchestration platform that transforms Excel datasets into interactive visual insights and professional PDF reports.',
+    desc: 'Data analytics web application that processes Excel datasets and converts them into interactive tables, charts, and visual insights.',
     link: 'https://github.com/sumanth965/MERN-excel-analytics-',
     demo: 'https://excel-analytic-sumanth09.onrender.com',
     category: 'Full Stack',
@@ -62,35 +66,12 @@ const projects = [
     accentB: '#1d4ed8',
     emoji: '📊',
     img: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=600&q=80',
-    tags: ['Data Visualization', 'Excel Parser', 'Chart.js', 'Express.js'],
+    tags: ['MERN', 'Excel Processing', 'Data Visualization', 'Chart.js'],
   },
-  {
-    name: 'Unified Image Slider',
-    desc: 'GPU-accelerated responsive gallery engine with fluid transitions, lazy loading, and touch-optimized navigation for mobile platforms.',
-    link: 'https://github.com/sumanth965/Image_Slider',
-    demo: 'https://sumanth09-image-slider.netlify.app/',
-    category: 'Frontend',
-    accent: '#a855f7',
-    accentB: '#7c3aed',
-    emoji: '🎞',
-    img: 'https://images.unsplash.com/photo-1611162617474-5b21e879e113?auto=format&fit=crop&w=600&q=80',
-    tags: ['Frontend Architecture', 'CSS Animations', 'Performance', 'Vite'],
-  },
-  {
-    name: 'Secure Cloud Auth',
-    desc: 'Enterprise-grade authentication system featuring encrypted session management, password hashing, and role-based access control (RBAC).',
-    link: 'https://github.com/sumanth965/signin-signup-page',
-    demo: 'https://su-manth09-signin-signup-page-frontend.onrender.com',
-    category: 'Full Stack',
-    accent: '#facc15',
-    accentB: '#ca8a04',
-    emoji: '🔐',
-    img: 'https://images.unsplash.com/photo-1555949963-aa79dcee57d5?auto=format&fit=crop&w=600&q=80',
-    tags: ['Cybersecurity', 'Session Management', 'Hashing', 'Auth Flow'],
-  },
+
   {
     name: 'Foodify',
-    desc: 'End-to-end food delivery orchestration system with menu management, live order tracking, and sophisticated administrative controls.',
+    desc: 'Full-stack food ordering application where users can browse food, manage carts, place orders, track order status, while admins manage food items and orders.',
     link: 'https://github.com/sumanth965/Foodify',
     demo: 'https://foodify-frontend-4vlo.onrender.com',
     category: 'Full Stack',
@@ -98,11 +79,64 @@ const projects = [
     accentB: '#c2410c',
     emoji: '🍔',
     img: 'https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?auto=format&fit=crop&w=600&q=80',
-    tags: ['Food Tech', 'Real-time Tracking', 'Admin Control', 'Redux'],
+    tags: ['MERN', 'JWT Auth', 'MongoDB', 'Order Management'],
   },
+
   {
-    name: 'TST Gadgets - Frontend',
-    desc: 'A premium gadget ecosystem frontend, built for high-conversion product browsing with a modular, atomic UI design pattern.',
+    name: 'MediCare+',
+    desc: 'Flutter-based healthcare application focused on providing a digital platform for personal healthcare management and essential health-related features.',
+    link: 'https://github.com/sumanth965/medicare-plus-flutter',
+    demo: '',
+    category: 'Mobile',
+    accent: '#06b6d4',
+    accentB: '#0e7490',
+    emoji: '🩺',
+    img: 'https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?auto=format&fit=crop&w=600&q=80',
+    tags: ['Flutter', 'Dart', 'Healthcare', 'Mobile App'],
+  },
+
+  {
+    name: 'Expense Tracker',
+    desc: 'Full-stack expense management application built with Spring Boot and MySQL for recording income and expenses, viewing transactions, and monitoring financial summaries.',
+    link: 'https://github.com/sumanth965/expense-tracker-springboot',
+    demo: '',
+    category: 'Full Stack',
+    accent: '#84cc16',
+    accentB: '#4d7c0f',
+    emoji: '💰',
+    img: 'https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?auto=format&fit=crop&w=600&q=80',
+    tags: ['Java', 'Spring Boot', 'MySQL', 'REST API'],
+  },
+
+  {
+    name: 'Lyrics Teleprompter',
+    desc: 'Web-based lyrics teleprompter application designed for displaying and controlling lyrics with a responsive modern interface.',
+    link: 'https://github.com/sumanth965/Lyrics-Teleprompter-App',
+    demo: 'https://lyrics-teleprompter.onrender.com/',
+    category: 'Frontend',
+    accent: '#ec4899',
+    accentB: '#9d174d',
+    emoji: '🎤',
+    img: 'https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?auto=format&fit=crop&w=600&q=80',
+    tags: ['Next.js', 'React', 'Tailwind CSS', 'Web App'],
+  },
+
+  {
+    name: 'Nexus Web Games',
+    desc: 'Collection of interactive browser games built with JavaScript, featuring game logic, responsive interfaces, and interactive gameplay experiences.',
+    link: 'https://github.com/sumanth965/nexus-web-games',
+    demo: 'https://nexus-web-games.vercel.app/',
+    category: 'Frontend',
+    accent: '#f43f5e',
+    accentB: '#be123c',
+    emoji: '🎮',
+    img: 'https://images.unsplash.com/photo-1552820728-8b83bb6b773f?auto=format&fit=crop&w=600&q=80',
+    tags: ['JavaScript', 'Game Logic', 'Canvas', 'UI/UX'],
+  },
+
+  {
+    name: 'TST Gadgets',
+    desc: 'Responsive electronic gadgets e-commerce interface with product browsing and dedicated user-facing and administrative experiences.',
     link: 'https://github.com/sumanth965/TST_Electronic_Gadgets-',
     demo: 'https://tst-electronic-gadgets-su-manth09.onrender.com',
     category: 'Frontend',
@@ -110,24 +144,70 @@ const projects = [
     accentB: '#0891b2',
     emoji: '📱',
     img: 'https://images.unsplash.com/photo-1498049794561-7780e7231661?auto=format&fit=crop&w=600&q=80',
-    tags: ['E-commerce UI', 'Responsive Design', 'Modular CSS', 'HTML5'],
+    tags: ['E-commerce', 'Responsive Design', 'HTML5', 'CSS'],
   },
+
   {
-    name: 'TST Gadgets - Admin',
-    desc: 'Architectural admin gateway for product orchestration, featuring inventory lifecycle management and secure data synchronization.',
-    link: 'https://github.com/sumanth965/TST_Electronic_Gadgets-',
-    demo: 'https://tst-electronic-gadgets-su-manth09-admin.onrender.com',
+    name: 'Resume Builder',
+    desc: 'Django-based web application for creating resumes and generating downloadable PDF documents from user-provided information.',
+    link: 'https://github.com/sumanth965/Resume-Builder-with-PDF-Generation-using-Django',
+    demo: '',
     category: 'Full Stack',
-    accent: '#0891b2',
-    accentB: '#155e75',
-    emoji: '⚙️',
-    img: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=600&q=80',
-    tags: ['Inventory Control', 'Data Sync', 'Admin UX', 'Resource Management'],
+    accent: '#6366f1',
+    accentB: '#4338ca',
+    emoji: '📄',
+    img: 'https://images.unsplash.com/photo-1586281380349-632531db7ed4?auto=format&fit=crop&w=600&q=80',
+    tags: ['Python', 'Django', 'PDF Generation', 'Web App'],
+  },
+
+  {
+    name: 'Rails Project Management',
+    desc: 'Ruby on Rails project exploring project management functionality and server-side web application development.',
+    link: 'https://github.com/sumanth965/rails-project-management',
+    demo: '',
+    category: 'Backend',
+    accent: '#ef4444',
+    accentB: '#b91c1c',
+    emoji: '📋',
+    img: 'https://images.unsplash.com/photo-1556761175-b413da4baf72?auto=format&fit=crop&w=600&q=80',
+    tags: ['Ruby on Rails', 'Ruby', 'Web Development'],
+  },
+
+  {
+    name: 'Unified Image Slider',
+    desc: 'Responsive image slider project with interactive navigation, visual transitions, and a mobile-friendly frontend experience.',
+    link: 'https://github.com/sumanth965/Image_Slider',
+    demo: 'https://sumanth09-image-slider.netlify.app/',
+    category: 'Frontend',
+    accent: '#a855f7',
+    accentB: '#7c3aed',
+    emoji: '🎞️',
+    img: 'https://images.unsplash.com/photo-1611162617474-5b21e879e113?auto=format&fit=crop&w=600&q=80',
+    tags: ['HTML5', 'CSS', 'JavaScript', 'Animations'],
+  },
+
+  {
+    name: 'Secure Authentication System',
+    desc: 'Authentication-focused web application implementing user sign-in and sign-up flows with backend authentication functionality.',
+    link: 'https://github.com/sumanth965/signin-signup-page',
+    demo: 'https://su-manth09-signin-signup-page-frontend.onrender.com',
+    category: 'Full Stack',
+    accent: '#facc15',
+    accentB: '#ca8a04',
+    emoji: '🔐',
+    img: 'https://images.unsplash.com/photo-1555949963-aa79dcee57d5?auto=format&fit=crop&w=600&q=80',
+    tags: ['Authentication', 'JavaScript', 'Forms', 'Web Security'],
   },
 ]
 
-const CATEGORIES = ['All', 'Frontend', 'Full Stack']
-
+const CATEGORIES = [
+  'All',
+  'Frontend',
+  'Full Stack',
+  'AI / Computer Vision',
+  'Mobile',
+  'Backend',
+]
 /* ─────────────────── GITHUB ICON ─────────────────── */
 const GithubIcon = () => (
   <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor">
@@ -159,9 +239,7 @@ function ProjectCard({ project, index, onHover }) {
         width: '100%',
         borderRadius: 22,
         overflow: 'hidden',
-        background: 'linear-gradient(155deg, rgba(15,23,42,0.6) 0%, rgba(15,23,42,0.4) 65%)',
-        backdropFilter: 'blur(12px)',
-        WebkitBackdropFilter: 'blur(12px)',
+        background: 'linear-gradient(155deg, rgba(15,23,42,0.92) 0%, rgba(9,15,30,0.90) 65%)',
         border: `1px solid ${hovered ? project.accent + '50' : 'rgba(255,255,255,0.09)'}`,
         boxShadow: hovered
           ? `0 30px 54px -16px ${project.accent}35, 0 10px 24px -8px rgba(0,0,0,0.55), 0 0 0 1px ${project.accent}25, inset 0 1px 0 rgba(255,255,255,0.12), inset 0 -1px 0 rgba(0,0,0,0.3)`
@@ -182,10 +260,12 @@ function ProjectCard({ project, index, onHover }) {
         overflow: 'hidden',
       }}>
         {project.img ? (
-          <img 
-            src={project.img} 
-            alt={project.name} 
-            style={{ width: '100%', height: '100%', objectFit: 'cover' }} 
+          <img
+            src={project.img}
+            alt={project.name}
+            loading="lazy"
+            decoding="async"
+            style={{ width: '100%', height: '100%', objectFit: 'cover' }}
           />
         ) : project.mockup ? project.mockup(project.accent) : (
           <div style={{
@@ -438,7 +518,7 @@ export default function Projects() {
         <div style={{ maxWidth: 1100, margin: '0 auto', position: 'relative', zIndex: 10 }}>
 
           {/* ── HEADER ROW ── */}
-          <Motion.div 
+          <Motion.div
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, amount: 0.2 }}
@@ -472,7 +552,7 @@ export default function Projects() {
           </Motion.div>
 
           {/* ── STAT STRIP ── */}
-          <Motion.div 
+          <Motion.div
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, amount: 0.2 }}
@@ -504,7 +584,7 @@ export default function Projects() {
           </Motion.div>
 
           {/* ── FILTERS ── */}
-          <Motion.div 
+          <Motion.div
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, amount: 0.2 }}

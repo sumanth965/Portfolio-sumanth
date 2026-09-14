@@ -2,6 +2,7 @@ import React, { useEffect } from 'react'
 import Lenis from 'lenis'
 import Navbar from './Components/Navbar'
 import Home from './Pages/Home'
+import About from './Pages/About'
 import Skills from './Pages/Skills'
 import Projects from './Pages/Projects'
 import Contact from './Pages/Contact'
@@ -17,10 +18,10 @@ export default function App() {
     }
 
     const lenis = new Lenis({
-      duration: 1.2,
-      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+      duration: 0.75,
+      wheelMultiplier: 1.0,
+      touchMultiplier: 1.0,
       smoothWheel: true,
-      touchMultiplier: 1.5,
     });
 
     let rafId;
@@ -31,7 +32,7 @@ export default function App() {
 
     rafId = requestAnimationFrame(raf);
 
-    // Synchronize anchor links (#home, #skills, #projects, #contact) with Lenis smooth scroll
+    // Synchronize anchor links (#home, #about, #skills, #projects, #contact) with Lenis smooth scroll
     const handleAnchorClick = (e) => {
       const target = e.target.closest('a[href^="#"]');
       if (target) {
@@ -60,6 +61,7 @@ export default function App() {
       <Navbar theme="dark" />
       <main>
         <Home theme="dark" />
+        <About theme="dark" />
         <Skills theme="dark" />
         <Projects theme="dark" />
         <Contact theme="dark" />

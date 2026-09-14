@@ -24,10 +24,8 @@ const contactCards = [
 function ContactItem({ icon, label, value, href }) {
   const content = (
     <div style={{
-      background: 'rgba(15, 23, 42, 0.5)',
-      backdropFilter: 'blur(8px)',
-      WebkitBackdropFilter: 'blur(8px)',
-      border: '1px solid rgba(255, 255, 255, 0.05)',
+      background: 'rgba(15, 23, 42, 0.88)',
+      border: '1px solid rgba(255, 255, 255, 0.08)',
       borderRadius: '16px',
       padding: '1.25rem',
       display: 'flex',
@@ -37,10 +35,10 @@ function ContactItem({ icon, label, value, href }) {
       cursor: href ? 'pointer' : 'default',
     }}
       onMouseEnter={(e) => {
-        if (href) e.currentTarget.style.background = 'rgba(15, 23, 42, 0.7)';
+        if (href) e.currentTarget.style.background = 'rgba(15, 23, 42, 0.95)';
       }}
       onMouseLeave={(e) => {
-        if (href) e.currentTarget.style.background = 'rgba(15, 23, 42, 0.5)';
+        if (href) e.currentTarget.style.background = 'rgba(15, 23, 42, 0.88)';
       }}>
       <div style={{
         width: '44px',
@@ -369,6 +367,12 @@ export default function Contact() {
               <feMerge><feMergeNode in="blur" /><feMergeNode in="SourceGraphic" /></feMerge>
             </filter>
           </defs>
+
+          {/* Solid footer background fill below the line */}
+          <path
+            d="M0,14 L350,14 L420,46 L1200,46 L1200,60 L0,60 Z"
+            fill="#060d1a"
+          />
 
           {/* Glow blur layer */}
           <path

@@ -13,6 +13,7 @@ import { Menu, X, Home, User, Briefcase, Mail, Sparkles, ChevronRight } from "lu
 
 const NAV_LINKS = [
   { name: "HOME", href: "#home", icon: Home },
+  { name: "ABOUT", href: "#about", icon: User },
   { name: "SKILLS", href: "#skills", icon: User },
   { name: "PROJECTS", href: "#projects", icon: Briefcase },
   { name: "CONTACT", href: "#contact", icon: Mail },
@@ -21,6 +22,7 @@ const NAV_LINKS = [
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const [activeTab, setActiveTab] = useState("HOME");
+  const [scrolled, setScrolled] = useState(false);
 
   const { scrollYProgress } = useScroll();
   const scaleX = useSpring(scrollYProgress, {
@@ -30,22 +32,60 @@ export default function Navbar() {
   });
 
   useEffect(() => {
-    const handleScroll = () => {
-      const scrollPos = window.scrollY + 120;
-      const sections = NAV_LINKS.map(link => document.querySelector(link.href));
+    let ticking = false;
+    let cachedSections = [];
 
-      sections.forEach((section, index) => {
-        if (section && scrollPos >= section.offsetTop && scrollPos < section.offsetTop + section.offsetHeight) {
-          setActiveTab(NAV_LINKS[index].name);
+    const updateCachedSections = () => {
+      cachedSections = NAV_LINKS.map(link => {
+        const el = document.querySelector(link.href);
+        if (!el) return null;
+        return {
+          name: link.name,
+          top: el.offsetTop,
+          bottom: el.offsetTop + el.offsetHeight,
+        };
+      }).filter(Boolean);
+    };
+
+    updateCachedSections();
+    window.addEventListener("resize", updateCachedSections, { passive: true });
+
+    const handleScroll = () => {
+      if (ticking) return;
+      ticking = true;
+
+      requestAnimationFrame(() => {
+        const scrollY = window.scrollY;
+        const isScrolledNow = scrollY > 20;
+        
+        setScrolled(prev => (prev !== isScrolledNow ? isScrolledNow : prev));
+
+        const scrollPos = scrollY + 140;
+        for (let i = 0; i < cachedSections.length; i++) {
+          const sec = cachedSections[i];
+          if (scrollPos >= sec.top && scrollPos < sec.bottom) {
+            setActiveTab(prev => (prev !== sec.name ? sec.name : prev));
+            break;
+          }
         }
+        ticking = false;
       });
     };
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
+
+    handleScroll();
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+      window.removeEventListener("resize", updateCachedSections);
+    };
   }, []);
 
   return (
-    <header className="fixed top-0 left-0 right-0 z-[1000] py-5 px-6 sm:px-12 bg-transparent pointer-events-none">
+    <header className={`fixed top-0 left-0 right-0 z-[1000] px-6 sm:px-12 transition-all duration-300 ${
+      scrolled
+        ? "py-3.5 bg-[#060d1a]/80 backdrop-blur-xl border-b border-white/10 shadow-[0_8px_32px_rgba(0,0,0,0.5)]"
+        : "py-5 bg-transparent"
+    }`}>
       {/* Top Scroll Progress Line */}
       <motion.div
         className="fixed top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-cyan-400 via-sky-500 to-purple-500 origin-left z-[1001]"

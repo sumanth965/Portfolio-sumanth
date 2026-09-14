@@ -14,9 +14,10 @@ export default function ProceduralScaleFluidBackground() {
         // 1. Core Three.js Setup
         const width = window.innerWidth;
         const height = window.innerHeight;
-        const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+        const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true, powerPreference: 'high-performance' });
         renderer.setSize(width, height);
-        const dpr = Math.min(window.devicePixelRatio, 2);
+        const maxDpr = (navigator.hardwareConcurrency && navigator.hardwareConcurrency < 4) ? 1.0 : 1.5;
+        const dpr = Math.min(window.devicePixelRatio || 1, maxDpr);
         renderer.setPixelRatio(dpr);
         mountRef.current.appendChild(renderer.domElement);
 
@@ -67,10 +68,15 @@ export default function ProceduralScaleFluidBackground() {
         const mouseTarget = new THREE.Vector3(-1000, -1000, 0);
         const smoothMouse = new THREE.Vector3(-1000, -1000, 0);
         
-        // Fluid Mouse State
+        // Reusable Vector/Color instances to prevent garbage collection frame spikes
+        const reusableSplatColor = new THREE.Color();
+
+        // Fluid Mouse State & Scroll Performance Mode State
         let pointerDown = false;
         let pointerInitialized = false;
         let lastInteractionTime = performance.now();
+        let isScrolling = false;
+        let scrollTimeout = null;
         const pointerPos = { x: 0, y: 0 };
         const prevPointerPos = { x: 0, y: 0 };
 
@@ -93,6 +99,14 @@ export default function ProceduralScaleFluidBackground() {
             mouseXY.y = -(clientY / window.innerHeight) * 2 + 1; 
         };
 
+        const onWindowScroll = () => {
+            isScrolling = true;
+            if (scrollTimeout) clearTimeout(scrollTimeout);
+            scrollTimeout = setTimeout(() => {
+                isScrolling = false;
+            }, 150);
+        };
+
         // Click Shockwave Burst
         const onClick = (e) => {
             const clientX = e.clientX;
@@ -110,19 +124,27 @@ export default function ProceduralScaleFluidBackground() {
             }
         };
 
-        window.addEventListener('mousemove', onMouseMove);
+        window.addEventListener('mousemove', onMouseMove, { passive: true });
         window.addEventListener('touchmove', onMouseMove, { passive: true });
         window.addEventListener('touchstart', onMouseMove, { passive: true });
-        window.addEventListener('click', onClick);
+        window.addEventListener('scroll', onWindowScroll, { passive: true });
+        window.addEventListener('click', onClick, { passive: true });
 
+        // Debounced Resize Handler
+        let resizeTimeout = null;
         const onResize = () => {
-            camera.aspect = window.innerWidth / window.innerHeight; 
-            camera.updateProjectionMatrix();
-            renderer.setSize(window.innerWidth, window.innerHeight);
-            uniforms.u_resolution.value.set(window.innerWidth * renderer.getPixelRatio(), window.innerHeight * renderer.getPixelRatio());
-            fluid.resize();
+            if (resizeTimeout) clearTimeout(resizeTimeout);
+            resizeTimeout = setTimeout(() => {
+                camera.aspect = window.innerWidth / window.innerHeight; 
+                camera.updateProjectionMatrix();
+                const curDpr = Math.min(window.devicePixelRatio || 1, maxDpr);
+                renderer.setSize(window.innerWidth, window.innerHeight);
+                renderer.setPixelRatio(curDpr);
+                uniforms.u_resolution.value.set(window.innerWidth * curDpr, window.innerHeight * curDpr);
+                fluid.resize();
+            }, 100);
         };
-        window.addEventListener('resize', onResize);
+        window.addEventListener('resize', onResize, { passive: true });
 
         // Colors for Fluid: Neon Green, Electric Purple, and Cyan as requested
         const colors = [
@@ -136,11 +158,21 @@ export default function ProceduralScaleFluidBackground() {
         // 5. Animation Loop
         let frameId;
         let lastTime = performance.now();
+        let isTabActive = true;
+
+        const handleVisibilityChange = () => {
+            isTabActive = !document.hidden;
+        };
+        document.addEventListener('visibilitychange', handleVisibilityChange);
         
         const animate = () => {
+            frameId = requestAnimationFrame(animate);
+
+            if (!isTabActive) return;
+
             const now = performance.now();
             let dt = (now - lastTime) / 1000;
-            dt = Math.min(dt, 0.016667 * 2);
+            dt = Math.min(dt, 0.033);
             lastTime = now;
 
             // Update Time Uniform for Breathing & Iridescence
@@ -152,20 +184,19 @@ export default function ProceduralScaleFluidBackground() {
             smoothMouse.lerp(mouseTarget, 0.1);
             uniforms.u_mousePos.value.set(smoothMouse.x, smoothMouse.y);
 
-            // Cycle through Neon Green, Electric Purple, and Cyan
+            // Cycle through Neon Green, Electric Purple, and Cyan using REUSABLE color object
             colorCycleT += dt * 0.25;
             const h = colorCycleT % 1.0;
             const colorIdx = Math.floor(h * colors.length);
             const nextColorIdx = (colorIdx + 1) % colors.length;
             const lerpFactor = (h * colors.length) - colorIdx;
-            const splatColor = new THREE.Color().lerpColors(colors[colorIdx], colors[nextColorIdx], lerpFactor);
+            reusableSplatColor.lerpColors(colors[colorIdx], colors[nextColorIdx], lerpFactor);
 
-            // Update Fluid Simulation on Mouse Move
-            if (pointerDown) {
+            // Update Fluid Simulation on Mouse Move (only if not fast scrolling to preserve GPU fill rate)
+            if (pointerDown && !isScrolling) {
                 let rawDx = pointerPos.x - prevPointerPos.x;
                 let rawDy = prevPointerPos.y - pointerPos.y; // WebGL Y is flipped
                 
-                // Prevent insanely huge delta from breaking the simulation
                 let safeDx = Math.sign(rawDx) * Math.min(Math.abs(rawDx), 60);
                 let safeDy = Math.sign(rawDy) * Math.min(Math.abs(rawDy), 60);
                 
@@ -176,17 +207,15 @@ export default function ProceduralScaleFluidBackground() {
                     const u = pointerPos.x / window.innerWidth;
                     const v = 1.0 - (pointerPos.y / window.innerHeight);
                     
-                    // Inject Neon Green / Purple / Cyan fluid that leaks from gaps
-                    fluid.splat(u, v, dx, dy, splatColor);
+                    fluid.splat(u, v, dx, dy, reusableSplatColor);
                     
-                    // Reset prev so it doesn't continuously splat if stopped moving
                     prevPointerPos.x = pointerPos.x;
                     prevPointerPos.y = pointerPos.y;
                 }
             }
 
             // AMBIENT IDLE EFFECT: Emit gentle fluid pulses when stationary for >2.5 sec
-            if (now - lastInteractionTime > 2500 && now - lastIdleSplatTime > 1200) {
+            if (!isScrolling && now - lastInteractionTime > 2500 && now - lastIdleSplatTime > 1500) {
                 lastIdleSplatTime = now;
                 const randomU = 0.1 + Math.random() * 0.8;
                 const randomV = 0.1 + Math.random() * 0.8;
@@ -197,7 +226,7 @@ export default function ProceduralScaleFluidBackground() {
                 fluid.splat(randomU, randomV, dx, dy, idleColor);
             }
 
-            // Step fluid
+            // Step fluid simulation
             fluid.step(dt);
             
             // Bind fluid texture to scale shader
@@ -206,8 +235,6 @@ export default function ProceduralScaleFluidBackground() {
             // Render scales
             renderer.setRenderTarget(null);
             renderer.render(scene, camera);
-            
-            frameId = requestAnimationFrame(animate);
         };
         animate();
 
@@ -215,10 +242,15 @@ export default function ProceduralScaleFluidBackground() {
             window.removeEventListener('mousemove', onMouseMove); 
             window.removeEventListener('touchmove', onMouseMove); 
             window.removeEventListener('touchstart', onMouseMove); 
+            window.removeEventListener('scroll', onWindowScroll);
             window.removeEventListener('click', onClick);
             window.removeEventListener('resize', onResize);
+            document.removeEventListener('visibilitychange', handleVisibilityChange);
+            if (scrollTimeout) clearTimeout(scrollTimeout);
+            if (resizeTimeout) clearTimeout(resizeTimeout);
             cancelAnimationFrame(frameId); 
             geometry.dispose(); 
+            material.dispose();
             renderer.dispose();
             if (mountRef.current && renderer.domElement) mountRef.current.removeChild(renderer.domElement);
         };
