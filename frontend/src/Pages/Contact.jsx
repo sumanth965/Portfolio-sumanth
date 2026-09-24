@@ -24,26 +24,29 @@ const contactCards = [
 function ContactItem({ icon, label, value, href }) {
   const content = (
     <div style={{
-      background: 'rgba(15, 23, 42, 0.88)',
-      border: '1px solid rgba(255, 255, 255, 0.08)',
-      borderRadius: '16px',
+      background: 'rgba(255, 255, 255, 0.08)',
+      backdropFilter: 'blur(25px) saturate(180%)',
+      WebkitBackdropFilter: 'blur(25px) saturate(180%)',
+      border: '1px solid rgba(255, 255, 255, 0.2)',
+      borderRadius: '24px',
+      boxShadow: '0 20px 40px -15px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255, 255, 255, 0.45)',
       padding: '1.25rem',
       display: 'flex',
       alignItems: 'center',
       gap: '1.25rem',
-      transition: 'all 0.2s',
+      transition: 'all 0.3s cubic-bezier(0.16, 1, 0.3, 1)',
       cursor: href ? 'pointer' : 'default',
     }}
       onMouseEnter={(e) => {
-        if (href) e.currentTarget.style.background = 'rgba(15, 23, 42, 0.95)';
+        if (href) e.currentTarget.style.background = 'rgba(15, 23, 42, 0.88)';
       }}
       onMouseLeave={(e) => {
-        if (href) e.currentTarget.style.background = 'rgba(15, 23, 42, 0.88)';
+        if (href) e.currentTarget.style.background = 'rgba(15, 23, 42, 0.75)';
       }}>
       <div style={{
         width: '44px',
         height: '44px',
-        borderRadius: '12px',
+        borderRadius: '8px',
         background: 'rgba(255, 255, 255, 0.08)',
         display: 'flex',
         alignItems: 'center',
@@ -244,11 +247,12 @@ export default function Contact() {
               transition={{ duration: 0.6, delay: 0.2 }}
               onSubmit={handleSubmit}
               style={{
-                background: 'rgba(15, 23, 42, 0.4)',
-                backdropFilter: 'blur(12px)',
-                WebkitBackdropFilter: 'blur(12px)',
-                border: '1px solid rgba(255, 255, 255, 0.08)',
-                borderRadius: '28px',
+                background: 'rgba(255, 255, 255, 0.08)',
+                backdropFilter: 'blur(25px) saturate(180%)',
+                WebkitBackdropFilter: 'blur(25px) saturate(180%)',
+                border: '1px solid rgba(255, 255, 255, 0.2)',
+                borderRadius: '24px',
+                boxShadow: '0 24px 48px -15px rgba(0,0,0,0.6), inset 0 1px 0 rgba(255,255,255,0.45)',
                 padding: 'clamp(1.5rem, 4vw, 2.5rem)',
               }}
             >

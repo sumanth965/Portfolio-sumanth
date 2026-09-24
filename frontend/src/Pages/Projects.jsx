@@ -237,13 +237,15 @@ function ProjectCard({ project, index, onHover }) {
       onMouseLeave={leave}
       style={{
         width: '100%',
-        borderRadius: 22,
+        borderRadius: 24,
         overflow: 'hidden',
-        background: 'linear-gradient(155deg, rgba(15,23,42,0.92) 0%, rgba(9,15,30,0.90) 65%)',
-        border: `1px solid ${hovered ? project.accent + '50' : 'rgba(255,255,255,0.09)'}`,
+        background: 'rgba(255, 255, 255, 0.08)',
+        backdropFilter: 'blur(25px) saturate(180%)',
+        WebkitBackdropFilter: 'blur(25px) saturate(180%)',
+        border: `1px solid ${hovered ? project.accent + '60' : 'rgba(255, 255, 255, 0.2)'}`,
         boxShadow: hovered
-          ? `0 30px 54px -16px ${project.accent}35, 0 10px 24px -8px rgba(0,0,0,0.55), 0 0 0 1px ${project.accent}25, inset 0 1px 0 rgba(255,255,255,0.12), inset 0 -1px 0 rgba(0,0,0,0.3)`
-          : `0 16px 32px -14px rgba(0,0,0,0.6), 0 4px 10px -4px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.08), inset 0 -1px 0 rgba(0,0,0,0.3)`,
+          ? `0 30px 60px -20px ${project.accent}35, 0 10px 24px -8px rgba(0,0,0,0.55), inset 0 1px 0 rgba(255,255,255,0.7)`
+          : `0 20px 40px -15px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.45), inset 0 -1px 0 rgba(0,0,0,0.2)`,
         transform: hovered ? 'translateY(-8px) scale(1.01)' : 'translateY(0) scale(1)',
         transition: 'all 0.35s cubic-bezier(0.34,1.56,0.64,1)',
         cursor: 'pointer',

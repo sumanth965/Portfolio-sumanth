@@ -511,23 +511,26 @@ export default function Skills() {
         @keyframes pulse-ring{0%,100%{opacity:0.15;transform:scale(1)}50%{opacity:0.3;transform:scale(1.06)}}
         @keyframes marquee{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
         .sk-card{
-          background:linear-gradient(155deg, rgba(6,13,26,0.92) 0%, rgba(9,21,40,0.88) 100%);
-          border:1px solid rgba(255,255,255,0.08);
-          border-top-color:rgba(255,255,255,0.15);
+          background: rgba(255, 255, 255, 0.08);
+          backdrop-filter: blur(25px) saturate(180%);
+          -webkit-backdrop-filter: blur(25px) saturate(180%);
+          border: 1px solid rgba(255, 255, 255, 0.2);
+          border-radius: 24px;
           box-shadow:
-            0 16px 36px -14px rgba(0,0,0,0.7),
-            0 4px 10px -4px rgba(0,0,0,0.5),
-            inset 0 1px 0 rgba(255,255,255,0.08),
-            inset 0 -1px 0 rgba(0,0,0,0.4);
-          transition:border-color .25s,box-shadow .25s,background .25s;
+            0 20px 40px -15px rgba(0,0,0,0.5),
+            0 4px 12px -2px rgba(0,0,0,0.3),
+            inset 0 1px 0 rgba(255,255,255,0.45),
+            inset 0 -1px 0 rgba(0,0,0,0.2);
+          transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
         }
         .sk-card:hover{
-          border-color:rgba(34,211,238,0.35);
-          background:linear-gradient(155deg, rgba(6,13,26,0.95) 0%, rgba(14,165,233,0.12) 100%);
+          background: rgba(255, 255, 255, 0.14);
+          border-color: rgba(255, 255, 255, 0.35);
           box-shadow:
-            0 26px 46px -16px rgba(0,0,0,0.8),
-            0 0 25px rgba(34,211,238,0.15),
-            inset 0 1px 0 rgba(255,255,255,0.15);
+            0 30px 60px -20px rgba(0,0,0,0.65),
+            0 0 25px rgba(34,211,238,0.2),
+            inset 0 1px 0 rgba(255,255,255,0.7);
+          transform: translateY(-4px);
         }
         .cat-btn{
           border:1px solid rgba(255,255,255,0.08);

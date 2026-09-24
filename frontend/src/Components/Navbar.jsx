@@ -155,7 +155,7 @@ export default function Navbar() {
                       key={link.name}
                       href={link.href}
                       onClick={() => setIsOpen(false)}
-                      className={`flex items-center justify-between p-3 rounded-xl no-underline transition-all ${
+                      className={`flex items-center justify-between p-3 rounded-lg no-underline transition-all ${
                         isActive
                           ? "bg-cyan-500/20 border border-cyan-400/40 text-cyan-300"
                           : "text-slate-300 hover:bg-white/5"

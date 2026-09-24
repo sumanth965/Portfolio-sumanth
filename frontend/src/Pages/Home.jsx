@@ -82,10 +82,9 @@ export default function Hero() {
 
             <Motion.h1
               variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0, transition: { duration: 0.6 } } }}
-              className="font-extrabold leading-[1.05] mb-2"
+              className="font-bold text-4xl sm:text-5xl lg:text-6xl leading-[1.08] mb-2"
               style={{
                 fontFamily: 'var(--font-display)',
-                fontSize: 'clamp(2.2rem, 4vw, 3.2rem)',
               }}
             >
               <span className="text-white">Full Stack</span>
@@ -93,10 +92,9 @@ export default function Hero() {
 
             <Motion.h1
               variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0, transition: { duration: 0.6 } } }}
-              className="font-extrabold leading-[1.05] mb-6"
+              className="font-bold text-4xl sm:text-5xl lg:text-6xl leading-[1.08] mb-6"
               style={{
                 fontFamily: 'var(--font-display)',
-                fontSize: 'clamp(2.2rem, 4vw, 3.2rem)',
               }}
             >
               <span className="block bg-gradient-to-r from-sky-400 via-cyan-300 to-violet-400 bg-clip-text text-transparent">
@@ -108,7 +106,7 @@ export default function Hero() {
 
             <Motion.p
               variants={{ hidden: { opacity: 0, y: 20 }, visible: { opacity: 1, y: 0, transition: { duration: 0.6 } } }}
-              className="text-[#64748b] text-sm sm:text-base leading-relaxed mb-8 max-w-md mx-auto lg:mx-0"
+              className="text-[#94a3b8] text-sm sm:text-base leading-relaxed mb-8 max-w-md mx-auto lg:mx-0"
             >
               I have a passion for building scalable web applications using{' '}
               <span className="text-[#3b9eff] font-medium">MongoDB</span>,{' '}
@@ -169,11 +167,11 @@ export default function Hero() {
                 style={{
                   clipPath: 'polygon(25% 0%, 100% 0%, 100% 100%, 0% 100%, 0% 20%)',
                   height: 'clamp(460px, 34vw, 540px)',
-                  background: 'rgba(255, 255, 255, 0.05)',
-                  boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.7)',
-                  border: '1px solid rgba(255, 255, 255, 0.12)',
-                  backdropFilter: 'blur(8px)',
-                  WebkitBackdropFilter: 'blur(8px)',
+                  background: 'rgba(255, 255, 255, 0.1)',
+                  boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.7), inset 0 1px 0 rgba(255, 255, 255, 0.5)',
+                  border: '1px solid rgba(255, 255, 255, 0.25)',
+                  backdropFilter: 'blur(25px) saturate(180%)',
+                  WebkitBackdropFilter: 'blur(25px) saturate(180%)',
                 }}
               >
                 {/* Subtle Scanline Effect */}
